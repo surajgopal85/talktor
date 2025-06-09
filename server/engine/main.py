@@ -16,6 +16,10 @@ app.add_middleware(
 
 model = whisper.load_model("base")
 
+@app.get("/")
+async def root():
+    return {"message": "API is up and running!"}
+
 @app.post("/speech-to-text") # post due to creation 
 # async allows await, fastAPI uploadfile for large uploads 
 # file in req.body
