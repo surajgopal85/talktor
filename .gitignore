@@ -1,0 +1,12 @@
+# Node (frontend)
+client/node_modules
+client/.env
+
+# Python (backend)
+__pycache__/
+server/.venv/
+server/env/
+server/.env
+
+# macOS
+.DS_Store
