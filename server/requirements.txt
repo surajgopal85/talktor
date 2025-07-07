@@ -1,3 +1,28 @@
-fastapi
-uvicorn
-openai-whisper
+# Core FastAPI and server
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+
+# Audio processing and ML
+openai-whisper==20231117
+
+# Data validation and parsing
+pydantic==2.5.0
+
+# HTTP client for external APIs
+httpx==0.25.0
+
+# Environment variables
+python-dotenv==1.0.0
+
+# Translation services (compatible version)
+deep-translator==1.11.4
+
+# Basic dependencies only for now
+# Will add these back as we need them:
+# sqlalchemy==2.0.23
+# alembic==1.13.0
+# redis==5.0.1
+# passlib==1.7.4
+# python-jose[cryptography]==3.3.0
+# pytest==7.4.3
+# pytest-asyncio==0.21.1
