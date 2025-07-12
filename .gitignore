@@ -3,6 +3,7 @@ client/node_modules
 client/.env
 
 # Python (backend)
+talktor-venv/
 __pycache__/
 server/.venv/
 server/env/
