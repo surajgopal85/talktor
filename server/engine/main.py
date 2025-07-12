@@ -4,10 +4,13 @@ from pydantic import BaseModel
 import whisper
 import tempfile
 import os
-from typing import Optional
+from typing import Optional, List, Dict
 import logging
 from datetime import datetime
 import uuid
+
+# from medical_intelligence import medical_intelligence, MedicalCategory
+from external_medical_intelligence import scalable_medical_intelligence, MedicalSpecialty, enhanced_medication_lookup, get_specialty_context_suggestions
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -49,6 +52,43 @@ class TranscriptionResponse(BaseModel):
     language: Optional[str] = None
     confidence: Optional[float] = None
     session_id: str
+
+# New Pydantic models for medical responses
+class MedicalTerm(BaseModel):
+    original_text: str
+    canonical_name: str
+    category: str
+    confidence: float
+    translation: str
+    context_clues: List[str]
+
+class MedicalNote(BaseModel):
+    term: str
+    category: str
+    translation: str
+    note: str
+
+class EnhancedTranslationResponse(BaseModel):
+    original_text: str
+    standard_translation: str
+    enhanced_translation: str
+    medical_terms: List[MedicalTerm]
+    medical_notes: List[MedicalNote]
+    follow_up_questions: List[str]
+    medical_accuracy_score: float
+    confidence: float
+    session_id: str
+
+class MedicalTranscriptionResponse(BaseModel):
+    text: str
+    language: Optional[str] = None
+    confidence: Optional[float] = None
+    medical_terms: List[Dict]
+    follow_up_questions: List[str]
+    medical_context_detected: str
+    session_id: str
+
+
 
 # In-memory session storage (replace with Redis/DB later)
 sessions = {}
@@ -227,6 +267,207 @@ def extract_medical_terms(text: str) -> list:
             found_terms.append(term)
     
     return found_terms
+
+# Add this to your existing server/engine/main.py
+
+# Enhanced translation endpoint with medical intelligence
+@app.post("/translate/medical", response_model=EnhancedTranslationResponse)
+async def medical_translate(request: TranslationRequest):
+    """
+    Enhanced translation with medical intelligence
+    """
+    try:
+        session_id = str(uuid.uuid4())
+        
+        # Step 1: Extract medical terms from original text
+        medical_analysis = await enhanced_medication_lookup(request.text, request.medical_context or "general")
+        
+        logger.info(f"Found {len(medical_analysis)} medical terms: {[t['canonical_name'] for t in medical_analysis]}")
+        
+        # Step 2: Standard translation
+        try:
+            from deep_translator import GoogleTranslator
+            
+            if request.source_language == "auto":
+                translator = GoogleTranslator(source='auto', target=request.target_language)
+            else:
+                translator = GoogleTranslator(source=request.source_language, target=request.target_language)
+            
+            standard_translation = translator.translate(request.text)
+            
+        except Exception as translation_error:
+            logger.warning(f"Translation failed: {translation_error}")
+            standard_translation = f"[TRANSLATION FAILED] {request.text}"
+        
+        # Step 3: Enhance translation with medical intelligence
+        enhanced_result = medical_intelligence.enhance_translation(
+            original_text=request.text,
+            translated_text=standard_translation,
+            source_lang=request.source_language,
+            target_lang=request.target_language
+        )
+        
+        # Step 4: Generate follow-up questions
+        follow_up_questions = medical_intelligence.suggest_follow_up_questions(
+            enhanced_result["medical_terms_found"],
+            request.medical_context or "general"
+        )
+        
+        # Step 5: Store enhanced session data
+        if session_id not in sessions:
+            sessions[session_id] = []
+            
+        sessions[session_id].append({
+            "type": "medical_translation",
+            "timestamp": datetime.now().isoformat(),
+            "original_text": request.text,
+            "standard_translation": standard_translation,
+            "enhanced_translation": enhanced_result["enhanced_translation"],
+            "medical_terms": enhanced_result["medical_terms_found"],
+            "medical_notes": enhanced_result["medical_notes"],
+            "medical_accuracy_score": enhanced_result["medical_accuracy_score"],
+            "follow_up_questions": follow_up_questions,
+            "source_language": request.source_language,
+            "target_language": request.target_language,
+            "medical_context": request.medical_context
+        })
+        
+        return EnhancedTranslationResponse(
+            original_text=request.text,
+            standard_translation=standard_translation,
+            enhanced_translation=enhanced_result["enhanced_translation"],
+            medical_terms=enhanced_result["medical_terms_found"],
+            medical_notes=enhanced_result["medical_notes"],
+            follow_up_questions=follow_up_questions,
+            medical_accuracy_score=enhanced_result["medical_accuracy_score"],
+            confidence=0.95,
+            session_id=session_id
+        )
+        
+    except Exception as e:
+        logger.error(f"Error in medical translation: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+# Medical term analysis endpoint
+@app.post("/analyze/medical-terms")
+async def analyze_medical_terms(text: str, language: str = "en"):
+    """
+    Analyze text for medical terminology
+    """
+    try:
+        medical_terms = medical_intelligence.extract_medical_terms(text, language)
+        
+        # Categorize terms
+        categorized = {
+            "medications": [t for t in medical_terms if t["category"] == "medication"],
+            "symptoms": [t for t in medical_terms if t["category"] == "symptom"],
+            "body_parts": [t for t in medical_terms if t["category"] == "body_part"],
+            "procedures": [t for t in medical_terms if t["category"] == "procedure"],
+            "conditions": [t for t in medical_terms if t["category"] == "condition"]
+        }
+        
+        return {
+            "text_analyzed": text,
+            "total_medical_terms": len(medical_terms),
+            "categorized_terms": categorized,
+            "medical_complexity_score": len(medical_terms) / max(len(text.split()), 1),
+            "recommended_context": determine_medical_context(medical_terms)
+        }
+        
+    except Exception as e:
+        logger.error(f"Error analyzing medical terms: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+def determine_medical_context(medical_terms: List[Dict]) -> str:
+    """Determine appropriate medical context based on terms found"""
+    
+    # Emergency indicators
+    emergency_terms = ["chest pain", "shortness_of_breath", "severe pain", "bleeding"]
+    if any(term["canonical_name"] in emergency_terms for term in medical_terms):
+        return "emergency"
+    
+    # Medication focus
+    medication_count = sum(1 for term in medical_terms if term["category"] == "medication")
+    if medication_count >= 2:
+        return "medication_review"
+    
+    # Symptom assessment
+    symptom_count = sum(1 for term in medical_terms if term["category"] == "symptom")
+    if symptom_count >= 2:
+        return "symptom_assessment"
+    
+    return "general"
+
+# Enhanced speech-to-text with medical analysis
+@app.post("/speech-to-text/medical", response_model=MedicalTranscriptionResponse)
+async def medical_speech_to_text(
+    file: UploadFile = File(...),
+    session_id: Optional[str] = None,
+    medical_context: Optional[str] = None
+):
+    """
+    Enhanced speech-to-text with immediate medical analysis
+    """
+    try:
+        # Standard STT processing (same as before)
+        if not session_id:
+            session_id = str(uuid.uuid4())
+        
+        if not file.content_type.startswith("audio/"):
+            raise HTTPException(status_code=400, detail="File must be audio format")
+        
+        with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp:
+            content = await file.read()
+            tmp.write(content)
+            tmp_path = tmp.name
+        
+        logger.info(f"Processing medical transcription for session {session_id}")
+        result = model.transcribe(tmp_path)
+        os.remove(tmp_path)
+        
+        # Immediate medical analysis
+        # Ensure transcribed_text is always a string
+        transcribed_text = result["text"]
+        if isinstance(transcribed_text, list):
+            transcribed_text = " ".join(transcribed_text)  # Join list into single string
+        elif transcribed_text is None:
+            transcribed_text = ""  # Handle None case
+
+        medical_analysis = await enhanced_medication_lookup(transcribed_text, medical_context or "general")
+
+        # Suggest follow-up questions
+        follow_up_questions = await get_specialty_context_suggestions(
+            transcribed_text, medical_context or "general"
+        )
+        
+        # Enhanced session storage
+        if session_id not in sessions:
+            sessions[session_id] = []
+        
+        sessions[session_id].append({
+            "type": "medical_transcription",
+            "timestamp": datetime.now().isoformat(),
+            "original_audio_language": result.get("language", "unknown"),
+            "transcribed_text": transcribed_text,
+            "medical_terms": medical_analysis,
+            "follow_up_questions": follow_up_questions,
+            "medical_context": medical_context,
+            "recommended_context": determine_medical_context(medical_analysis)
+        })
+        
+        return MedicalTranscriptionResponse(
+            text=transcribed_text,
+            language=result.get("language"),
+            confidence=result.get("confidence"),
+            medical_terms=medical_analysis,
+            follow_up_questions=follow_up_questions,
+            medical_context_detected=determine_medical_context(medical_analysis),
+            session_id=session_id
+        )
+        
+    except Exception as e:
+        logger.error(f"Error in medical speech-to-text: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
 
 # Startup event to load models
 @app.on_event("startup")

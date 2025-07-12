@@ -17,6 +17,9 @@ python-dotenv==1.0.0
 # Translation services (compatible version)
 deep-translator==1.11.4
 
+# just in case
+difflib
+
 # Basic dependencies only for now
 # Will add these back as we need them:
 # sqlalchemy==2.0.23
