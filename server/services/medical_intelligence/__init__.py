@@ -2,6 +2,7 @@
 # services/medical_intelligence/__init__.py
 # =============================================================================
 
+
 """
 Medical Intelligence Services
 
@@ -11,7 +12,6 @@ AI-powered medical analysis including:
 - Confidence scoring and learning components
 - RL infrastructure for continuous improvement
 """
-
 
 from .extraction import MedicationExtractionService
 from .api_client import ExternalMedicalAPIClient

@@ -178,6 +178,32 @@ async def speech_to_text(
         logger.error(f"❌ Error in speech-to-text: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
 
+@app.post("/translate")
+async def basic_translate(request: TranslationRequest):
+    """Basic translation endpoint for backward compatibility"""
+    try:
+        from deep_translator import GoogleTranslator
+        
+        if request.source_language == "auto":
+            translator = GoogleTranslator(source='auto', target=request.target_language)
+        else:
+            translator = GoogleTranslator(source=request.source_language, target=request.target_language)
+        
+        translated_text = translator.translate(request.text)
+        session_id = str(uuid.uuid4())
+        
+        return {
+            "original_text": request.text,
+            "translated_text": translated_text,
+            "confidence": 0.95,
+            "medical_terms": [],
+            "session_id": session_id
+        }
+        
+    except Exception as e:
+        logger.error(f"❌ Error in basic translation: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
 @app.post("/translate/medical", response_model=EnhancedTranslationResponse)
 async def medical_translate_with_learning(
     request: TranslationRequest,

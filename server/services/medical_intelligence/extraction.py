@@ -24,7 +24,7 @@ class MedicationExtractionService:
         self.api_client = ExternalMedicalAPIClient()
         self.confidence_scorer = ConfidenceScorer()
         self.learning_manager = LearningManager()
-        self.confidence_threshold = 0.6
+        self.confidence_threshold = 0.3
         
     async def extract_medications(self, text: str, session_id: str, medical_context: str = "general") -> Dict:
         """Main extraction method with learning integration"""
