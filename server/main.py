@@ -219,20 +219,53 @@ async def medical_translate_with_learning(
     translation_service: TranslationService = Depends(get_translation_service),
     session_service: SessionService = Depends(get_session_service)
 ):
-    """Enhanced medical translation with learning-ready extraction"""
+    """Enhanced medical translation with OBGYN specialization and learning-ready extraction"""
     try:
         session_id = str(uuid.uuid4())
         
         logger.info(f"🚀 Medical translation with learning: '{request.text}'")
         
-        # Step 1: Intelligent medication extraction
-        extraction_result = await extraction_service.extract_medications(
-            request.text, 
-            session_id, 
-            request.medical_context or "general"
-        )
+        # ENHANCED: Auto-detect OBGYN context and use appropriate extraction
+        obgyn_keywords = [
+            "pregnant", "pregnancy", "prenatal", "postpartum", "breastfeeding",
+            "birth control", "contraception", "period", "menstrual", "cycle", 
+            "pcos", "endometriosis", "fertility", "ovulation", "trimester",
+            "embarazada", "embarazo", "prenatal", "anticonceptivos", "período"  # Spanish terms
+        ]
         
-        # Step 2: Translation
+        text_lower = request.text.lower()
+        is_obgyn_context = any(keyword in text_lower for keyword in obgyn_keywords)
+        
+        if is_obgyn_context:
+            # Use OBGYN specialization
+            from services.medical_intelligence import process_obgyn_case
+            
+            # Create patient profile from request
+            patient_profile = {
+                "source_language": request.source_language,
+                "medical_context": request.medical_context
+            }
+            
+            logger.info(f"🏥 Using OBGYN specialization for: '{request.text}'")
+            obgyn_result = await process_obgyn_case(request.text, session_id, patient_profile)
+            
+            # Convert OBGYN result to standard extraction format
+            extraction_result = {
+                "medications": obgyn_result["medications"],
+                "metadata": obgyn_result["metadata"],
+                "obgyn_context": obgyn_result["obgyn_context"],
+                "recommendations": obgyn_result["recommendations"]
+            }
+        else:
+            # Use general extraction (your existing code)
+            logger.info(f"📋 Using general extraction for: '{request.text}'")
+            extraction_result = await extraction_service.extract_medications(
+                request.text, 
+                session_id, 
+                request.medical_context or "general"
+            )
+        
+        # Step 2: Translation (same as before)
         translation_result = await translation_service.translate_with_medical_context(
             request.text,
             request.source_language,
@@ -240,18 +273,23 @@ async def medical_translate_with_learning(
             extraction_result["medications"]
         )
         
-        # Step 3: Generate follow-up questions
-        follow_up_questions = await translation_service.get_follow_up_questions(
-            request.text, 
-            request.medical_context or "general"
-        )
+        # Step 3: Generate follow-up questions (enhanced for OBGYN)
+        if is_obgyn_context and "recommendations" in extraction_result:
+            follow_up_questions = extraction_result["recommendations"].get("follow_up_questions", [])
+        else:
+            follow_up_questions = await translation_service.get_follow_up_questions(
+                request.text, 
+                request.medical_context or "general"
+            )
         
-        # Step 4: Format medical terms for response
+        # Step 4: Format medical terms for response (enhanced)
         medical_terms_list = []
         confidence_scores = {}
         
         for med_result in extraction_result["medications"]:
             medication = med_result["medication"]
+            
+            # Enhanced term data with OBGYN context
             term_data = {
                 "original_text": med_result["original_term"],
                 "canonical_name": medication.get("canonical_name", ""),
@@ -266,6 +304,13 @@ async def medical_translate_with_learning(
                     "brand_names": medication.get("brand_names", [])
                 }
             }
+            
+            # Add OBGYN-specific data if available
+            if "obgyn_category" in med_result:
+                term_data["obgyn_category"] = med_result["obgyn_category"]
+                term_data["pregnancy_stage"] = med_result.get("pregnancy_stage", "unknown")
+                term_data["safety_assessment"] = med_result.get("safety_assessment", {})
+            
             medical_terms_list.append(term_data)
             confidence_scores[med_result["original_term"]] = med_result["extraction_confidence"]
         
@@ -274,7 +319,31 @@ async def medical_translate_with_learning(
         if extraction_result["metadata"]["total_candidates"] > 0:
             accuracy_score = extraction_result["metadata"]["successful_extractions"] / extraction_result["metadata"]["total_candidates"]
         
-        # Step 6: Store session data
+        # Step 6: Enhanced medical notes with OBGYN insights
+        medical_notes = []
+        
+        if is_obgyn_context and "obgyn_context" in extraction_result:
+            obgyn_context = extraction_result["obgyn_context"]
+            
+            # Add pregnancy stage note
+            if obgyn_context.get("pregnancy_stage") != "not_pregnant":
+                medical_notes.append({
+                    "type": "pregnancy_context",
+                    "message": f"Patient pregnancy stage: {obgyn_context['pregnancy_stage']}",
+                    "importance": "high"
+                })
+            
+            # Add safety alerts
+            if "recommendations" in extraction_result:
+                safety_alerts = extraction_result["recommendations"].get("safety_alerts", [])
+                for alert in safety_alerts:
+                    medical_notes.append({
+                        "type": "safety_alert", 
+                        "message": alert,
+                        "importance": "urgent"
+                    })
+        
+        # Step 7: Store session data
         await session_service.store_medical_translation(
             session_id, request, translation_result, extraction_result, follow_up_questions
         )
@@ -284,7 +353,7 @@ async def medical_translate_with_learning(
             standard_translation=translation_result["standard_translation"],
             enhanced_translation=translation_result["enhanced_translation"],
             medical_terms=medical_terms_list,
-            medical_notes=[],
+            medical_notes=medical_notes,
             follow_up_questions=follow_up_questions,
             medical_accuracy_score=accuracy_score,
             confidence=0.95,
@@ -297,12 +366,105 @@ async def medical_translate_with_learning(
             )
         )
         
-        logger.info(f"✅ Medical translation completed: {len(medical_terms_list)} medications extracted")
+        specialty_used = extraction_result["metadata"].get("specialty", "general")
+        logger.info(f"✅ Medical translation completed ({specialty_used}): {len(medical_terms_list)} medications extracted")
         return response
         
     except Exception as e:
         logger.error(f"❌ Error in medical translation: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
+
+# @app.post("/translate/medical", response_model=EnhancedTranslationResponse)
+# async def medical_translate_with_learning(
+#     request: TranslationRequest,
+#     extraction_service: MedicationExtractionService = Depends(get_extraction_service),
+#     translation_service: TranslationService = Depends(get_translation_service),
+#     session_service: SessionService = Depends(get_session_service)
+# ):
+#     """Enhanced medical translation with learning-ready extraction"""
+#     try:
+#         session_id = str(uuid.uuid4())
+        
+#         logger.info(f"🚀 Medical translation with learning: '{request.text}'")
+        
+#         # Step 1: Intelligent medication extraction
+#         extraction_result = await extraction_service.extract_medications(
+#             request.text, 
+#             session_id, 
+#             request.medical_context or "general"
+#         )
+        
+#         # Step 2: Translation
+#         translation_result = await translation_service.translate_with_medical_context(
+#             request.text,
+#             request.source_language,
+#             request.target_language,
+#             extraction_result["medications"]
+#         )
+        
+#         # Step 3: Generate follow-up questions
+#         follow_up_questions = await translation_service.get_follow_up_questions(
+#             request.text, 
+#             request.medical_context or "general"
+#         )
+        
+#         # Step 4: Format medical terms for response
+#         medical_terms_list = []
+#         confidence_scores = {}
+        
+#         for med_result in extraction_result["medications"]:
+#             medication = med_result["medication"]
+#             term_data = {
+#                 "original_text": med_result["original_term"],
+#                 "canonical_name": medication.get("canonical_name", ""),
+#                 "category": "medication",
+#                 "confidence": med_result["extraction_confidence"],
+#                 "translation": medication.get("canonical_name", ""),
+#                 "context_clues": medication.get("indications", [])[:2] if medication.get("indications") else [],
+#                 "extraction_strategy": med_result["extraction_strategy"],
+#                 "api_data": {
+#                     "rxcui": medication.get("rxcui"),
+#                     "pregnancy_category": medication.get("pregnancy_category"),
+#                     "brand_names": medication.get("brand_names", [])
+#                 }
+#             }
+#             medical_terms_list.append(term_data)
+#             confidence_scores[med_result["original_term"]] = med_result["extraction_confidence"]
+        
+#         # Step 5: Calculate accuracy score
+#         accuracy_score = 0.0
+#         if extraction_result["metadata"]["total_candidates"] > 0:
+#             accuracy_score = extraction_result["metadata"]["successful_extractions"] / extraction_result["metadata"]["total_candidates"]
+        
+#         # Step 6: Store session data
+#         await session_service.store_medical_translation(
+#             session_id, request, translation_result, extraction_result, follow_up_questions
+#         )
+        
+#         response = EnhancedTranslationResponse(
+#             original_text=request.text,
+#             standard_translation=translation_result["standard_translation"],
+#             enhanced_translation=translation_result["enhanced_translation"],
+#             medical_terms=medical_terms_list,
+#             medical_notes=[],
+#             follow_up_questions=follow_up_questions,
+#             medical_accuracy_score=accuracy_score,
+#             confidence=0.95,
+#             session_id=session_id,
+#             learning_metadata=LearningMetadata(
+#                 extraction_strategies_used=extraction_result["metadata"]["extraction_strategies_used"],
+#                 candidates_analyzed=extraction_result["metadata"]["total_candidates"],
+#                 ready_for_feedback=True,
+#                 confidence_scores=confidence_scores
+#             )
+#         )
+        
+#         logger.info(f"✅ Medical translation completed: {len(medical_terms_list)} medications extracted")
+#         return response
+        
+#     except Exception as e:
+#         logger.error(f"❌ Error in medical translation: {str(e)}")
+#         raise HTTPException(status_code=500, detail=str(e))
 
 # =============================================================================
 # LEARNING & FEEDBACK ENDPOINTS
@@ -343,23 +505,29 @@ async def get_learning_analytics(
 # =============================================================================
 
 @app.post("/test/extraction")
-async def test_intelligent_extraction(
-    text: str = "I'm taking azithromycin for my infection",
-    extraction_service: MedicationExtractionService = Depends(get_extraction_service)
-):
-    """Test the intelligent extraction system"""
+async def test_intelligent_extraction(text: str = "I'm taking azithromycin for my infection"):
+    """Test the intelligent extraction system with OBGYN auto-detection"""
     try:
+        from services.medical_intelligence import extract_medications, health_check
+        
         session_id = f"test_{uuid.uuid4()}"
         
         logger.info(f"🧪 Testing extraction with: '{text}'")
         
-        result = await extraction_service.extract_medications(text, session_id, "general")
+        # USE NEW SYSTEM: This will auto-detect OBGYN
+        result = await extract_medications(text, session_id)
+        
+        # Test health check too
+        health_status = await health_check()
         
         return {
             "test_text": text,
             "extraction_result": result,
-            "medications_found": len(result["medications"]),
-            "strategies_used": result["metadata"]["extraction_strategies_used"],
+            "specialty_detected": result.get("metadata", {}).get("specialty", "general"),
+            "medications_found": len(result.get("medications", [])),
+            "strategies_used": result.get("metadata", {}).get("extraction_strategies_used", []),
+            "obgyn_context": result.get("obgyn_context", {}),  # Show OBGYN context if present
+            "health_check": health_status.get("status", "unknown"),
             "session_id": session_id,
             "success": True
         }
@@ -371,6 +539,36 @@ async def test_intelligent_extraction(
             "test_text": text,
             "success": False
         }
+
+# @app.post("/test/extraction")
+# async def test_intelligent_extraction(
+#     text: str = "I'm taking azithromycin for my infection",
+#     extraction_service: MedicationExtractionService = Depends(get_extraction_service)
+# ):
+#     """Test the intelligent extraction system"""
+#     try:
+#         session_id = f"test_{uuid.uuid4()}"
+        
+#         logger.info(f"🧪 Testing extraction with: '{text}'")
+        
+#         result = await extraction_service.extract_medications(text, session_id, "general")
+        
+#         return {
+#             "test_text": text,
+#             "extraction_result": result,
+#             "medications_found": len(result["medications"]),
+#             "strategies_used": result["metadata"]["extraction_strategies_used"],
+#             "session_id": session_id,
+#             "success": True
+#         }
+        
+#     except Exception as e:
+#         logger.error(f"❌ Test extraction failed: {str(e)}")
+#         return {
+#             "error": str(e),
+#             "test_text": text,
+#             "success": False
+#         }
 
 @app.get("/test/external-apis")
 async def test_external_apis(drug_name: str = "azithromycin"):
