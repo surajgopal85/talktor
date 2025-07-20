@@ -13,13 +13,21 @@ from datetime import datetime
 import uuid
 
 # Service imports following your nested architecture
-from services.medical_intelligence.extraction import MedicationExtractionService
+
+# no longer works in current architecture - 7.20.25
+# from services.medical_intelligence.extraction import MedicationExtractionService 
 from services.translation.translator import TranslationService
 from services.session.manager import SessionService
 from services.audio.whisper_service import WhisperService
 
-# For feedback, we'll use the learning manager
-from services.medical_intelligence.learning import LearningManager
+# no longer works in current architecture - 7.20.25
+# from services.medical_intelligence.learning import LearningManager
+
+# 7.20.25 - replaced with new architecture
+# NEW imports (after migration)
+from services.medical_intelligence import MedicationExtractionService, LearningManager
+# OR for OBGYN-specific:
+from services.medical_intelligence import process_obgyn_case, extract_medications
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
