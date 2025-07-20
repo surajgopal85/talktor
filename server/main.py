@@ -230,7 +230,10 @@ async def medical_translate_with_learning(
             "pregnant", "pregnancy", "prenatal", "postpartum", "breastfeeding",
             "birth control", "contraception", "period", "menstrual", "cycle", 
             "pcos", "endometriosis", "fertility", "ovulation", "trimester",
-            "embarazada", "embarazo", "prenatal", "anticonceptivos", "período"  # Spanish terms
+            "folic acid", "prenatal vitamins", "gestational", "labor", "delivery",
+            # Spanish terms
+            "embarazada", "embarazo", "prenatal", "anticonceptivos", "período",
+            "ácido fólico", "vitaminas prenatales", "gestacional"
         ]
         
         text_lower = request.text.lower()
@@ -342,6 +345,15 @@ async def medical_translate_with_learning(
                         "message": alert,
                         "importance": "urgent"
                     })
+            
+            # Add OBGYN-specific notes
+            conditions = obgyn_context.get("identified_conditions", [])
+            if "pcos" in conditions:
+                medical_notes.append({
+                    "type": "condition_context",
+                    "message": "Patient has PCOS - consider medication interactions",
+                    "importance": "medium"
+                })
         
         # Step 7: Store session data
         await session_service.store_medical_translation(
@@ -373,6 +385,65 @@ async def medical_translate_with_learning(
     except Exception as e:
         logger.error(f"❌ Error in medical translation: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/debug/obgyn")
+async def debug_obgyn_processing(text: str = "I'm pregnant taking prenatal vitamins"):
+    """Debug OBGYN processing to see the actual result structure"""
+    try:
+        from services.medical_intelligence import process_obgyn_case
+        
+        session_id = f"debug_{uuid.uuid4()}"
+        patient_profile = {"source_language": "en"}
+        
+        result = await process_obgyn_case(text, session_id, patient_profile)
+        
+        return {
+            "input": text,
+            "result_keys": list(result.keys()),  # Show what keys exist
+            "full_result": result,
+            "success": True
+        }
+        
+    except Exception as e:
+        return {
+            "input": text,
+            "error": str(e),
+            "error_type": type(e).__name__,
+            "success": False
+        }
+
+@app.post("/debug/obgyn-routing") 
+async def debug_obgyn_routing(text: str = "I'm pregnant taking prenatal vitamins"):
+    """Debug why OBGYN routing isn't working"""
+    try:
+        # Test the specialty registry detection
+        from services.medical_intelligence.specialties import specialty_registry
+        
+        detected_specialty = specialty_registry.detect_specialty(text, {"pregnancy_status": True})
+        available_specialties = specialty_registry.get_available_specialties()
+        obgyn_service = specialty_registry.get_specialty("obgyn")
+        
+        # Test direct OBGYN call
+        if obgyn_service:
+            session_id = f"debug_direct_{uuid.uuid4()}"
+            direct_result = await obgyn_service.process_text(text, session_id, {"pregnancy_status": True})
+            has_obgyn_context = "obgyn_context" in direct_result
+        else:
+            direct_result = None
+            has_obgyn_context = False
+        
+        return {
+            "text": text,
+            "detected_specialty": detected_specialty,
+            "available_specialties": available_specialties, 
+            "obgyn_service_exists": obgyn_service is not None,
+            "direct_obgyn_result_keys": list(direct_result.keys()) if direct_result else None,
+            "has_obgyn_context": has_obgyn_context,
+            "success": True
+        }
+        
+    except Exception as e:
+        return {"error": str(e), "success": False}
 
 # @app.post("/translate/medical", response_model=EnhancedTranslationResponse)
 # async def medical_translate_with_learning(

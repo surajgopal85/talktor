@@ -21,3 +21,4 @@ __pycache__/
 *.sqlite
 *.sqlite3
 talktor.db
+server/talktor.db

@@ -21,19 +21,15 @@ class OBGYNSpecialty(SpecialtyInterface):
     Provides standardized interface for OBGYN medical intelligence
     """
     
-    @property
-    def specialty_name(self) -> str:
-        return "obgyn"
-    
-    @property 
-    def keywords(self) -> List[str]:
-        return [
-            "pregnant", "pregnancy", "prenatal", "postpartum", "breastfeeding",
-            "birth control", "contraception", "period", "menstrual", "cycle",
-            "pcos", "endometriosis", "fertility", "ovulation", "gynecologist",
-            "obgyn", "ob/gyn", "prenatal vitamins", "folic acid", "gestational",
-            "trimester", "labor", "delivery", "cervical", "uterine", "ovarian"
-        ]
+    # Class attributes (not properties) to fix the iteration issue
+    specialty_name = "obgyn"
+    keywords = [
+        "pregnant", "pregnancy", "prenatal", "postpartum", "breastfeeding",
+        "birth control", "contraception", "period", "menstrual", "cycle",
+        "pcos", "endometriosis", "fertility", "ovulation", "gynecologist",
+        "obgyn", "ob/gyn", "prenatal vitamins", "folic acid", "gestational",
+        "trimester", "labor", "delivery", "cervical", "uterine", "ovarian"
+    ]
     
     def __init__(self):
         self.intelligence = OBGYNMedicalIntelligence()
@@ -103,6 +99,7 @@ class OBGYNMedicalIntelligence:
                 "medications": [],
                 "obgyn_context": {},
                 "recommendations": {},
+                "metadata": {"specialty": "obgyn"},
                 "timestamp": datetime.now().isoformat()
             }
     

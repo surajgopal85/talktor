@@ -15,17 +15,9 @@ logger = logging.getLogger(__name__)
 class SpecialtyInterface(ABC):
     """Base interface for all medical specialties"""
     
-    @property
-    @abstractmethod
-    def specialty_name(self) -> str:
-        """Name of the medical specialty"""
-        pass
-    
-    @property
-    @abstractmethod
-    def keywords(self) -> List[str]:
-        """Keywords that indicate this specialty"""
-        pass
+    # Class attributes that must be defined by subclasses
+    specialty_name: str
+    keywords: List[str]
     
     @abstractmethod
     async def process_text(self, text: str, session_id: str, 
@@ -48,6 +40,7 @@ class SpecialtyRegistry:
     
     def register_specialty(self, specialty_class: Type[SpecialtyInterface]):
         """Register a specialty class"""
+        # Access class attribute directly
         specialty_name = specialty_class.specialty_name
         self._specialties[specialty_name] = specialty_class
         logger.info(f"📋 Registered specialty: {specialty_name}")
@@ -68,8 +61,9 @@ class SpecialtyRegistry:
         
         # Check each registered specialty's keywords
         for specialty_name, specialty_class in self._specialties.items():
+            # Access class attribute directly (not property)
             keywords = specialty_class.keywords
-            if any(keyword in text_lower for keyword in keywords):
+            if isinstance(keywords, list) and any(keyword in text_lower for keyword in keywords):
                 logger.info(f"🎯 Auto-detected specialty: {specialty_name}")
                 return specialty_name
         
@@ -97,8 +91,11 @@ def _register_available_specialties():
     try:
         from .obgyn.integration import OBGYNSpecialty
         specialty_registry.register_specialty(OBGYNSpecialty)
+        logger.info(f"✅ Successfully registered OBGYN specialty")
     except ImportError as e:
         logger.warning(f"Failed to import OBGYN specialty: {e}")
+    except Exception as e:
+        logger.error(f"Failed to register OBGYN specialty: {e}")
 
 # Register specialties on module import
 _register_available_specialties()
