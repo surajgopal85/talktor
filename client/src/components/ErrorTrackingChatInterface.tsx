@@ -108,7 +108,7 @@ export const ErrorTrackingChatInterface: React.FC = () => {
       const translatedText = backendResponse.enhanced_translation || backendResponse.standard_translation;
       const medicalNotes = backendResponse.medical_notes || [];
       const followUpQuestions = backendResponse.follow_up_questions || [];
-      const medicalAccuracy = backendResponse.medical_accuracy_score || 0;
+      const medicalAccuracy = backendResponse.medical_accuracy_score || backendResponse.confidence || 0;
       const confidence = backendResponse.confidence || 0;
       
       // Detect specialty

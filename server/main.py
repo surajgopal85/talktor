@@ -1,6 +1,4 @@
 # Clean main.py using service architecture pattern
-# This separates concerns and makes the code much more maintainable
-
 from fastapi import FastAPI, File, UploadFile, HTTPException, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -12,34 +10,30 @@ import logging
 from datetime import datetime
 import uuid
 
-# Service imports following your nested architecture
+# Import router BEFORE app creation
+from routers.conversation_router import router as conversation_router
 
-# no longer works in current architecture - 7.20.25
-# from services.medical_intelligence.extraction import MedicationExtractionService 
+# Service imports
 from services.translation.translator import TranslationService
 from services.session.manager import SessionService
 from services.audio.whisper_service import WhisperService
+# Medical Intelligence imports - CORRECT PATHS
+from services.medical_intelligence.core.extraction import MedicationExtractionService
+from services.medical_intelligence.core.learning import LearningManager
+from services.medical_intelligence import extract_medications, process_obgyn_case
 
-# no longer works in current architecture - 7.20.25
-# from services.medical_intelligence.learning import LearningManager
-
-# 7.20.25 - replaced with new architecture
-# NEW imports (after migration)
-from services.medical_intelligence import MedicationExtractionService, LearningManager
-# OR for OBGYN-specific:
-from services.medical_intelligence import process_obgyn_case, extract_medications
-
-# Configure logging
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
-
+# Create FastAPI app
 app = FastAPI(
     title="Talktor - Medical Interpreter API",
     description="AI-powered medical interpretation with learning intelligence",
     version="2.0.0"
 )
 
-# CORS middleware
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+# Add middleware
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],  # Restrict this in production
@@ -47,8 +41,23 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Include routers
+app.include_router(conversation_router)
+
 # Load Whisper model
 model = whisper.load_model("base")
+
+# =============================================================================
+# STARTUP EVENTS
+# =============================================================================
+
+@app.on_event("startup")
+async def startup_event():
+    logger.info("🚀 Talktor Medical Interpreter API starting up...")
+    logger.info(f"📡 Whisper model loaded: {model}")
+    logger.info("🧠 Learning system: ACTIVE")
+    logger.info("🏗️ Service architecture: READY")
+    logger.info("✅ All systems operational!")
 
 # =============================================================================
 # PYDANTIC MODELS
@@ -707,17 +716,7 @@ async def delete_session(
             raise HTTPException(status_code=404, detail="Session not found")
         raise HTTPException(status_code=500, detail=str(e))
 
-# =============================================================================
-# STARTUP EVENTS
-# =============================================================================
-
-@app.on_event("startup")
-async def startup_event():
-    logger.info("🚀 Talktor Medical Interpreter API starting up...")
-    logger.info(f"📡 Whisper model loaded: {model}")
-    logger.info("🧠 Learning system: ACTIVE")
-    logger.info("🏗️ Service architecture: READY")
-    logger.info("✅ All systems operational!")
+# MAIN!
 
 if __name__ == "__main__":
     import uvicorn

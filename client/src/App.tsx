@@ -1,23 +1,101 @@
-// src/App.tsx
-import React from 'react';
+// src/App.tsx - Updated with WebSocket Testing
+import React, { useState } from 'react';
 import { ErrorTrackingChatInterface } from './components/ErrorTrackingChatInterface';
-import { Stethoscope } from 'lucide-react';
+import { Stethoscope, MessageSquare, Radio } from 'lucide-react';
+
+// updated conversation UI test & seamless
+import { WebSocketTest } from './components/WebSocketTest';
+import { SeamlessConversationInterface } from './components/SeamlessConversationInterface';
+
+// toggle modes
+type TestMode = 'chat' | 'websocket' | 'conversation';
 
 function App() {
+  const [testMode, setTestMode] = useState<TestMode>('chat');
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
       <div className="container mx-auto px-4 py-4">
-        <div className="text-center mb-4">
+        {/* Header */}
+        <div className="text-center mb-6">
           <div className="flex items-center justify-center space-x-3 mb-2">
             <Stethoscope className="text-blue-600" size={32} />
-            <h1 className="text-2xl font-bold text-gray-800">talktor</h1>
+            <h1 className="text-3xl font-bold text-gray-800">talktor</h1>
           </div>
-          <p className="text-gray-600 text-sm">
-            AI-powered medical interpreter with error tracking
+          <p className="text-gray-600">
+            AI-powered medical interpreter - Phase 2 Development & Testing
           </p>
         </div>
-        
-        <ErrorTrackingChatInterface />
+
+        {/* Test Mode Toggle */}
+        <div className="flex justify-center mb-6">
+          <div className="bg-white rounded-lg p-1 shadow-md">
+            <button
+              onClick={() => setTestMode('chat')}
+              className={`flex items-center space-x-2 px-4 py-2 rounded-md transition-all ${
+                testMode === 'chat'
+                  ? 'bg-blue-500 text-white shadow-sm'
+                  : 'text-gray-600 hover:bg-gray-100'
+              }`}
+            >
+              <MessageSquare size={18} />
+              <span>Chat Interface</span>
+            </button>
+            <button
+              onClick={() => setTestMode('websocket')}
+              className={`flex items-center space-x-2 px-4 py-2 rounded-md transition-all ${
+                testMode === 'websocket'
+                  ? 'bg-green-500 text-white shadow-sm'
+                  : 'text-gray-600 hover:bg-gray-100'
+              }`}
+            >
+              <Radio size={18} />
+              <span>WebSocket Test</span>
+            </button>
+            <button
+              onClick={() => setTestMode('conversation')}
+              className={`flex items-center space-x-2 px-4 py-2 rounded-md transition-all ${
+                testMode === 'conversation'
+                  ? 'bg-purple-500 text-white shadow-sm'
+                  : 'text-gray-600 hover:bg-gray-100'
+              }`}
+            >
+              <Stethoscope size={18} />
+              <span>Live Consultation</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Test Mode Description */}
+        <div className="text-center mb-6">
+          {testMode === 'chat' ? (
+            <p className="text-sm text-gray-600">
+              <strong>Phase 1 Testing:</strong> Translation + Spanish Medical Intelligence
+            </p>
+          ) : (
+            <p className="text-sm text-gray-600">
+              <strong>Phase 2 Testing:</strong> Real-time WebSocket Conversations
+            </p>
+          )}
+        </div>
+
+        {/* Content based on test mode */}
+        <div className="transition-all duration-300">
+          {testMode === 'chat' ? (
+            <ErrorTrackingChatInterface />
+          ) : (
+            <WebSocketTest />
+          )}
+          {/* added conversation mode */}
+          {testMode === 'conversation' && <SeamlessConversationInterface />}
+        </div>
+
+        {/* Development Footer */}
+        <div className="text-center mt-8 pt-6 border-t border-gray-200">
+          <p className="text-xs text-gray-500">
+            Development Mode - Phase {testMode === 'chat' ? '1' : '2'} Testing
+          </p>
+        </div>
       </div>
     </div>
   );
