@@ -92,22 +92,30 @@ class ExternalMedicalAPIClient:
         """
         Use external APIs to identify and get comprehensive info about a medication
         """
-        # Check cache first
+        # Check cache first - don't return NONE! 7.22.25
         cache_key = f"{drug_name}_{specialty.value}"
         if cache_key in self.cache:
-            logger.info(f"📦 Cache hit for {drug_name}")
-            return self.cache[cache_key]
+            cached_result = self.cache[cache_key]
+            
+            # CRITICAL FIX: Don't return None from cache
+            if cached_result is None:
+                logger.warning(f"🔄 Removing None from cache for {drug_name}")
+                del self.cache[cache_key]
+            else:
+                logger.info(f"📦 Cache hit for {drug_name}")
+                return cached_result
         
         # Try multiple APIs for comprehensive information
+        # replace all instances of none with value or empty iterable
         medication_info = {
             "drug_name": drug_name,
-            "canonical_name": None,
+            "canonical_name": drug_name,
             "brand_names": [],
             "generic_names": [],
-            "drug_class": None,
+            "drug_class": [],
             "indications": [],
             "contraindications": [],
-            "pregnancy_category": None,  # Important for OBGYN
+            "pregnancy_category": "unknown",  # Important for OBGYN
             "translations": {},
             "specialty_specific": {}
         }
@@ -128,8 +136,11 @@ class ExternalMedicalAPIClient:
                 obgyn_info = await self._get_obgyn_specific_info(drug_name)
                 medication_info["specialty_specific"] = obgyn_info
             
-            # Cache the result
-            self.cache[cache_key] = medication_info
+            # Cache the result (but never cache None) 7.22.25
+            if medication_info and medication_info.get("drug_name"):
+                self.cache[cache_key] = medication_info
+            else:
+                logger.warning(f"⚠️ Not caching empty result for {drug_name}")
             
             logger.info(f"🌐 API lookup successful for {drug_name}")
             return medication_info
@@ -137,12 +148,13 @@ class ExternalMedicalAPIClient:
         except Exception as e:
             logger.error(f"❌ API lookup failed for {drug_name}: {e}")
             # Return basic info even if APIs fail
+            # important to NOT return NONE! 7.22.25
             return {
                 "drug_name": drug_name,
                 "canonical_name": drug_name,  # Fallback to original
                 "brand_names": [],
                 "generic_names": [],
-                "drug_class": None,
+                "drug_class": [],
                 "indications": [],
                 "contraindications": [],
                 "pregnancy_category": "unknown",

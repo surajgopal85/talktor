@@ -219,39 +219,64 @@ class OBGYNSpecialtyEngine:
         }
     
     def _detect_pregnancy_stage(self, text: str, patient_profile: Optional[Dict] = None) -> PregnancyStage:
-        """Detect pregnancy stage from text and patient profile"""
+        """ENHANCED: Detect pregnancy stage with Spanish support"""
+        text_lower = text.lower()
         
-        # Pregnancy indicators with stage detection
+        # BILINGUAL pregnancy patterns
         pregnancy_patterns = {
             PregnancyStage.PRECONCEPTION: [
+                # English
                 "trying to conceive", "planning pregnancy", "want to get pregnant",
-                "before conception", "preconception"
+                "before conception", "preconception",
+                # Spanish
+                "tratando de concebir", "planificando embarazo", "quiero quedar embarazada",
+                "antes de la concepción", "preconcepción"
             ],
             PregnancyStage.FIRST_TRIMESTER: [
+                # English
                 "first trimester", "6 weeks pregnant", "8 weeks pregnant",
-                "10 weeks pregnant", "12 weeks pregnant", "morning sickness"
+                "10 weeks pregnant", "12 weeks pregnant", "morning sickness",
+                # Spanish  
+                "primer trimestre", "6 semanas embarazada", "8 semanas embarazada",
+                "10 semanas embarazada", "12 semanas embarazada", "náuseas matutinas"
             ],
             PregnancyStage.SECOND_TRIMESTER: [
+                # English
                 "second trimester", "16 weeks pregnant", "20 weeks pregnant",
-                "24 weeks pregnant", "anatomy scan"
+                "24 weeks pregnant", "anatomy scan",
+                # Spanish
+                "segundo trimestre", "16 semanas embarazada", "20 semanas embarazada", 
+                "24 semanas embarazada", "ultrasonido anatómico"
             ],
             PregnancyStage.THIRD_TRIMESTER: [
+                # English
                 "third trimester", "32 weeks pregnant", "36 weeks pregnant",
-                "full term", "due date", "labor"
+                "full term", "due date", "labor",
+                # Spanish
+                "tercer trimestre", "32 semanas embarazada", "36 semanas embarazada",
+                "a término", "fecha de parto", "trabajo de parto"
             ],
             PregnancyStage.POSTPARTUM: [
+                # English
                 "postpartum", "after delivery", "breastfeeding", "nursing",
-                "gave birth", "delivered"
+                "gave birth", "delivered",
+                # Spanish
+                "posparto", "después del parto", "amamantando", "lactancia",
+                "dio a luz", "tuvo el bebé"
             ]
         }
         
-        # Check for specific stage indicators
+        # Check for specific stage indicators (bilingual)
         for stage, patterns in pregnancy_patterns.items():
-            if any(pattern in text for pattern in patterns):
+            if any(pattern in text_lower for pattern in patterns):
                 return stage
         
-        # General pregnancy indicators
-        if any(word in text for word in ["pregnant", "pregnancy", "expecting", "prenatal"]):
+        # ENHANCED: General pregnancy indicators (bilingual)
+        english_pregnancy_terms = ["pregnant", "pregnancy", "expecting", "prenatal"]
+        spanish_pregnancy_terms = ["embarazada", "embarazo", "esperando bebé", "prenatal"]
+        
+        if (any(word in text_lower for word in english_pregnancy_terms) or 
+            any(word in text_lower for word in spanish_pregnancy_terms)):
             return PregnancyStage.UNKNOWN  # Pregnant but stage unclear
         
         # Check patient profile if available
@@ -268,18 +293,41 @@ class OBGYNSpecialtyEngine:
         return PregnancyStage.NOT_PREGNANT
     
     def _identify_obgyn_conditions(self, text: str) -> List[OBGYNCondition]:
-        """Identify OBGYN conditions mentioned in text"""
+        """ENHANCED: Identify OBGYN conditions with Spanish support"""
         conditions = []
         
+        # BILINGUAL condition patterns
         condition_patterns = {
-            OBGYNCondition.PCOS: ["pcos", "polycystic ovary", "irregular periods", "hirsutism"],
-            OBGYNCondition.ENDOMETRIOSIS: ["endometriosis", "painful periods", "pelvic pain"],
-            OBGYNCondition.MENSTRUAL_DISORDERS: ["irregular periods", "heavy bleeding", "amenorrhea"],
-            OBGYNCondition.CONTRACEPTION: ["birth control", "contraception", "prevent pregnancy"],
-            OBGYNCondition.FERTILITY: ["fertility", "trying to conceive", "ovulation", "infertility"],
-            OBGYNCondition.MENOPAUSE: ["menopause", "hot flashes", "perimenopause"],
-            OBGYNCondition.STI_STD: ["std", "sti", "chlamydia", "gonorrhea", "herpes"],
-            OBGYNCondition.PREGNANCY: ["pregnant", "pregnancy", "prenatal", "expecting"]
+            OBGYNCondition.PCOS: [
+                # English
+                "pcos", "polycystic ovary", "irregular periods", "hirsutism",
+                # Spanish
+                "ovarios poliquísticos", "períodos irregulares", "reglas irregulares"
+            ],
+            OBGYNCondition.PREGNANCY: [
+                # English
+                "pregnant", "pregnancy", "prenatal", "expecting",
+                # Spanish
+                "embarazada", "embarazo", "prenatal", "esperando bebé"
+            ],
+            OBGYNCondition.CONTRACEPTION: [
+                # English
+                "birth control", "contraception", "prevent pregnancy",
+                # Spanish
+                "anticonceptivos", "control natal", "prevenir embarazo", "píldora"
+            ],
+            OBGYNCondition.MENSTRUAL_DISORDERS: [
+                # English
+                "irregular periods", "heavy bleeding", "amenorrhea",
+                # Spanish
+                "períodos irregulares", "reglas irregulares", "sangrado abundante", "amenorrea"
+            ],
+            OBGYNCondition.FERTILITY: [
+                # English
+                "fertility", "trying to conceive", "ovulation", "infertility",
+                # Spanish
+                "fertilidad", "tratando de concebir", "ovulación", "infertilidad"
+            ]
         }
         
         for condition, patterns in condition_patterns.items():
@@ -345,48 +393,40 @@ class OBGYNSpecialtyEngine:
         return cycle_info
     
     def _assess_safety_flags(self, text: str, pregnancy_stage: PregnancyStage) -> List[Dict]:
-        """Assess safety flags for OBGYN patients"""
+        """ENHANCED: Safety flags with Spanish support"""
         flags = []
+        text_lower = text.lower()
         
-        # Pregnancy-specific safety flags
-        if pregnancy_stage in [PregnancyStage.FIRST_TRIMESTER, PregnancyStage.SECOND_TRIMESTER, PregnancyStage.THIRD_TRIMESTER, PregnancyStage.UNKNOWN]:
+        # BILINGUAL pregnancy-specific safety flags
+        if pregnancy_stage in [PregnancyStage.FIRST_TRIMESTER, PregnancyStage.SECOND_TRIMESTER, 
+                            PregnancyStage.THIRD_TRIMESTER, PregnancyStage.UNKNOWN]:
             
-            # High-risk medications during pregnancy
-            risky_terms = ["ibuprofen", "aspirin", "accutane", "warfarin", "ace inhibitor"]
-            for term in risky_terms:
-                if term in text:
+            # High-risk medications (bilingual detection)
+            risky_terms_english = ["ibuprofen", "aspirin", "accutane", "warfarin", "ace inhibitor"]
+            risky_terms_spanish = ["ibuprofeno", "aspirina", "warfarina"]
+            
+            all_risky_terms = risky_terms_english + risky_terms_spanish
+            
+            for term in all_risky_terms:
+                if term in text_lower:
                     flags.append({
                         "type": "medication_pregnancy_risk",
                         "medication": term,
                         "severity": "high",
-                        "message": f"{term} may not be safe during pregnancy"
+                        "message": f"{term} may not be safe during pregnancy / {term} puede no ser seguro durante el embarazo",
+                        "bilingual": True
                     })
             
-            # Alcohol/substance use
-            if any(word in text for word in ["alcohol", "drinking", "smoking"]):
+            # Alcohol/substance use (bilingual)
+            substance_terms_english = ["alcohol", "drinking", "smoking"]
+            substance_terms_spanish = ["alcohol", "bebiendo", "fumando", "cigarrillos"]
+            
+            if any(word in text_lower for word in (substance_terms_english + substance_terms_spanish)):
                 flags.append({
                     "type": "substance_use_pregnancy",
-                    "severity": "high",
-                    "message": "Alcohol and smoking should be avoided during pregnancy"
-                })
-        
-        # Contraception and pregnancy
-        if pregnancy_stage != PregnancyStage.NOT_PREGNANT and "birth control" in text:
-            flags.append({
-                "type": "contraception_pregnancy_conflict",
-                "severity": "medium",
-                "message": "Birth control should be discontinued if pregnant"
-            })
-        
-        # Emergency situations
-        emergency_terms = ["severe pain", "heavy bleeding", "fever", "severe headache"]
-        for term in emergency_terms:
-            if term in text:
-                flags.append({
-                    "type": "emergency_symptom",
-                    "symptom": term,
-                    "severity": "urgent",
-                    "message": f"{term} may require immediate medical attention"
+                    "severity": "high", 
+                    "message": "Alcohol and smoking should be avoided during pregnancy / Alcohol y fumar deben evitarse durante el embarazo",
+                    "bilingual": True
                 })
         
         return flags
@@ -414,6 +454,15 @@ class OBGYNSpecialtyEngine:
         # Fall back to general API lookup with OBGYN enhancement
         try:
             api_result = await self.api_client.lookup_medication(medication_name, "obgyn")
+            
+            # CRITICAL FIX: Handle None/empty API results
+            if not api_result or api_result is None:
+                return {"error": f"No information available for {medication_name}"}
+            
+            # Ensure required fields exist
+            api_result.setdefault("indications", [])
+            api_result.setdefault("drug_class", [])
+            api_result.setdefault("contraindications", [])
             
             # Enhance API result with OBGYN-specific analysis
             enhanced_result = {

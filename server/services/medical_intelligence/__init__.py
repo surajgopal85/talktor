@@ -59,7 +59,7 @@ class MedicalIntelligenceService:
                 logger.info(f"🎯 Auto-detected specialty: {specialty}")
         
         # Route to appropriate service
-        specialty_service = self.specialty_registry.get_specialty(specialty)
+        specialty_service = self._debug_specialty_routing(specialty)
         
         if specialty_service:
             logger.info(f"🏥 Routing to {specialty} specialty service")
@@ -128,6 +128,24 @@ class MedicalIntelligenceService:
         except Exception as e:
             logger.error(f"Failed to register specialty: {e}")
             return False
+
+    # Add this to your MedicalIntelligenceService.__init__() method:
+
+    def _debug_specialty_routing(self, specialty: str):
+        """Debug specialty routing"""
+        logger.info(f"🔍 === SPECIALTY ROUTING DEBUG ===")
+        logger.info(f"🎯 Requested specialty: {specialty}")
+        logger.info(f"📋 Available specialties: {self.specialty_registry.get_available_specialties()}")
+        
+        specialty_service = self.specialty_registry.get_specialty(specialty)
+        logger.info(f"🔧 Specialty service result: {specialty_service is not None}")
+        
+        if not specialty_service:
+            # Debug why it failed
+            registry_status = self.specialty_registry.debug_registry_status()
+            logger.error(f"❌ Specialty routing failed. Registry status: {registry_status}")
+        
+        return specialty_service
 
 # =============================================================================
 # Global service instance and convenience functions
