@@ -7,6 +7,7 @@ import uuid
 from sqlalchemy.orm import Session as DBSession
 from sqlalchemy import and_, func, desc
 
+# Alternative (absolute imports):
 from models.database import (
     SessionLocal, ExtractionAttempt, ExtractionCandidate, 
     ExtractedMedication, ExtractionFeedback, LearningMetrics

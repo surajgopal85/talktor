@@ -11,6 +11,14 @@ server/.env
 venv/
 __pycache__/
 *.pyc
+*.log
 
 # macOS
 .DS_Store
+
+# database files
+*.db
+*.sqlite
+*.sqlite3
+talktor.db
+server/talktor.db
