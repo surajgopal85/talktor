@@ -1,6 +1,4 @@
-# =============================================================================
-# services/translation/translator.py
-# =============================================================================
+# services/translation/translator.py - Fixed imports
 
 import logging
 from typing import Dict, List, Optional
@@ -56,13 +54,16 @@ class TranslationService:
         """Generate contextual follow-up questions"""
         
         try:
-            from external_medical_intelligence import get_specialty_context_suggestions
+            # Import from the correct location
+            from ..medical_intelligence.api_client import get_specialty_context_suggestions
             questions = await get_specialty_context_suggestions(text, medical_context)
             return questions
         except Exception as e:
             logger.warning(f"⚠️ Failed to get follow-up questions: {e}")
+            # Return fallback questions
             return [
                 "How long have you been experiencing these symptoms?",
                 "Are you taking any other medications?", 
-                "Do you have any known allergies?"
+                "Do you have any known allergies?",
+                "When was your last doctor visit?"
             ]

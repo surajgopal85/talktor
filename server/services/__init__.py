@@ -12,7 +12,6 @@ Organized medical AI services following scalable architecture:
 - session/: Session management and storage
 """
 
-# Only import what actually exists
 from .medical_intelligence.extraction import MedicationExtractionService
 from .translation.translator import TranslationService
 from .session.manager import SessionService

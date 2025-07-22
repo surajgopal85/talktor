@@ -20,7 +20,26 @@ deep-translator==1.11.4
 # just in case
 difflib
 
+# Configuration management (you installed this)
+pydantic[dotenv]>=1.10.0
+python-multipart>=0.0.5
+pydantic-settings>=2.0.0
+
+# Future dependencies (optional for now)
+python-jose[cryptography]>=3.3.0
+
+# development dependencies
+pytest>=7.0.0
+pytest-asyncio>=0.20.0
+factory-boy>=3.2.0
+
+# database dependencies
+sqlalchemy>=1.4.0
+alembic>=1.8.0
+psycopg2-binary>=2.9.0
+
 # Basic dependencies only for now
+# some of these have changed!
 # Will add these back as we need them:
 # sqlalchemy==2.0.23
 # alembic==1.13.0
