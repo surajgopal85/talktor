@@ -1,3 +1,4 @@
+// src/components/AudioRecorder.tsx
 import React, { useState, useRef } from 'react';
 import { Mic, Square, Loader2 } from 'lucide-react';
 

@@ -1,14 +1,37 @@
-// src/components/TranslationDisplay.tsx
+// src/components/MedicalTranslationDisplay.tsx
 import React, { useState } from 'react';
-import { ArrowRight, Languages, Volume2, VolumeX, Pause, Play, Settings } from 'lucide-react';
+import { ArrowRight, Languages, Volume2, VolumeX, Pause, Play, Settings, AlertTriangle, Heart, Baby, Shield, CheckCircle } from 'lucide-react';
 import { useTTS } from '../hooks/useTTS';
 
-interface TranslationDisplayProps {
+interface MedicalTranslationDisplayProps {
   originalText: string;
   sessionId: string;
 }
 
-export const TranslationDisplay: React.FC<TranslationDisplayProps> = ({ 
+// Match your actual backend response structure
+interface MedicalTranslationResponse {
+  original_text: string;
+  standard_translation: string;
+  enhanced_translation: string;
+  medical_terms: string[];
+  medical_notes: Array<{
+    type: string;
+    message: string;
+    importance: 'low' | 'medium' | 'high' | 'critical';
+  }>;
+  follow_up_questions: string[];
+  medical_accuracy_score: number;
+  confidence: number;
+  session_id: string;
+  learning_metadata: {
+    extraction_strategies_used: string[];
+    candidates_analyzed: number;
+    ready_for_feedback: boolean;
+    confidence_scores: Record<string, number>;
+  };
+}
+
+export const MedicalTranslationDisplay: React.FC<MedicalTranslationDisplayProps> = ({ 
   originalText, 
   sessionId 
 }) => {
@@ -19,6 +42,15 @@ export const TranslationDisplay: React.FC<TranslationDisplayProps> = ({
   const [showVoiceSettings, setShowVoiceSettings] = useState(false);
   const [speechRate, setSpeechRate] = useState(0.8);
   const [preferredGender, setPreferredGender] = useState<'male' | 'female'>('female');
+  
+  // Medical intelligence state - matching your backend structure
+  const [medicalNotes, setMedicalNotes] = useState<MedicalTranslationResponse['medical_notes']>([]);
+  const [followUpQuestions, setFollowUpQuestions] = useState<string[]>([]);
+  const [medicalTerms, setMedicalTerms] = useState<string[]>([]);
+  const [medicalAccuracy, setMedicalAccuracy] = useState<number>(0);
+  const [confidence, setConfidence] = useState<number>(0);
+  const [detectedSpecialty, setDetectedSpecialty] = useState<string>('');
+  const [showFollowUpQuestions, setShowFollowUpQuestions] = useState(false);
 
   // TTS Hook
   const { 
@@ -38,7 +70,8 @@ export const TranslationDisplay: React.FC<TranslationDisplayProps> = ({
 
     setIsTranslating(true);
     try {
-      const response = await fetch('http://127.0.0.1:8000/translate', {
+      // Use enhanced medical translation endpoint
+      const response = await fetch('http://127.0.0.1:8000/translate/medical', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -47,7 +80,8 @@ export const TranslationDisplay: React.FC<TranslationDisplayProps> = ({
           text: originalText,
           source_language: sourceLanguage,
           target_language: targetLanguage,
-          medical_context: 'general'
+          medical_context: 'general',
+          session_id: sessionId
         }),
       });
 
@@ -55,8 +89,24 @@ export const TranslationDisplay: React.FC<TranslationDisplayProps> = ({
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      const result = await response.json();
-      setTranslatedText(result.translated_text);
+      const result: MedicalTranslationResponse = await response.json();
+      
+      // Use enhanced_translation for better medical accuracy
+      setTranslatedText(result.enhanced_translation);
+      setMedicalNotes(result.medical_notes || []);
+      setFollowUpQuestions(result.follow_up_questions || []);
+      setMedicalTerms(result.medical_terms || []);
+      setMedicalAccuracy(result.medical_accuracy_score || 0);
+      setConfidence(result.confidence || 0);
+      
+      // Detect specialty from medical notes
+      const pregnancyNote = result.medical_notes?.find(note => note.type === 'pregnancy_context');
+      if (pregnancyNote) {
+        setDetectedSpecialty('OBGYN');
+      } else {
+        setDetectedSpecialty('General');
+      }
+      
     } catch (error) {
       console.error('Error translating text:', error);
       alert('Failed to translate text. Make sure the server is running.');
@@ -69,6 +119,10 @@ export const TranslationDisplay: React.FC<TranslationDisplayProps> = ({
     setSourceLanguage(targetLanguage);
     setTargetLanguage(sourceLanguage);
     setTranslatedText(''); // Clear previous translation
+    setMedicalNotes([]);
+    setFollowUpQuestions([]);
+    setMedicalTerms([]);
+    setDetectedSpecialty('');
   };
 
   // TTS Functions
@@ -92,6 +146,14 @@ export const TranslationDisplay: React.FC<TranslationDisplayProps> = ({
     }
   };
 
+  const speakFollowUpQuestion = (question: string) => {
+    const voice = getBestVoice(sourceLanguage, preferredGender);
+    speak(question, sourceLanguage, { 
+      rate: speechRate, 
+      voice: voice || undefined 
+    });
+  };
+
   const getLanguageName = (code: string) => {
     const names: Record<string, string> = {
       'en': 'English',
@@ -103,12 +165,80 @@ export const TranslationDisplay: React.FC<TranslationDisplayProps> = ({
     return names[code] || code;
   };
 
+  const getSpecialtyIcon = (specialty: string) => {
+    switch (specialty.toLowerCase()) {
+      case 'obgyn':
+      case 'obstetrics':
+      case 'gynecology':
+        return <Baby className="text-pink-600" size={20} />;
+      case 'cardiology':
+        return <Heart className="text-red-600" size={20} />;
+      default:
+        return <Shield className="text-blue-600" size={20} />;
+    }
+  };
+
+  const getImportanceColor = (importance: string) => {
+    switch (importance) {
+      case 'critical': return 'bg-red-100 border-red-500 text-red-800';
+      case 'high': return 'bg-orange-100 border-orange-500 text-orange-800';
+      case 'medium': return 'bg-yellow-100 border-yellow-500 text-yellow-800';
+      case 'low': return 'bg-blue-100 border-blue-500 text-blue-800';
+      default: return 'bg-gray-100 border-gray-500 text-gray-800';
+    }
+  };
+
   const getAvailableVoices = (language: string) => {
     return voices.filter(voice => voice.lang.startsWith(language));
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto space-y-4">
+    <div className="w-full max-w-6xl mx-auto space-y-6">
+      {/* Medical Context Banner */}
+      {detectedSpecialty && confidence > 0 && (
+        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-lg p-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-3">
+              {getSpecialtyIcon(detectedSpecialty)}
+              <div>
+                <h3 className="font-semibold text-gray-800">
+                  {detectedSpecialty.toUpperCase()} Context Detected
+                </h3>
+                <p className="text-sm text-gray-600">
+                  Confidence: {Math.round(confidence * 100)}% • 
+                  {medicalTerms.length > 0 && ` Medical Terms: ${medicalTerms.join(', ')}`}
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center space-x-2">
+              <div className="text-right">
+                <div className="text-xs text-gray-500">Medical Accuracy</div>
+                <div className="font-semibold text-green-600">
+                  {Math.round(medicalAccuracy * 100)}%
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Medical Notes / Safety Alerts */}
+      {medicalNotes && medicalNotes.length > 0 && (
+        <div className="space-y-3">
+          {medicalNotes.map((note, index) => (
+            <div key={index} className={`p-4 rounded-lg border-l-4 ${getImportanceColor(note.importance)}`}>
+              <div className="flex items-start space-x-3">
+                <AlertTriangle size={20} className="mt-0.5 flex-shrink-0" />
+                <div>
+                  <h4 className="font-semibold">{note.type.replace('_', ' ').toUpperCase()}</h4>
+                  <p className="text-sm mt-1">{note.message}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
       {/* Language Controls */}
       <div className="flex items-center justify-center space-x-4 p-4 bg-gray-50 rounded-lg">
         <select 
@@ -146,7 +276,7 @@ export const TranslationDisplay: React.FC<TranslationDisplayProps> = ({
           className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
         >
           <Languages size={16} />
-          <span>{isTranslating ? 'Translating...' : 'Translate'}</span>
+          <span>{isTranslating ? 'Translating...' : 'Medical Translate'}</span>
         </button>
 
         {/* Voice Settings Toggle */}
@@ -209,7 +339,7 @@ export const TranslationDisplay: React.FC<TranslationDisplayProps> = ({
       )}
 
       {/* Text Display with TTS Controls */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Original Text */}
         <div className="space-y-2">
           <div className="flex items-center justify-between">
@@ -217,42 +347,25 @@ export const TranslationDisplay: React.FC<TranslationDisplayProps> = ({
               Original ({getLanguageName(sourceLanguage)})
             </h3>
             
-            {/* TTS Controls for Original */}
             {ttsSupported && originalText && (
               <div className="flex items-center space-x-1">
                 {isSpeaking ? (
                   <>
                     {isPaused ? (
-                      <button
-                        onClick={resume}
-                        className="p-1 text-green-600 hover:text-green-700 transition-colors"
-                        title="Resume"
-                      >
+                      <button onClick={resume} className="p-1 text-green-600 hover:text-green-700" title="Resume">
                         <Play size={16} />
                       </button>
                     ) : (
-                      <button
-                        onClick={pause}
-                        className="p-1 text-yellow-600 hover:text-yellow-700 transition-colors"
-                        title="Pause"
-                      >
+                      <button onClick={pause} className="p-1 text-yellow-600 hover:text-yellow-700" title="Pause">
                         <Pause size={16} />
                       </button>
                     )}
-                    <button
-                      onClick={stop}
-                      className="p-1 text-red-600 hover:text-red-700 transition-colors"
-                      title="Stop"
-                    >
+                    <button onClick={stop} className="p-1 text-red-600 hover:text-red-700" title="Stop">
                       <VolumeX size={16} />
                     </button>
                   </>
                 ) : (
-                  <button
-                    onClick={speakOriginal}
-                    className="p-1 text-blue-600 hover:text-blue-700 transition-colors"
-                    title="Speak original text"
-                  >
+                  <button onClick={speakOriginal} className="p-1 text-blue-600 hover:text-blue-700" title="Speak original text">
                     <Volume2 size={16} />
                   </button>
                 )}
@@ -273,45 +386,28 @@ export const TranslationDisplay: React.FC<TranslationDisplayProps> = ({
         <div className="space-y-2">
           <div className="flex items-center justify-between">
             <h3 className="font-semibold text-gray-700 uppercase text-sm tracking-wide">
-              Translation ({getLanguageName(targetLanguage)})
+              Medical Translation ({getLanguageName(targetLanguage)})
             </h3>
             
-            {/* TTS Controls for Translation */}
             {ttsSupported && translatedText && (
               <div className="flex items-center space-x-1">
                 {isSpeaking ? (
                   <>
                     {isPaused ? (
-                      <button
-                        onClick={resume}
-                        className="p-1 text-green-600 hover:text-green-700 transition-colors"
-                        title="Resume"
-                      >
+                      <button onClick={resume} className="p-1 text-green-600 hover:text-green-700" title="Resume">
                         <Play size={16} />
                       </button>
                     ) : (
-                      <button
-                        onClick={pause}
-                        className="p-1 text-yellow-600 hover:text-yellow-700 transition-colors"
-                        title="Pause"
-                      >
+                      <button onClick={pause} className="p-1 text-yellow-600 hover:text-yellow-700" title="Pause">
                         <Pause size={16} />
                       </button>
                     )}
-                    <button
-                      onClick={stop}
-                      className="p-1 text-red-600 hover:text-red-700 transition-colors"
-                      title="Stop"
-                    >
+                    <button onClick={stop} className="p-1 text-red-600 hover:text-red-700" title="Stop">
                       <VolumeX size={16} />
                     </button>
                   </>
                 ) : (
-                  <button
-                    onClick={speakTranslation}
-                    className="p-1 text-blue-600 hover:text-blue-700 transition-colors"
-                    title="Speak translation"
-                  >
+                  <button onClick={speakTranslation} className="p-1 text-blue-600 hover:text-blue-700" title="Speak translation">
                     <Volume2 size={16} />
                   </button>
                 )}
@@ -321,15 +417,52 @@ export const TranslationDisplay: React.FC<TranslationDisplayProps> = ({
           
           <div className="p-4 bg-white border border-gray-200 rounded-lg min-h-24">
             {isTranslating ? (
-              <p className="text-gray-400 italic animate-pulse">Translating...</p>
+              <p className="text-gray-400 italic animate-pulse">Analyzing medical context...</p>
             ) : translatedText ? (
               <p className="text-gray-800 leading-relaxed">{translatedText}</p>
             ) : (
-              <p className="text-gray-400 italic">Translation will appear here...</p>
+              <p className="text-gray-400 italic">Medical translation will appear here...</p>
             )}
           </div>
         </div>
       </div>
+
+      {/* Follow-up Questions */}
+      {followUpQuestions && followUpQuestions.length > 0 && (
+        <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+          <div className="flex items-center justify-between mb-3">
+            <h4 className="font-semibold text-green-800 flex items-center space-x-2">
+              <CheckCircle size={18} />
+              <span>Suggested Follow-up Questions</span>
+            </h4>
+            <button
+              onClick={() => setShowFollowUpQuestions(!showFollowUpQuestions)}
+              className="text-green-600 hover:text-green-700 text-sm"
+            >
+              {showFollowUpQuestions ? 'Hide' : 'Show'}
+            </button>
+          </div>
+          
+          {showFollowUpQuestions && (
+            <div className="space-y-2">
+              {followUpQuestions.map((question, index) => (
+                <div key={index} className="flex items-center justify-between bg-white p-3 rounded border">
+                  <p className="text-sm text-gray-700">{question}</p>
+                  {ttsSupported && (
+                    <button
+                      onClick={() => speakFollowUpQuestion(question)}
+                      className="p-1 text-green-600 hover:text-green-700 ml-2"
+                      title="Speak question"
+                    >
+                      <Volume2 size={14} />
+                    </button>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
 
       {/* TTS Support Warning */}
       {!ttsSupported && (

@@ -36,8 +36,8 @@ class OBGYNEnhancedExtractionService(MedicationExtractionService):
                 "pregnancy_concern": True
             },
             
-            # Prenatal supplements
-            r'\b(?:prenatal\s+vitamin|folic\s+acid|folate|iron\s+supplement)\b': {
+            # Prenatal supplements (enhanced for coverage)
+            r'\b(?:prenatal\s+vitamins?|folic\s+acid|folate|iron\s+supplement|vitaminas\s+prenatales|ácido\s+fólico)\b': {
                 "category": "prenatal_supplement",
                 "confidence_boost": 0.4,
                 "pregnancy_related": True

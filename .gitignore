@@ -1,6 +1,7 @@
 # Node (frontend)
 client/node_modules
 client/.env
+client/package-lock.json
 
 # Python (backend)
 talktor-venv/
@@ -21,4 +22,6 @@ __pycache__/
 *.sqlite
 *.sqlite3
 talktor.db
-server/talktor.db
+server/talktor.db 
+
+#

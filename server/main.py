@@ -233,7 +233,8 @@ async def medical_translate_with_learning(
             "folic acid", "prenatal vitamins", "gestational", "labor", "delivery",
             # Spanish terms
             "embarazada", "embarazo", "prenatal", "anticonceptivos", "período",
-            "ácido fólico", "vitaminas prenatales", "gestacional"
+            "ácido fólico", "vitaminas prenatales", "gestacional", "trimestre",
+            "lactancia", "materna", "parto", "ginecólogo", "obstetra"
         ]
         
         text_lower = request.text.lower()
