@@ -1,6 +1,7 @@
+// src/App.tsx (Simplified - No Routing)
 import React, { useState } from 'react';
 import { AudioRecorder } from './components/AudioRecorder';
-import { TranslationDisplay } from './components/TranslationDisplay';
+import { MedicalTranslationDisplay } from './components/MedicalTranslationDisplay';
 import { Stethoscope } from 'lucide-react';
 
 function App() {
@@ -27,8 +28,8 @@ function App() {
             <h1 className="text-4xl font-bold text-gray-800">talktor</h1>
           </div>
           <p className="text-gray-600 max-w-2xl mx-auto">
-            AI-powered medical interpreter for seamless communication between healthcare providers and patients.
-            Record, transcribe, and translate medical conversations instantly.
+            AI-powered medical interpreter for English-speaking doctors and Spanish-speaking patients.
+            Translate medical conversations and suggest helpful questions patients can ask.
           </p>
         </div>
 
@@ -42,11 +43,11 @@ function App() {
             <AudioRecorder onTranscription={handleTranscription} />
           </div>
 
-          {/* Translation Display */}
+          {/* Enhanced Medical Translation Display */}
           <div className="bg-white rounded-xl shadow-lg p-8">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-2xl font-semibold text-gray-800">
-                Translation
+                Enhanced Medical Translation
               </h2>
               {currentSessionId && (
                 <button
@@ -57,7 +58,7 @@ function App() {
                 </button>
               )}
             </div>
-            <TranslationDisplay 
+            <MedicalTranslationDisplay
               originalText={transcribedText}
               sessionId={currentSessionId}
             />
@@ -66,7 +67,7 @@ function App() {
 
         {/* Footer */}
         <div className="text-center mt-12 text-gray-500 text-sm">
-          <p>Built for medical professionals • HIPAA compliance ready • Secure conversations</p>
+          <p>Empowering patient communication • HIPAA compliance ready • Enhanced medical intelligence</p>
         </div>
       </div>
     </div>
