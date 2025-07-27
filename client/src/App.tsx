@@ -1,182 +1,110 @@
-// src/App.tsx - Updated with WebSocket Testing
+// src/App.tsx - Simplified & Clean
 import React, { useState } from 'react';
+import { Stethoscope, Settings, Eye, EyeOff } from 'lucide-react';
+import { TalktorMedicalInterface } from './components/SeamlessConversationInterface';
 import { ErrorTrackingChatInterface } from './components/ErrorTrackingChatInterface';
-import { Stethoscope, MessageSquare, Radio } from 'lucide-react';
+import { TailwindTest } from './components/TailwindTest';
 
-// updated conversation UI test & seamless
-import { WebSocketTest } from './components/WebSocketTest';
-import { SeamlessConversationInterface } from './components/SeamlessConversationInterface';
-
-// toggle modes
-type TestMode = 'chat' | 'websocket' | 'conversation';
+type AppMode = 'production' | 'development';
 
 function App() {
-  const [testMode, setTestMode] = useState<TestMode>('chat');
+  const [appMode, setAppMode] = useState<AppMode>('production');
+  const [showDevTools, setShowDevTools] = useState(false);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
-      <div className="container mx-auto px-4 py-4">
-        {/* Header */}
-        <div className="text-center mb-6">
-          <div className="flex items-center justify-center space-x-3 mb-2">
-            <Stethoscope className="text-blue-600" size={32} />
-            <h1 className="text-3xl font-bold text-gray-800">talktor</h1>
-          </div>
-          <p className="text-gray-600">
-            AI-powered medical interpreter - Phase 2 Development & Testing
-          </p>
-        </div>
+    <div className="min-h-screen bg-gray-100">
+      <TailwindTest />
+      {/* Simple Header - Only show in development mode */}
+      {appMode === 'development' && (
+        <div className="bg-white border-b border-gray-200 px-6 py-4">
+          <div className="flex items-center justify-between max-w-7xl mx-auto">
+            <div className="flex items-center space-x-3">
+              <Stethoscope className="text-blue-600" size={28} />
+              <div>
+                <h1 className="text-xl font-bold text-gray-800">Talktor Development</h1>
+                <p className="text-sm text-gray-600">Medical AI Interpreter - Testing Environment</p>
+              </div>
+            </div>
+            
+            <div className="flex items-center space-x-4">
+              {/* Mode Toggle */}
+              <div className="flex items-center space-x-2">
+                <label className="text-sm font-medium text-gray-700">Mode:</label>
+                <select
+                  value={appMode}
+                  onChange={(e) => setAppMode(e.target.value as AppMode)}
+                  className="border border-gray-300 rounded-md px-3 py-1 text-sm bg-white"
+                >
+                  <option value="production">🏥 Production Interface</option>
+                  <option value="development">🔧 Development Testing</option>
+                </select>
+              </div>
 
-        {/* Test Mode Toggle */}
-        <div className="flex justify-center mb-6">
-          <div className="bg-white rounded-lg p-1 shadow-md">
-            <button
-              onClick={() => setTestMode('chat')}
-              className={`flex items-center space-x-2 px-4 py-2 rounded-md transition-all ${
-                testMode === 'chat'
-                  ? 'bg-blue-500 text-white shadow-sm'
-                  : 'text-gray-600 hover:bg-gray-100'
-              }`}
-            >
-              <MessageSquare size={18} />
-              <span>Chat Interface</span>
-            </button>
-            <button
-              onClick={() => setTestMode('websocket')}
-              className={`flex items-center space-x-2 px-4 py-2 rounded-md transition-all ${
-                testMode === 'websocket'
-                  ? 'bg-green-500 text-white shadow-sm'
-                  : 'text-gray-600 hover:bg-gray-100'
-              }`}
-            >
-              <Radio size={18} />
-              <span>WebSocket Test</span>
-            </button>
-            <button
-              onClick={() => setTestMode('conversation')}
-              className={`flex items-center space-x-2 px-4 py-2 rounded-md transition-all ${
-                testMode === 'conversation'
-                  ? 'bg-purple-500 text-white shadow-sm'
-                  : 'text-gray-600 hover:bg-gray-100'
-              }`}
-            >
-              <Stethoscope size={18} />
-              <span>Live Consultation</span>
-            </button>
+              {/* Dev Tools Toggle */}
+              {appMode === 'development' && (
+                <button
+                  onClick={() => setShowDevTools(!showDevTools)}
+                  className={`flex items-center space-x-2 px-3 py-1 rounded-md text-sm ${
+                    showDevTools 
+                      ? 'bg-yellow-100 text-yellow-800' 
+                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                  }`}
+                >
+                  {showDevTools ? <EyeOff size={16} /> : <Eye size={16} />}
+                  <span>{showDevTools ? 'Hide' : 'Show'} Legacy Interface</span>
+                </button>
+              )}
+            </div>
           </div>
         </div>
+      )}
 
-        {/* Test Mode Description */}
-        <div className="text-center mb-6">
-          {testMode === 'chat' ? (
-            <p className="text-sm text-gray-600">
-              <strong>Phase 1 Testing:</strong> Translation + Spanish Medical Intelligence
-            </p>
-          ) : (
-            <p className="text-sm text-gray-600">
-              <strong>Phase 2 Testing:</strong> Real-time WebSocket Conversations
-            </p>
-          )}
-        </div>
+      {/* Main Content */}
+      <div className="h-screen">
+        {appMode === 'production' ? (
+          // Production Mode: Beautiful Medical Interface Only
+          <TalktorMedicalInterface />
+        ) : (
+          // Development Mode: Choose between interfaces
+          <div className="flex h-full">
+            {/* Main Interface */}
+            <div className={showDevTools ? 'w-2/3' : 'w-full'}>
+              <TalktorMedicalInterface />
+            </div>
 
-        {/* Content based on test mode */}
-        <div className="transition-all duration-300">
-          {testMode === 'chat' ? (
-            <ErrorTrackingChatInterface />
-          ) : (
-            <WebSocketTest />
-          )}
-          {/* added conversation mode */}
-          {testMode === 'conversation' && <SeamlessConversationInterface />}
-        </div>
-
-        {/* Development Footer */}
-        <div className="text-center mt-8 pt-6 border-t border-gray-200">
-          <p className="text-xs text-gray-500">
-            Development Mode - Phase {testMode === 'chat' ? '1' : '2'} Testing
-          </p>
-        </div>
+            {/* Legacy Development Interface */}
+            {showDevTools && (
+              <div className="w-1/3 border-l border-gray-300 bg-white">
+                <div className="p-4 border-b border-gray-200">
+                  <h3 className="font-semibold text-gray-800 flex items-center space-x-2">
+                    <Settings size={16} />
+                    <span>Legacy Development Interface</span>
+                  </h3>
+                  <p className="text-xs text-gray-600 mt-1">
+                    Phase 1 testing - Translation only (no WebSocket)
+                  </p>
+                </div>
+                <div className="p-4">
+                  <ErrorTrackingChatInterface />
+                </div>
+              </div>
+            )}
+          </div>
+        )}
       </div>
+
+      {/* Development Footer */}
+      {appMode === 'development' && (
+        <div className="fixed bottom-4 right-4">
+          <div className="bg-yellow-100 border border-yellow-300 rounded-lg px-3 py-2 shadow-sm">
+            <p className="text-xs text-yellow-800 font-medium">
+              🔧 Development Mode Active
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
 
 export default App;
-
-// // src/App.tsx (Simplified - No Routing)
-// import React, { useState } from 'react';
-// import { AudioRecorder } from './components/AudioRecorder';
-// import { MedicalTranslationDisplay } from './components/MedicalTranslationDisplay';
-// import { Stethoscope } from 'lucide-react';
-
-// function App() {
-//   const [transcribedText, setTranscribedText] = useState('');
-//   const [currentSessionId, setCurrentSessionId] = useState('');
-
-//   const handleTranscription = (text: string, sessionId: string) => {
-//     setTranscribedText(text);
-//     setCurrentSessionId(sessionId);
-//   };
-
-//   const clearSession = () => {
-//     setTranscribedText('');
-//     setCurrentSessionId('');
-//   };
-
-//   return (
-//     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
-//       <div className="container mx-auto px-4 py-8">
-//         {/* Header */}
-//         <div className="text-center mb-8">
-//           <div className="flex items-center justify-center space-x-3 mb-4">
-//             <Stethoscope className="text-blue-600" size={48} />
-//             <h1 className="text-4xl font-bold text-gray-800">talktor</h1>
-//           </div>
-//           <p className="text-gray-600 max-w-2xl mx-auto">
-//             AI-powered medical interpreter for English-speaking doctors and Spanish-speaking patients.
-//             Translate medical conversations and suggest helpful questions patients can ask.
-//           </p>
-//         </div>
-
-//         {/* Main Content */}
-//         <div className="space-y-8">
-//           {/* Audio Recorder */}
-//           <div className="bg-white rounded-xl shadow-lg p-8">
-//             <h2 className="text-2xl font-semibold text-gray-800 text-center mb-6">
-//               Voice Recording
-//             </h2>
-//             <AudioRecorder onTranscription={handleTranscription} />
-//           </div>
-
-//           {/* Enhanced Medical Translation Display */}
-//           <div className="bg-white rounded-xl shadow-lg p-8">
-//             <div className="flex items-center justify-between mb-6">
-//               <h2 className="text-2xl font-semibold text-gray-800">
-//                 Enhanced Medical Translation
-//               </h2>
-//               {currentSessionId && (
-//                 <button
-//                   onClick={clearSession}
-//                   className="px-4 py-2 text-sm bg-gray-100 text-gray-600 rounded-md hover:bg-gray-200 transition-colors"
-//                 >
-//                   Clear Session
-//                 </button>
-//               )}
-//             </div>
-//             <MedicalTranslationDisplay
-//               originalText={transcribedText}
-//               sessionId={currentSessionId}
-//             />
-//           </div>
-//         </div>
-
-//         {/* Footer */}
-//         <div className="text-center mt-12 text-gray-500 text-sm">
-//           <p>Empowering patient communication • HIPAA compliance ready • Enhanced medical intelligence</p>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
-
-// export default App;
