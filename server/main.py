@@ -12,6 +12,11 @@ import uuid
 
 # Import router BEFORE app creation
 from routers.conversation_router import router as conversation_router
+# enhanced router for streaming
+from routers.enhanced_conversation_router import router as enhanced_conversation_router
+
+# streaming audio service
+from services.audio.streaming_audio_service import get_streaming_audio_service
 
 # Service imports
 from services.translation.translator import TranslationService
@@ -24,9 +29,9 @@ from services.medical_intelligence import extract_medications, process_obgyn_cas
 
 # Create FastAPI app
 app = FastAPI(
-    title="Talktor - Medical Interpreter API",
-    description="AI-powered medical interpretation with learning intelligence",
-    version="2.0.0"
+    title="Talktor Medical Interpreter",
+    description="Real-time medical conversation AI with streaming audio",
+    version="2.1.0"  # Updated version
 )
 
 # Configure logging
@@ -41,8 +46,21 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Include routers
-app.include_router(conversation_router)
+
+# old router
+app.include_router(
+    conversation_router,
+    prefix="/api/v1",  # Legacy endpoint
+    tags=["Legacy Conversation"]
+)
+
+# enhanced, v2 router for streaming
+app.include_router(
+    enhanced_conversation_router,
+    prefix="/api/v2",  # New versioned endpoint
+    tags=["Enhanced Conversation"]
+)
+
 
 # Load Whisper model
 model = whisper.load_model("base")
@@ -51,13 +69,255 @@ model = whisper.load_model("base")
 # STARTUP EVENTS
 # =============================================================================
 
+# @app.on_event("startup")
+# async def startup_event():
+#     logger.info("🚀 Talktor Medical Interpreter API starting up...")
+#     logger.info(f"📡 Whisper model loaded: {model}")
+#     logger.info("🧠 Learning system: ACTIVE")
+#     logger.info("🏗️ Service architecture: READY")
+#     logger.info("✅ All systems operational!")
+
+# ===== Enhanced startup event =====
 @app.on_event("startup")
 async def startup_event():
-    logger.info("🚀 Talktor Medical Interpreter API starting up...")
-    logger.info(f"📡 Whisper model loaded: {model}")
-    logger.info("🧠 Learning system: ACTIVE")
-    logger.info("🏗️ Service architecture: READY")
-    logger.info("✅ All systems operational!")
+    """Enhanced startup event with streaming service initialization"""
+    logger.info("🚀 Starting Talktor Medical Interpreter with Streaming Audio")
+    
+    # Initialize streaming audio service
+    try:
+        streaming_service = get_streaming_audio_service()
+        logger.info("🎤 Streaming Audio Service initialized")
+        logger.info(f"   VAD Threshold: {streaming_service.vad_threshold}")
+        logger.info(f"   Silence Duration: {streaming_service.silence_duration}s")
+        logger.info(f"   Sample Rate: {streaming_service.sample_rate}Hz")
+        
+    except Exception as e:
+        logger.error(f"❌ Failed to initialize Streaming Audio Service: {e}")
+        raise
+
+    # Your existing startup code...
+    logger.info("✅ Application startup complete")
+
+# ===== Enhanced shutdown event =====
+@app.on_event("shutdown")
+async def shutdown_event():
+    """Enhanced shutdown event with streaming cleanup"""
+    logger.info("🛑 Shutting down Talktor Medical Interpreter")
+    
+    # Cleanup streaming sessions
+    try:
+        streaming_service = get_streaming_audio_service()
+        
+        # Get all active session IDs
+        active_session_ids = list(streaming_service.audio_buffers.keys())
+        
+        # Cleanup each session
+        for session_id in active_session_ids:
+            await streaming_service.cleanup_session(session_id)
+            
+        logger.info(f"🧹 Cleaned up {len(active_session_ids)} streaming sessions")
+        
+    except Exception as e:
+        logger.error(f"❌ Error during streaming cleanup: {e}")
+
+    # Your existing shutdown code...
+    logger.info("✅ Application shutdown complete")
+
+# =============================================================================
+# STREAMING ENDPOINTS
+# =============================================================================
+
+# KICKSTART STREAM - create conversation
+@app.post("/conversation/create")
+async def create_conversation_session():
+    """Create a new conversation session"""
+    try:
+        session_id = str(uuid.uuid4())
+        
+        session_data = {
+            "session_id": session_id,
+            "doctor_language": "en",
+            "patient_language": "es", 
+            "websocket_urls": {
+                "doctor": f"/api/v2/conversation/ws/{session_id}/doctor",
+                "patient": f"/api/v2/conversation/ws/{session_id}/patient"
+            },
+            "status": "ready",
+            "created_at": datetime.now().isoformat(),
+            "capabilities": [
+                "real_time_translation",
+                "medical_intelligence", 
+                "safety_monitoring",
+                "conversation_summary",
+                "streaming_audio"
+            ]
+        }
+        
+        logger.info(f"✅ Created session: {session_id}")
+        return session_data
+        
+    except Exception as e:
+        logger.error(f"❌ Session creation failed: {e}")
+        raise HTTPException(status_code=500, detail=f"Session creation failed: {str(e)}")
+
+# ===== NEW: Streaming Configuration Endpoint =====
+@app.get("/config/streaming")
+async def get_streaming_config():
+    """
+    Get streaming audio configuration
+    """
+    streaming_service = get_streaming_audio_service()
+    
+    return {
+        "vad_threshold": streaming_service.vad_threshold,
+        "silence_duration": streaming_service.silence_duration,
+        "min_audio_length": streaming_service.min_audio_length,
+        "max_audio_length": streaming_service.max_audio_length,
+        "sample_rate": streaming_service.sample_rate,
+        "use_openai_whisper": streaming_service.use_openai_whisper
+    }
+
+@app.post("/config/streaming")
+async def update_streaming_config(config: dict):
+    """
+    Update streaming audio configuration
+    """
+    try:
+        streaming_service = get_streaming_audio_service()
+        
+        # Update configuration
+        if "vad_threshold" in config:
+            streaming_service.vad_threshold = config["vad_threshold"]
+        if "silence_duration" in config:
+            streaming_service.silence_duration = config["silence_duration"]
+        if "min_audio_length" in config:
+            streaming_service.min_audio_length = config["min_audio_length"]
+        if "max_audio_length" in config:
+            streaming_service.max_audio_length = config["max_audio_length"]
+            
+        logger.info("Streaming configuration updated")
+        
+        return {
+            "status": "updated",
+            "new_config": await get_streaming_config()
+        }
+        
+    except Exception as e:
+        logger.error(f"Failed to update streaming config: {e}")
+        return {
+            "status": "error",
+            "error": str(e)
+        }
+
+# ===== NEW: Active Sessions Monitoring =====
+@app.get("/sessions/streaming")
+async def get_active_streaming_sessions():
+    """
+    Get active streaming audio sessions for monitoring
+    """
+    try:
+        streaming_service = get_streaming_audio_service()
+        
+        sessions = []
+        for session_id, buffer in streaming_service.audio_buffers.items():
+            state = streaming_service.processing_states.get(session_id)
+            
+            sessions.append({
+                "session_id": session_id,
+                "buffer_duration": buffer.get_duration(),
+                "is_recording": state.is_recording if state else False,
+                "is_processing": state.is_processing if state else False,
+                "session_age": time.time() - state.session_start_time if state else 0
+            })
+        
+        return {
+            "active_sessions": sessions,
+            "total_count": len(sessions)
+        }
+        
+    except Exception as e:
+        logger.error(f"Failed to get streaming sessions: {e}")
+        return {
+            "error": str(e)
+        }
+
+# ===== health check =====
+@app.get("/health/streaming")
+async def streaming_health_check():
+    """Health check for streaming audio services"""
+    return {
+        "status": "healthy",
+        "streaming_audio_enabled": True,
+        "message": "Streaming audio service is running"
+    }
+
+# ===== Quick Test Endpoint =====
+@app.post("/test/streaming")
+async def test_streaming_pipeline(test_data: dict):
+    """
+    Test endpoint for streaming audio pipeline
+    """
+    try:
+        text = test_data.get("text", "Hello, this is a test")
+        language = test_data.get("language", "en")
+        session_id = test_data.get("session_id", "test-session")
+        
+        # Test medical intelligence
+        from services.medical_intelligence import MedicalIntelligenceService
+        medical_service = MedicalIntelligenceService()
+        
+        medical_result = await medical_service.process_medical_text(
+            text=text,
+            session_id=session_id,
+            specialty="general"
+        )
+
+        # Add these debug lines:
+        print("🔍 MEDICAL RESULT DEBUG:")
+        print(f"Type: {type(medical_result)}")
+        print(f"Keys: {list(medical_result.keys()) if isinstance(medical_result, dict) else 'Not a dict'}")
+        print(f"Structure: {medical_result}")
+        print("🔍 END DEBUG")
+        
+        # Test translation
+        from services.translation.translator import TranslationService
+        translation_service = TranslationService()
+        
+        target_language = "es" if language == "en" else "en"
+        translation_result = await translation_service.translate_with_medical_context(
+            text=text,
+            source_lang=language,                         # ✅ Correct
+            target_lang=target_language,                  # ✅ Correct
+            medications=medical_result.get("extracted_medications", [])  # ✅ Correct
+        )
+
+        print("🔍 TRANSLATION RESULT DEBUG:")
+        print(f"Type: {type(translation_result)}")
+        print(f"Keys: {list(translation_result.keys()) if isinstance(translation_result, dict) else 'Not a dict'}")
+        print(f"Structure: {translation_result}")
+        print("🔍 END TRANSLATION DEBUG")
+        
+        return {
+                "status": "success", 
+                "original_text": text,
+                "medical_intelligence": {
+                    "medications_found": len(medical_result["medications"]),                           # ✅
+                    "safety_alerts": len(medical_result["obgyn_context"]["safety_flags"]),            # ✅
+                    "specialty": medical_result["metadata"]["specialty"]                              # ✅
+                },
+            "translation": {
+                "translated_text": translation_result.get("enhanced_translation") or translation_result.get("standard_translation"),
+                "confidence": 0.9,  # Default confidence since not in dict
+                "target_language": target_language
+            }
+        }
+        
+    except Exception as e:
+        logger.error(f"Streaming test failed: {e}")
+        return {
+            "status": "error",
+            "error": str(e)
+        }
 
 # =============================================================================
 # PYDANTIC MODELS
@@ -112,6 +372,13 @@ def get_session_service() -> SessionService:
 def get_learning_manager() -> LearningManager:
     """Dependency injection for learning/feedback service"""
     return LearningManager()
+
+# ===== Dependency injection for services =====
+async def get_enhanced_conversation_manager():
+    """Dependency injection for enhanced conversation manager"""
+    from routers.enhanced_conversation_router import EnhancedConversationManager
+    return EnhancedConversationManager()
+
 
 # =============================================================================
 # CORE API ENDPOINTS
@@ -717,7 +984,18 @@ async def delete_session(
         raise HTTPException(status_code=500, detail=str(e))
 
 # MAIN!
-
+# STREAMING - MODIFIED RUN
+# ===== For development/testing =====
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    
+    # Run with streaming support
+    uvicorn.run(
+        "main:app",
+        host="0.0.0.0",
+        port=8000,
+        reload=True,
+        log_level="info",
+        ws_ping_interval=20,  # WebSocket ping interval
+        ws_ping_timeout=20    # WebSocket ping timeout
+    )
