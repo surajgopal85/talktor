@@ -1,7 +1,7 @@
 // src/App.tsx - Simplified & Clean
 import React, { useState } from 'react';
 import { Stethoscope, Settings, Eye, EyeOff } from 'lucide-react';
-import { TalktorMedicalInterface } from './components/SeamlessConversationInterface';
+import { TalktorMedicalInterface } from './components/TalktorMedicalInterface';
 import { ErrorTrackingChatInterface } from './components/ErrorTrackingChatInterface';
 import { TailwindTest } from './components/TailwindTest';
 
