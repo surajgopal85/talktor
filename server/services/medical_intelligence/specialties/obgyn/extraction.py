@@ -75,37 +75,48 @@ class OBGYNEnhancedExtractionService(MedicationExtractionService):
     async def extract_obgyn_medications(self, text: str, session_id: str, 
                                       patient_profile: Optional[Dict] = None) -> Dict:
         """
-        OBGYN-specialized medication extraction
+        Enhanced OBGYN-specialized medication extraction with BERT integration
         """
-        logger.info(f"🏥 OBGYN Extraction: Processing '{text}' with patient context")
+        logger.info(f"🏥 Enhanced OBGYN Extraction: Processing '{text[:100]}...' with patient context")
         
-        # Step 1: Analyze OBGYN context
+        # Step 1: Get BERT context analysis
+        bert_context = await self._get_bert_context(text)
+        
+        # Step 2: Analyze OBGYN context with BERT enhancement
         obgyn_context = await self.obgyn_engine.analyze_obgyn_context(text, patient_profile)
+        obgyn_context["bert_enhancement"] = bert_context
         
-        # Step 2: Perform enhanced candidate identification
-        candidates = await self._identify_obgyn_candidates(text, obgyn_context)
+        # Step 3: Perform BERT-enhanced candidate identification
+        candidates = await self._identify_obgyn_candidates_with_bert(text, obgyn_context, bert_context)
         
-        # Step 3: Validate with OBGYN-specific logic
-        validated_medications = await self._validate_obgyn_candidates(
-            candidates, obgyn_context, text, patient_profile
+        # Step 4: Pre-filter with BERT confidence
+        bert_filtered_candidates = await self._bert_pre_filter_obgyn(candidates, text, obgyn_context)
+        
+        # Step 5: Validate with OBGYN-specific logic and safety checks
+        validated_medications = await self._validate_obgyn_candidates_safe(
+            bert_filtered_candidates, obgyn_context, text, patient_profile
         )
         
-        # Step 4: Generate OBGYN-specific metadata
-        metadata = self._generate_obgyn_metadata(candidates, validated_medications, text, obgyn_context)
+        # Step 6: Apply final BERT confidence boost
+        final_medications = await self.bert_booster.boost_medication_confidence(validated_medications, text)
         
-        # Step 5: Store for learning with OBGYN context
+        # Step 7: Generate OBGYN-specific metadata
+        metadata = self._generate_obgyn_metadata(candidates, final_medications, text, obgyn_context)
+        
+        # Step 8: Store for learning with OBGYN context
         extraction_id = await self.learning_manager.store_extraction_attempt(
-            session_id, text, candidates, validated_medications, metadata
+            session_id, text, candidates, final_medications, metadata
         )
         
-        # Step 6: Generate OBGYN-specific recommendations
+        # Step 9: Generate OBGYN-specific recommendations
         recommendations = await self._generate_obgyn_recommendations(
-            validated_medications, obgyn_context, patient_profile
+            final_medications, obgyn_context, patient_profile
         )
         
         return {
-            "medications": validated_medications,
+            "medications": final_medications,
             "obgyn_context": obgyn_context,
+            "bert_context": bert_context,
             "recommendations": recommendations,
             "metadata": metadata,
             "learning_data": {
@@ -115,6 +126,45 @@ class OBGYNEnhancedExtractionService(MedicationExtractionService):
                 "specialty": "obgyn"
             }
         }
+    
+    async def _get_bert_context(self, text: str) -> Dict:
+        """Get BERT context analysis for OBGYN extraction"""
+        try:
+            bert_result = await self.bert_booster.bert.extract_medical_entities(text)
+            return {
+                "bert_entities": bert_result.entities,
+                "bert_confidence": bert_result.bert_confidence,
+                "medical_terms": [e.spanish_term for e in bert_result.entities if e.entity_type == "medication"],
+                "obgyn_terms": [e.spanish_term for e in bert_result.entities if e.entity_type in ["medication", "condition", "symptom"]],
+                "processing_time_ms": bert_result.processing_time_ms
+            }
+        except Exception as e:
+            logger.warning(f"BERT context analysis failed: {e}")
+            return {
+                "bert_entities": [],
+                "bert_confidence": 0.0,
+                "medical_terms": [],
+                "obgyn_terms": [],
+                "processing_time_ms": 0
+            }
+    
+    async def _identify_obgyn_candidates_with_bert(self, text: str, obgyn_context: Dict, bert_context: Dict) -> List[Dict]:
+        """Enhanced candidate identification with OBGYN patterns and BERT"""
+        
+        # Get base candidates from parent class with BERT enhancement
+        base_candidates = await super()._identify_candidates_with_bert(text, bert_context)
+        
+        # Add OBGYN-specific pattern candidates with BERT validation
+        obgyn_candidates = self._extract_obgyn_patterns_with_bert(text, obgyn_context, bert_context)
+        
+        # Enhance existing candidates with OBGYN context
+        enhanced_candidates = self._enhance_candidates_with_obgyn_context(
+            base_candidates, obgyn_context
+        )
+        
+        # Combine and deduplicate
+        all_candidates = enhanced_candidates + obgyn_candidates
+        return self._deduplicate_obgyn_candidates(all_candidates)
     
     async def _identify_obgyn_candidates(self, text: str, obgyn_context: Dict) -> List[Dict]:
         """Enhanced candidate identification with OBGYN patterns"""
@@ -133,6 +183,59 @@ class OBGYNEnhancedExtractionService(MedicationExtractionService):
         # Combine and deduplicate
         all_candidates = enhanced_candidates + obgyn_candidates
         return self._deduplicate_obgyn_candidates(all_candidates)
+    
+    def _extract_obgyn_patterns_with_bert(self, text: str, obgyn_context: Dict, bert_context: Dict) -> List[Dict]:
+        """Extract OBGYN-specific medication patterns with BERT validation"""
+        candidates = []
+        
+        pregnancy_stage = PregnancyStage(obgyn_context.get("pregnancy_stage", "not_pregnant"))
+        conditions = [OBGYNCondition(c) for c in obgyn_context.get("identified_conditions", [])]
+        bert_terms = set(bert_context.get("medical_terms", []))
+        
+        for pattern, pattern_info in self.obgyn_medication_patterns.items():
+            matches = re.finditer(pattern, text.lower())
+            
+            for match in matches:
+                term = match.group()
+                word_position = len(text[:match.start()].split())
+                
+                # Check if BERT also identified this term
+                bert_identified = term in bert_terms
+                bert_boost = 0.2 if bert_identified else 0.0
+                
+                # Calculate OBGYN-specific confidence modifiers
+                confidence_modifiers = {
+                    "obgyn_pattern_matched": True,
+                    "obgyn_confidence_boost": pattern_info["confidence_boost"],
+                    "category": pattern_info["category"],
+                    "bert_identified": bert_identified,
+                    "bert_confidence_boost": bert_boost
+                }
+                
+                # Context-specific boosts
+                if pattern_info.get("pregnancy_related") and pregnancy_stage != PregnancyStage.NOT_PREGNANT:
+                    confidence_modifiers["pregnancy_context_boost"] = 0.2
+                
+                if pattern_info.get("condition_specific"):
+                    target_condition = OBGYNCondition(pattern_info["condition_specific"])
+                    if target_condition in conditions:
+                        confidence_modifiers["condition_match_boost"] = 0.15
+                
+                if pattern_info.get("pregnancy_stage_specific"):
+                    target_stage = PregnancyStage(pattern_info["pregnancy_stage_specific"])
+                    if pregnancy_stage == target_stage:
+                        confidence_modifiers["stage_match_boost"] = 0.2
+                
+                candidates.append({
+                    "term": term,
+                    "strategy": "obgyn_pattern_match_bert_enhanced",
+                    "context": text[max(0, match.start()-30):match.end()+30],
+                    "position": word_position,
+                    "confidence_modifiers": confidence_modifiers,
+                    "obgyn_category": pattern_info["category"]
+                })
+        
+        return candidates
     
     def _extract_obgyn_patterns(self, text: str, obgyn_context: Dict) -> List[Dict]:
         """Extract OBGYN-specific medication patterns"""
@@ -246,6 +349,92 @@ class OBGYNEnhancedExtractionService(MedicationExtractionService):
                     )
         
         return unique_candidates
+    
+    async def _bert_pre_filter_obgyn(self, candidates: List[Dict], text: str, obgyn_context: Dict) -> List[Dict]:
+        """Pre-filter OBGYN candidates using BERT confidence and OBGYN context"""
+        filtered_candidates = []
+        
+        for candidate in candidates:
+            # Calculate BERT-enhanced confidence
+            bert_boost = candidate.get("confidence_modifiers", {}).get("bert_confidence_boost", 0.0)
+            bert_identified = candidate.get("confidence_modifiers", {}).get("bert_identified", False)
+            obgyn_boost = candidate.get("confidence_modifiers", {}).get("obgyn_confidence_boost", 0.0)
+            
+            # Keep candidates with BERT identification, high pattern confidence, or strong OBGYN context
+            if (bert_identified or 
+                candidate.get("confidence_modifiers", {}).get("pattern_confidence", 0.0) > 0.7 or
+                obgyn_boost > 0.2):
+                filtered_candidates.append(candidate)
+        
+        logger.info(f"OBGYN BERT pre-filter: {len(candidates)} → {len(filtered_candidates)} candidates")
+        return filtered_candidates
+    
+    async def _validate_obgyn_candidates_safe(self, candidates: List[Dict], obgyn_context: Dict,
+                                            text: str, patient_profile: Optional[Dict]) -> List[Dict]:
+        """Safe validation with OBGYN-specific intelligence and error handling"""
+        
+        validated_medications = []
+        pregnancy_stage = PregnancyStage(obgyn_context.get("pregnancy_stage", "not_pregnant"))
+        
+        for candidate in candidates:
+            try:
+                # Get OBGYN-specific medication information with safety checks
+                obgyn_med_info = await self.obgyn_engine.get_obgyn_medication_info(
+                    candidate["term"], pregnancy_stage
+                )
+                
+                # CRITICAL FIX: Ensure obgyn_med_info is never None
+                if obgyn_med_info is None:
+                    logger.warning(f"OBGYN engine returned None for '{candidate['term']}', using fallback")
+                    obgyn_med_info = {
+                        "drug_name": candidate["term"],
+                        "canonical_name": candidate["term"],
+                        "pregnancy_safety": "unknown",
+                        "breastfeeding_safety": "unknown",
+                        "obgyn_analysis": {"obgyn_relevance": "unknown"},
+                        "contraindications": [],
+                        "category": candidate.get("obgyn_category", "general")
+                    }
+                
+                # Calculate enhanced confidence score with BERT boost
+                base_confidence = await self._calculate_obgyn_confidence(
+                    candidate, obgyn_med_info, text, obgyn_context
+                )
+                
+                # Add BERT confidence boost
+                bert_boost = candidate.get("confidence_modifiers", {}).get("bert_confidence_boost", 0.0)
+                final_confidence = min(base_confidence + bert_boost, 1.0)
+                
+                # Apply OBGYN-specific threshold
+                if final_confidence > self.obgyn_confidence_threshold:
+                    
+                    # Perform safety assessment
+                    safety_assessment = self._assess_obgyn_safety(
+                        obgyn_med_info, pregnancy_stage, obgyn_context
+                    )
+                    
+                    validated_medication = {
+                        "medication": obgyn_med_info,
+                        "extraction_confidence": final_confidence,
+                        "extraction_strategy": candidate["strategy"],
+                        "context": candidate["context"],
+                        "position": candidate["position"],
+                        "original_term": candidate["term"],
+                        "obgyn_category": candidate.get("obgyn_category", "general"),
+                        "safety_assessment": safety_assessment,
+                        "pregnancy_stage": pregnancy_stage.value,
+                        "bert_boost": bert_boost,
+                        "validation_timestamp": datetime.now().isoformat(),
+                        "specialty": "obgyn"
+                    }
+                    
+                    validated_medications.append(validated_medication)
+                    
+            except Exception as e:
+                logger.warning(f"⚠️ Safe OBGYN validation failed for '{candidate['term']}': {e}")
+                continue
+        
+        return validated_medications
     
     async def _validate_obgyn_candidates(self, candidates: List[Dict], obgyn_context: Dict,
                                        text: str, patient_profile: Optional[Dict]) -> List[Dict]:

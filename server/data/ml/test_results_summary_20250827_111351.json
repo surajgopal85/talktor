@@ -1,0 +1,66 @@
+{
+  "test_summary": {
+    "conversations_tested": 5,
+    "test_date": "2025-08-27T11:13:51.274799",
+    "bert_model": "PlanTL-GOB-ES/roberta-base-biomedical-clinical-es"
+  },
+  "accuracy_metrics": {
+    "original_average_accuracy": 0.871,
+    "enhanced_average_accuracy": 0.871,
+    "average_improvement": 0.0,
+    "conversations_improved": 0,
+    "conversations_unchanged": 5,
+    "conversations_degraded": 0
+  },
+  "confidence_metrics": {
+    "medications_boosted": 0,
+    "average_confidence_boost": 0,
+    "max_confidence_boost": 0
+  },
+  "performance_metrics": {
+    "average_processing_time_ms": 56902.3,
+    "bert_overhead_ms": 61.4
+  },
+  "detailed_results": [
+    {
+      "conversation": "prenatal_medication_safety",
+      "accuracy_improvement": 0.0,
+      "medications_found": 84,
+      "confidence_boosts": 0,
+      "missed_medications": []
+    },
+    {
+      "conversation": "contraception_consultation",
+      "accuracy_improvement": 0.0,
+      "medications_found": 72,
+      "confidence_boosts": 0,
+      "missed_medications": []
+    },
+    {
+      "conversation": "gestational_diabetes",
+      "accuracy_improvement": 0.0,
+      "medications_found": 83,
+      "confidence_boosts": 0,
+      "missed_medications": []
+    },
+    {
+      "conversation": "postpartum_consultation",
+      "accuracy_improvement": 0.0,
+      "medications_found": 86,
+      "confidence_boosts": 0,
+      "missed_medications": [
+        "docusate sodium",
+        "crema antibiótico"
+      ]
+    },
+    {
+      "conversation": "menopause_hrt",
+      "accuracy_improvement": 0.0,
+      "medications_found": 76,
+      "confidence_boosts": 0,
+      "missed_medications": [
+        "vitamina D"
+      ]
+    }
+  ]
+}

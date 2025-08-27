@@ -1,0 +1,87 @@
+{
+  "test_summary": {
+    "conversations_tested": 5,
+    "test_date": "2025-08-27T11:21:11.842861",
+    "bert_model": "PlanTL-GOB-ES/roberta-base-biomedical-clinical-es"
+  },
+  "accuracy_metrics": {
+    "original_average_accuracy": 0.079,
+    "enhanced_average_accuracy": 0.079,
+    "average_improvement": 0.0,
+    "conversations_improved": 0,
+    "conversations_unchanged": 5,
+    "conversations_degraded": 0
+  },
+  "confidence_metrics": {
+    "medications_boosted": 0,
+    "average_confidence_boost": 0,
+    "max_confidence_boost": 0
+  },
+  "performance_metrics": {
+    "average_processing_time_ms": 587.0,
+    "bert_overhead_ms": 50.7
+  },
+  "detailed_results": [
+    {
+      "conversation": "prenatal_medication_safety",
+      "accuracy_improvement": 0.0,
+      "medications_found": 0,
+      "confidence_boosts": 0,
+      "missed_medications": [
+        "ácido fólico",
+        "vitaminas prenatales",
+        "ibuprofeno",
+        "calcio"
+      ]
+    },
+    {
+      "conversation": "contraception_consultation",
+      "accuracy_improvement": 0.0,
+      "medications_found": 1,
+      "confidence_boosts": 0,
+      "missed_medications": [
+        "píldoras anticonceptivas",
+        "vitaminas",
+        "acetaminofén"
+      ]
+    },
+    {
+      "conversation": "gestational_diabetes",
+      "accuracy_improvement": 0.0,
+      "medications_found": 0,
+      "confidence_boosts": 0,
+      "missed_medications": [
+        "vitaminas prenatales",
+        "hierro",
+        "metformina",
+        "magnesio"
+      ]
+    },
+    {
+      "conversation": "postpartum_consultation",
+      "accuracy_improvement": 0.0,
+      "medications_found": 0,
+      "confidence_boosts": 0,
+      "missed_medications": [
+        "ibuprofeno",
+        "vitaminas prenatales",
+        "docusate sodium",
+        "crema antibiótico"
+      ]
+    },
+    {
+      "conversation": "menopause_hrt",
+      "accuracy_improvement": 0.0,
+      "medications_found": 1,
+      "confidence_boosts": 0,
+      "missed_medications": [
+        "estrógeno",
+        "calcio",
+        "vitamina D",
+        "melatonina",
+        "aspirina",
+        "cohosh negro"
+      ]
+    }
+  ]
+}
