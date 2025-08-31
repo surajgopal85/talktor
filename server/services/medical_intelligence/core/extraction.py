@@ -12,12 +12,15 @@ from .api_client import ExternalMedicalAPIClient
 from .confidence import ConfidenceScorer
 from .learning import LearningManager
 
+# Enhanced BERT integration
+from services.ml import BERTConfidenceBooster
+
 logger = logging.getLogger(__name__)
 
 class MedicationExtractionService:
     """
-    Core medication extraction service with learning capabilities
-    Handles multi-strategy extraction, API validation, and confidence scoring
+    Core medication extraction service with enhanced BERT integration
+    Optimized for high-fidelity Spanish/English medical translations
     """
     
     def __init__(self):
@@ -25,29 +28,42 @@ class MedicationExtractionService:
         self.confidence_scorer = ConfidenceScorer()
         self.learning_manager = LearningManager()
         self.confidence_threshold = 0.3
+
+        # Enhanced BERT integration
+        self.bert_booster = BERTConfidenceBooster()
         
     async def extract_medications(self, text: str, session_id: str, medical_context: str = "general") -> Dict:
-        """Main extraction method with learning integration"""
+        """Enhanced extraction method with early BERT integration"""
         
-        logger.info(f"🧠 MedicationExtractionService: Processing '{text}'")
+        logger.info(f"🧠 Enhanced Extraction: Processing '{text[:100]}...'")
         
-        # Step 1: Identify candidates using multiple strategies
-        candidates = await self._identify_candidates(text)
-        logger.info(f"🔍 Found {len(candidates)} candidates")
+        # Step 1: Early BERT analysis for context understanding
+        bert_context = await self._get_bert_context(text)
         
-        # Step 2: Validate candidates with external APIs
-        validated_medications = await self._validate_candidates(candidates, medical_context, text)
+        # Step 2: Identify candidates with BERT-enhanced patterns
+        candidates = await self._identify_candidates_with_bert(text, bert_context)
+        logger.info(f"🔍 Found {len(candidates)} candidates with BERT enhancement")
         
-        # Step 3: Generate extraction metadata
-        metadata = self._generate_extraction_metadata(candidates, validated_medications, text)
+        # Step 3: Pre-filter candidates using BERT confidence
+        bert_filtered_candidates = await self._bert_pre_filter(candidates, text)
         
-        # Step 4: Store extraction data for learning
+        # Step 4: Validate candidates with external APIs (with safety checks)
+        validated_medications = await self._validate_candidates_safe(bert_filtered_candidates, medical_context, text)
+        
+        # Step 5: Apply final BERT confidence boost
+        final_medications = await self.bert_booster.boost_medication_confidence(validated_medications, text)
+        
+        # Step 6: Generate extraction metadata
+        metadata = self._generate_extraction_metadata(candidates, final_medications, text)
+        
+        # Step 7: Store extraction data for learning
         extraction_id = await self.learning_manager.store_extraction_attempt(
-            session_id, text, candidates, validated_medications, metadata
+            session_id, text, candidates, final_medications, metadata
         )
         
         return {
-            "medications": validated_medications,
+            "medications": final_medications,
+            "bert_context": bert_context,
             "metadata": metadata,
             "learning_data": {
                 "session_id": session_id,
@@ -56,78 +72,114 @@ class MedicationExtractionService:
             }
         }
     
-    async def _identify_candidates(self, text: str) -> List[Dict]:
-        """Identify potential medication candidates using multiple strategies"""
+    async def _get_bert_context(self, text: str) -> Dict:
+        """Get BERT context analysis for better extraction"""
+        try:
+            bert_result = await self.bert_booster.bert.extract_medical_entities(text)
+            return {
+                "bert_entities": bert_result.entities,
+                "bert_confidence": bert_result.bert_confidence,
+                "medical_terms": [e.spanish_term for e in bert_result.entities if e.entity_type == "medication"],
+                "processing_time_ms": bert_result.processing_time_ms
+            }
+        except Exception as e:
+            logger.warning(f"BERT context analysis failed: {e}")
+            return {
+                "bert_entities": [],
+                "bert_confidence": 0.0,
+                "medical_terms": [],
+                "processing_time_ms": 0
+            }
+    
+    async def _identify_candidates_with_bert(self, text: str, bert_context: Dict) -> List[Dict]:
+        """Enhanced candidate identification with BERT context"""
         candidates = []
         words = re.findall(r'\b\w{3,}\b', text.lower())
         
-        # Strategy 1: Single word extraction
-        candidates.extend(self._extract_single_words(words))
+        # Strategy 1: BERT-enhanced single word extraction
+        candidates.extend(self._extract_single_words_with_bert(words, bert_context))
         
-        # Strategy 2: Bigram extraction (compound drug names)
-        candidates.extend(self._extract_bigrams(words))
+        # Strategy 2: BERT-enhanced bigram extraction
+        candidates.extend(self._extract_bigrams_with_bert(words, bert_context))
         
-        # Strategy 3: Pattern-based extraction (pharmaceutical suffixes)
-        candidates.extend(self._extract_by_patterns(text))
+        # Strategy 3: Enhanced pattern-based extraction
+        candidates.extend(self._extract_by_patterns_enhanced(text, bert_context))
         
-        # Strategy 4: Context-aware extraction (future enhancement)
-        # candidates.extend(self._extract_context_aware(text, words))
+        # Strategy 4: BERT entity-based extraction
+        candidates.extend(self._extract_bert_entities(bert_context))
         
         return self._deduplicate_candidates(candidates)
     
-    def _extract_single_words(self, words: List[str]) -> List[Dict]:
-        """Extract single-word medication candidates"""
+    def _extract_single_words_with_bert(self, words: List[str], bert_context: Dict) -> List[Dict]:
+        """Extract single-word candidates with BERT enhancement"""
         candidates = []
+        bert_terms = set(bert_context.get("medical_terms", []))
         
         for i, word in enumerate(words):
             if len(word) >= 4:  # Filter very short words
+                # Check if BERT identified this as medical
+                bert_boost = 0.2 if word in bert_terms else 0.0
+                
                 candidates.append({
                     "term": word,
-                    "strategy": "single_word",
+                    "strategy": "single_word_bert_enhanced",
                     "context": " ".join(words[max(0,i-2):i+3]),
                     "position": i,
                     "confidence_modifiers": {
                         "word_length": len(word),
-                        "position_ratio": i / len(words) if words else 0
+                        "position_ratio": i / len(words) if words else 0,
+                        "bert_identified": word in bert_terms,
+                        "bert_confidence_boost": bert_boost
                     }
                 })
         
         return candidates
     
-    def _extract_bigrams(self, words: List[str]) -> List[Dict]:
-        """Extract two-word medication candidates (e.g., 'birth control')"""
+    def _extract_bigrams_with_bert(self, words: List[str], bert_context: Dict) -> List[Dict]:
+        """Extract two-word candidates with BERT enhancement"""
         candidates = []
+        bert_terms = set(bert_context.get("medical_terms", []))
         
         for i in range(len(words)-1):
             bigram = f"{words[i]} {words[i+1]}"
+            # Check if BERT identified this bigram as medical
+            bert_boost = 0.25 if bigram in bert_terms else 0.0
+            
             candidates.append({
                 "term": bigram,
-                "strategy": "bigram",
+                "strategy": "bigram_bert_enhanced",
                 "context": " ".join(words[max(0,i-1):i+4]),
                 "position": i,
                 "confidence_modifiers": {
                     "compound_length": len(bigram),
-                    "first_word_length": len(words[i])
+                    "first_word_length": len(words[i]),
+                    "bert_identified": bigram in bert_terms,
+                    "bert_confidence_boost": bert_boost
                 }
             })
         
         return candidates
     
-    def _extract_by_patterns(self, text: str) -> List[Dict]:
-        """Extract medications using known pharmaceutical patterns"""
+    def _extract_by_patterns_enhanced(self, text: str, bert_context: Dict) -> List[Dict]:
+        """Enhanced pattern extraction with BERT context"""
         candidates = []
         
-        # Common medication suffix patterns with confidence weights
+        # Enhanced medication suffix patterns with BERT validation
         patterns = {
-            r'\b\w+mycin\b': 0.8,    # antibiotics (azithromycin, erythromycin)
+            r'\b\w+mycin\b': 0.8,    # antibiotics
             r'\b\w+cillin\b': 0.85,  # penicillin family
             r'\b\w+prazole\b': 0.9,  # proton pump inhibitors
             r'\b\w+statin\b': 0.85,  # cholesterol medications
-            r'\b\w+pril\b': 0.8,     # ACE inhibitors (lisinopril)
-            r'\b\w+lol\b': 0.75,     # beta blockers (metoprolol)
-            r'\b\w+ide\b': 0.7,      # diuretics (furosemide)
+            r'\b\w+pril\b': 0.8,     # ACE inhibitors
+            r'\b\w+lol\b': 0.75,     # beta blockers
+            r'\b\w+ide\b': 0.7,      # diuretics
             r'\b\w+pine\b': 0.7,     # calcium channel blockers
+            # Spanish medication patterns
+            r'\b\w+ina\b': 0.6,      # Spanish medication suffix
+            r'\b\w+ol\b': 0.65,      # Spanish medication suffix
         }
+        
+        bert_terms = set(bert_context.get("medical_terms", []))
         
         for pattern, pattern_confidence in patterns.items():
             matches = re.finditer(pattern, text.lower())
@@ -135,19 +187,114 @@ class MedicationExtractionService:
                 term = match.group()
                 word_position = len(text[:match.start()].split())
                 
+                # Check if BERT also identified this term
+                bert_boost = 0.15 if term in bert_terms else 0.0
+                
                 candidates.append({
                     "term": term,
-                    "strategy": "pattern_match",
+                    "strategy": "pattern_match_bert_enhanced",
                     "context": text[max(0, match.start()-20):match.end()+20],
                     "position": word_position,
                     "confidence_modifiers": {
                         "pattern_matched": True,
                         "pattern_confidence": pattern_confidence,
-                        "suffix_type": pattern
+                        "suffix_type": pattern,
+                        "bert_identified": term in bert_terms,
+                        "bert_confidence_boost": bert_boost
                     }
                 })
         
         return candidates
+    
+    def _extract_bert_entities(self, bert_context: Dict) -> List[Dict]:
+        """Extract candidates directly from BERT entities"""
+        candidates = []
+        
+        for entity in bert_context.get("bert_entities", []):
+            if entity.entity_type == "medication":
+                candidates.append({
+                    "term": entity.spanish_term,
+                    "strategy": "bert_entity_extraction",
+                    "context": entity.context,
+                    "position": entity.start_position,
+                    "confidence_modifiers": {
+                        "bert_entity": True,
+                        "bert_confidence": entity.confidence,
+                        "bert_entity_type": entity.entity_type,
+                        "bert_confidence_boost": min(0.3, entity.confidence)
+                    }
+                })
+        
+        return candidates
+    
+    async def _bert_pre_filter(self, candidates: List[Dict], text: str) -> List[Dict]:
+        """Pre-filter candidates using BERT confidence"""
+        filtered_candidates = []
+        
+        for candidate in candidates:
+            # Calculate BERT-enhanced confidence
+            bert_boost = candidate.get("confidence_modifiers", {}).get("bert_confidence_boost", 0.0)
+            bert_identified = candidate.get("confidence_modifiers", {}).get("bert_identified", False)
+            
+            # Keep candidates with BERT identification or high pattern confidence
+            if bert_identified or candidate.get("confidence_modifiers", {}).get("pattern_confidence", 0.0) > 0.7:
+                filtered_candidates.append(candidate)
+        
+        logger.info(f"BERT pre-filter: {len(candidates)} → {len(filtered_candidates)} candidates")
+        return filtered_candidates
+    
+    async def _validate_candidates_safe(self, candidates: List[Dict], medical_context: str, original_text: str) -> List[Dict]:
+        """Safe validation with proper error handling"""
+        validated_medications = []
+        
+        for candidate in candidates:
+            try:
+                # Use API client to lookup medication with safety checks
+                api_result = await self.api_client.lookup_medication(candidate["term"], medical_context)
+                
+                # CRITICAL FIX: Ensure api_result is never None
+                if api_result is None:
+                    logger.warning(f"API returned None for '{candidate['term']}', using fallback")
+                    api_result = {
+                        "drug_name": candidate["term"],
+                        "canonical_name": candidate["term"],
+                        "brand_names": [],
+                        "generic_names": [],
+                        "drug_class": [],
+                        "indications": [],
+                        "contraindications": [],
+                        "pregnancy_category": "unknown",
+                        "translations": {},
+                        "specialty_specific": {}
+                    }
+                
+                # Calculate enhanced confidence score with BERT boost
+                base_confidence = self.confidence_scorer.calculate_confidence(
+                    candidate, api_result, original_text
+                )
+                
+                # Add BERT confidence boost
+                bert_boost = candidate.get("confidence_modifiers", {}).get("bert_confidence_boost", 0.0)
+                final_confidence = min(base_confidence + bert_boost, 1.0)
+                
+                # Filter by confidence threshold
+                if final_confidence > self.confidence_threshold:
+                    validated_medications.append({
+                        "medication": api_result,
+                        "extraction_confidence": final_confidence,
+                        "extraction_strategy": candidate["strategy"],
+                        "context": candidate["context"],
+                        "position": candidate["position"],
+                        "original_term": candidate["term"],
+                        "bert_boost": bert_boost,
+                        "validation_timestamp": datetime.now().isoformat()
+                    })
+                    
+            except Exception as e:
+                logger.warning(f"⚠️ Safe validation failed for '{candidate['term']}': {e}")
+                continue
+        
+        return validated_medications
     
     def _deduplicate_candidates(self, candidates: List[Dict]) -> List[Dict]:
         """Remove duplicate terms while preserving strategy diversity"""
@@ -162,38 +309,6 @@ class MedicationExtractionService:
                 unique_candidates.append(candidate)
         
         return unique_candidates
-    
-    async def _validate_candidates(self, candidates: List[Dict], medical_context: str, original_text: str) -> List[Dict]:
-        """Validate candidates using external medical APIs"""
-        validated_medications = []
-        
-        for candidate in candidates:
-            try:
-                # Use API client to lookup medication
-                api_result = await self.api_client.lookup_medication(candidate["term"], medical_context)
-                
-                # Calculate confidence score
-                confidence_score = self.confidence_scorer.calculate_confidence(
-                    candidate, api_result, original_text
-                )
-                
-                # Filter by confidence threshold
-                if confidence_score > self.confidence_threshold:
-                    validated_medications.append({
-                        "medication": api_result,
-                        "extraction_confidence": confidence_score,
-                        "extraction_strategy": candidate["strategy"],
-                        "context": candidate["context"],
-                        "position": candidate["position"],
-                        "original_term": candidate["term"],
-                        "validation_timestamp": datetime.now().isoformat()
-                    })
-                    
-            except Exception as e:
-                logger.warning(f"⚠️ API validation failed for '{candidate['term']}': {e}")
-                continue
-        
-        return validated_medications
     
     def _generate_extraction_metadata(self, candidates: List[Dict], validated: List[Dict], text: str) -> Dict:
         """Generate metadata for learning and analytics"""
