@@ -1,0 +1,2757 @@
+{
+  "sessionId": "session_1756412735587_j0qp37u1p",
+  "timestamp": "2025-08-28T20:36:54.511Z",
+  "stats": {
+    "totalMessages": 22,
+    "doctorMessages": 11,
+    "patientMessages": 11,
+    "systemMessages": 0,
+    "translations": 11,
+    "duration": "6m 44s",
+    "medications": 46,
+    "alerts": 5
+  },
+  "medicalAlerts": [
+    {
+      "id": "alert_1756412836321_0.8826093322921248",
+      "type": "pregnancy_context",
+      "message": "Patient pregnancy stage: first_trimester",
+      "severity": "high",
+      "timestamp": "2025-08-28T20:27:16.321Z"
+    },
+    {
+      "id": "alert_1756412862468_0.8035895650809417",
+      "type": "pregnancy_context",
+      "message": "Patient pregnancy stage: unknown",
+      "severity": "high",
+      "timestamp": "2025-08-28T20:27:42.468Z"
+    },
+    {
+      "id": "alert_1756412889902_0.19802831004368004",
+      "type": "pregnancy_context",
+      "message": "Patient pregnancy stage: third_trimester",
+      "severity": "high",
+      "timestamp": "2025-08-28T20:28:09.902Z"
+    },
+    {
+      "id": "alert_1756412963620_0.8857177978771554",
+      "type": "pregnancy_context",
+      "message": "Patient pregnancy stage: third_trimester",
+      "severity": "high",
+      "timestamp": "2025-08-28T20:29:23.620Z"
+    },
+    {
+      "id": "alert_1756413061056_0.21061263333580804",
+      "type": "pregnancy_context",
+      "message": "Patient pregnancy stage: third_trimester",
+      "severity": "high",
+      "timestamp": "2025-08-28T20:31:01.056Z"
+    }
+  ],
+  "medications": [
+    "your",
+    "cervix",
+    "under",
+    "millimeters",
+    "this",
+    "stage",
+    "consider",
+    "placing",
+    "progesterone",
+    "therapy",
+    "even",
+    "circlage",
+    "depending",
+    "severity",
+    "these",
+    "interventions",
+    "help",
+    "reduce",
+    "risk",
+    "preterm",
+    "birth",
+    "your cervix",
+    "cervix under",
+    "under millimeters",
+    "millimeters this",
+    "this stage",
+    "stage may",
+    "may consider",
+    "consider placing",
+    "placing you",
+    "you progesterone",
+    "progesterone therapy",
+    "therapy even",
+    "even circlage",
+    "circlage depending",
+    "depending the",
+    "the severity",
+    "severity these",
+    "these interventions",
+    "interventions help",
+    "help reduce",
+    "reduce the",
+    "the risk",
+    "risk preterm",
+    "preterm birth",
+    "ter"
+  ],
+  "messages": [
+    {
+      "timestamp": "2025-08-28T20:26:00.438Z",
+      "speaker": "doctor",
+      "type": "transcription",
+      "content": {
+        "text": " Good morning, Miss Gonzalez. I'm Dr. Carter, your OBGYN. How are you feeling today?"
+      }
+    },
+    {
+      "timestamp": "2025-08-28T20:26:19.550Z",
+      "speaker": "patient",
+      "type": "translation",
+      "content": {
+        "original_text": " Good morning, Miss Gonzalez. I'm Dr. Carter, your OBGYN. How are you feeling today?",
+        "translated_text": "Buenos días, señorita González. Soy el Dr. Carter, tu obgyn. ¿Cómo te sientes hoy?",
+        "medical_terms": [
+          {
+            "original_text": "good",
+            "canonical_name": "good",
+            "category": "medication",
+            "confidence": 0.6000000000000001,
+            "translation": "good",
+            "context_clues": [
+              "Uses • temporarily relieves common cold/flu symptoms: • nasal congestion • cough due to minor throat and bronchial irritation • sore throat • headache • minor aches and pains • fever"
+            ],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "morning",
+            "canonical_name": "morning",
+            "category": "medication",
+            "confidence": 0.6000000000000001,
+            "translation": "morning",
+            "context_clues": [
+              "Use Decreases bacteria on hands."
+            ],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "miss",
+            "canonical_name": "miss",
+            "category": "medication",
+            "confidence": 0.5,
+            "translation": "miss",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "gonzalez",
+            "canonical_name": "gonzalez",
+            "category": "medication",
+            "confidence": 0.55,
+            "translation": "gonzalez",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "carter",
+            "canonical_name": "carter",
+            "category": "medication",
+            "confidence": 0.5,
+            "translation": "carter",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "your",
+            "canonical_name": "your",
+            "category": "medication",
+            "confidence": 0.6,
+            "translation": "your",
+            "context_clues": [
+              "USES Helps prevent sunburn."
+            ],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "obgyn",
+            "canonical_name": "obgyn",
+            "category": "medication",
+            "confidence": 0.5,
+            "translation": "obgyn",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "feeling",
+            "canonical_name": "feeling",
+            "category": "medication",
+            "confidence": 0.6,
+            "translation": "feeling",
+            "context_clues": [
+              "Use helps protect against cavities"
+            ],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "today",
+            "canonical_name": "today",
+            "category": "medication",
+            "confidence": 0.5,
+            "translation": "today",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "good morning",
+            "canonical_name": "good morning",
+            "category": "medication",
+            "confidence": 0.7000000000000001,
+            "translation": "good morning",
+            "context_clues": [
+              "1 INDICATIONS AND USAGE Naproxen tablets and naproxen sodium tablets are indicated for: the relief of the signs and symptoms of: • rheumatoid arthritis • osteoarthritis • ankylosing spondylitis • Polyarticular Juvenile Idiopathic Arthritis Naproxen tablets and naproxen sodium tablets are also indicated for: the relief of signs and symptoms of: • tendonitis • bursitis • acute gout the management of: • pain • primary dysmenorrhea Naproxen tablets and naproxen sodium tablets are non-steroidal anti-inflammatory drugs indicated for: the relief of the signs and symptoms of: • rheumatoid arthritis • osteoarthritis • ankylosing spondylitis • polyarticular juvenile idiopathic arthritis Naproxen tablets and naproxen sodium tablets are also indicated for: the relief of signs and symptoms of: • tendonitis • bursitis • acute gout the management of: • pain • primary dysmenorrhea"
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "morning miss",
+            "canonical_name": "morning miss",
+            "category": "medication",
+            "confidence": 0.7000000000000001,
+            "translation": "morning miss",
+            "context_clues": [
+              "1 INDICATIONS AND USAGE MEKINIST is a kinase inhibitor indicated as a single agent for the treatment of BRAF-inhibitor treatment-naïve patients with unresectable or metastatic melanoma with BRAF V600E or V600K mutations as detected by an FDA-approved test. ( 1.1 , 2.1 ) MEKINIST is indicated, in combination with dabrafenib, for: the treatment of patients with unresectable or metastatic melanoma with BRAF V600E or V600K mutations as detected by an FDA-approved test. ( 1.1 , 2.1 ) the adjuvant treatment of patients with melanoma with BRAF V600E or V600K mutations, as detected by an FDA-approved test, and involvement of lymph node(s), following complete resection. ( 1.2 , 2.1 ) the treatment of patients with metastatic non-small cell lung cancer (NSCLC) with BRAF V600E mutation as detected by an FDA-approved test. ( 1.3 , 2.1 ) the treatment of patients with locally advanced or metastatic anaplastic thyroid cancer (ATC) with BRAF V600E mutation, as detected by an FDA-approved test, and with no satisfactory locoregional treatment options. ( 1.4 , 2.1 ) the treatment of adult and pediatric patients 1 year of age and older with unresectable or metastatic solid tumors with BRAF V600E mutation who have progressed following prior treatment and have no satisfactory alternative treatment options. This indication is approved under accelerated approval based on overall response rate and duration of response. Continued approval for this indication may be contingent upon verification and description of clinical benefit in a confirmatory trial(s). ( 1.5 , 2.1 ) the treatment of pediatric patients 1 year of age and older with low-grade glioma (LGG) with a BRAF V600E mutation who require systemic therapy. ( 1.6 , 2.1 ) Limitations of Use : MEKINIST is not indicated for treatment of patients with colorectal cancer because of known intrinsic resistance to BRAF inhibition. ( 1.7 , 12.1 ) 1.1 BRAF V600E or V600K Mutation-Positive Unresectable or Metastatic Melanoma MEKINIST ® is indicated, as a single agent in BRAF-inhibitor treatment-naïve patients or in combination with dabrafenib, for the treatment of patients with unresectable or metastatic melanoma with BRAF V600E or V600K mutations, as detected by an FDA-approved test [see Dosage and Administration (2.1)] . 1.2 Adjuvant Treatment of BRAF V600E or V600K Mutation-Positive Melanoma MEKINIST is indicated, in combination with dabrafenib, for the adjuvant treatment of patients with melanoma with BRAF V600E or V600K mutations as detected by an FDA-approved test, and involvement of lymph node(s), following complete resection [see Dosage and Administration (2.1)]. 1.3 BRAF V600E Mutation-Positive Metastatic NSCLC MEKINIST is indicated, in combination with dabrafenib, for the treatment of patients with metastatic non-small cell lung cancer (NSCLC) with BRAF V600E mutation as detected by an FDA-approved test [see Dosage and Administration (2.1)] . 1.4 BRAF V600E Mutation-Positive Locally Advanced or Metastatic Anaplastic Thyroid Cancer MEKINIST is indicated, in combination with dabrafenib, for the treatment of patients with locally advanced or metastatic anaplastic thyroid cancer (ATC) with BRAF V600E mutation, as detected by an FDA-approved test, and with no satisfactory locoregional treatment options [see Dosage and Administration (2.1)] . 1.5 BRAF V600E Mutation-Positive Unresectable or Metastatic Solid Tumors MEKINIST is indicated, in combination with dabrafenib, for the treatment of adult and pediatric patients 1 year of age and older with unresectable or metastatic solid tumors with BRAF V600E mutation who have progressed following prior treatment and have no satisfactory alternative treatment options [see Dosage and Administration (2.1)] . This indication is approved under accelerated approval based on overall response rate and duration of response [see Clinical Studies (14.6)] . Continued approval for this indication may be contingent upon verification and description of clinical benefit in a confirmatory trial(s). 1.6 BRAF V600E Mutation-Positive Low-Grade Glioma MEKINIST is indicated, in combination with dabrafenib, for the treatment of pediatric patients 1 year of age and older with low-grade glioma (LGG) with a BRAF V600E mutation who require systemic therapy [see Dosage and Administration (2.1)] . 1.7 Limitations of Use MEKINIST is not indicated for treatment of patients with colorectal cancer because of known intrinsic resistance to BRAF inhibition [see Indications and Usage (1.5), Clinical Pharmacology (12.1)] ."
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "miss gonzalez",
+            "canonical_name": "miss gonzalez",
+            "category": "medication",
+            "confidence": 0.7000000000000001,
+            "translation": "miss gonzalez",
+            "context_clues": [
+              "1 INDICATIONS AND USAGE Greer Standardized Mite ( Dermatophagoides farinae and/or Dermatophagoides pteronyssinus ) Extracts are allergenic extracts indicated for: skin test diagnosis of mite allergy treatment of patients with mite-induced allergic asthma, rhinitis and conjunctivitis. For immunotherapy, patients must show hypersensitivity to Dermatophagoides farinae ( D. farinae ) or Dermatophagoides pteronyssinus ( D. pteronyssinus ) based on their clinical history, allergen exposure history, and skin test reactivity. Greer Standardized Mite Extracts are allergenic extracts indicated for: Diagnosis of skin test reactivity to dust mite allergen (1) Treatment of mite-induced allergic asthma, rhinitis and conjunctivitis in patients that show hypersensitivity to dust mites based on clinical history, allergen exposure history, and skin test reactivity (1)"
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "C",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "gonzalez carter",
+            "canonical_name": "gonzalez carter",
+            "category": "medication",
+            "confidence": 0.6,
+            "translation": "gonzalez carter",
+            "context_clues": [
+              "Use: Hand sanitizer to help reduce bacteria on skin."
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "carter your",
+            "canonical_name": "carter your",
+            "category": "medication",
+            "confidence": 0.6,
+            "translation": "carter your",
+            "context_clues": [
+              "INDICATIONS Indications: MEZEREUM Itching"
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "your obgyn",
+            "canonical_name": "your obgyn",
+            "category": "medication",
+            "confidence": 0.6,
+            "translation": "your obgyn",
+            "context_clues": [
+              "USES Helps prevent sunburn."
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "obgyn how",
+            "canonical_name": "obgyn how",
+            "category": "medication",
+            "confidence": 0.7,
+            "translation": "obgyn how",
+            "context_clues": [
+              "INDICATIONS AND USAGE Ofloxacin ophthalmic solution is indicated for the treatment of infections caused by susceptible strains of the following bacteria in the conditions listed below:"
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "how are",
+            "canonical_name": "how are",
+            "category": "medication",
+            "confidence": 0.6,
+            "translation": "how are",
+            "context_clues": [
+              "INDICATIONS Condition listed above or as directed by the physician"
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "are you",
+            "canonical_name": "are you",
+            "category": "medication",
+            "confidence": 0.6,
+            "translation": "are you",
+            "context_clues": [
+              "INDICATIONS Condition listed above or as directed by the physician"
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "you feeling",
+            "canonical_name": "you feeling",
+            "category": "medication",
+            "confidence": 0.7,
+            "translation": "you feeling",
+            "context_clues": [
+              "1 INDICATIONS AND USAGE MEKINIST is a kinase inhibitor indicated as a single agent for the treatment of BRAF-inhibitor treatment-naïve patients with unresectable or metastatic melanoma with BRAF V600E or V600K mutations as detected by an FDA-approved test. ( 1.1 , 2.1 ) MEKINIST is indicated, in combination with dabrafenib, for: the treatment of patients with unresectable or metastatic melanoma with BRAF V600E or V600K mutations as detected by an FDA-approved test. ( 1.1 , 2.1 ) the adjuvant treatment of patients with melanoma with BRAF V600E or V600K mutations, as detected by an FDA-approved test, and involvement of lymph node(s), following complete resection. ( 1.2 , 2.1 ) the treatment of patients with metastatic non-small cell lung cancer (NSCLC) with BRAF V600E mutation as detected by an FDA-approved test. ( 1.3 , 2.1 ) the treatment of patients with locally advanced or metastatic anaplastic thyroid cancer (ATC) with BRAF V600E mutation, as detected by an FDA-approved test, and with no satisfactory locoregional treatment options. ( 1.4 , 2.1 ) the treatment of adult and pediatric patients 1 year of age and older with unresectable or metastatic solid tumors with BRAF V600E mutation who have progressed following prior treatment and have no satisfactory alternative treatment options. This indication is approved under accelerated approval based on overall response rate and duration of response. Continued approval for this indication may be contingent upon verification and description of clinical benefit in a confirmatory trial(s). ( 1.5 , 2.1 ) the treatment of pediatric patients 1 year of age and older with low-grade glioma (LGG) with a BRAF V600E mutation who require systemic therapy. ( 1.6 , 2.1 ) Limitations of Use : MEKINIST is not indicated for treatment of patients with colorectal cancer because of known intrinsic resistance to BRAF inhibition. ( 1.7 , 12.1 ) 1.1 BRAF V600E or V600K Mutation-Positive Unresectable or Metastatic Melanoma MEKINIST ® is indicated, as a single agent in BRAF-inhibitor treatment-naïve patients or in combination with dabrafenib, for the treatment of patients with unresectable or metastatic melanoma with BRAF V600E or V600K mutations, as detected by an FDA-approved test [see Dosage and Administration (2.1)] . 1.2 Adjuvant Treatment of BRAF V600E or V600K Mutation-Positive Melanoma MEKINIST is indicated, in combination with dabrafenib, for the adjuvant treatment of patients with melanoma with BRAF V600E or V600K mutations as detected by an FDA-approved test, and involvement of lymph node(s), following complete resection [see Dosage and Administration (2.1)]. 1.3 BRAF V600E Mutation-Positive Metastatic NSCLC MEKINIST is indicated, in combination with dabrafenib, for the treatment of patients with metastatic non-small cell lung cancer (NSCLC) with BRAF V600E mutation as detected by an FDA-approved test [see Dosage and Administration (2.1)] . 1.4 BRAF V600E Mutation-Positive Locally Advanced or Metastatic Anaplastic Thyroid Cancer MEKINIST is indicated, in combination with dabrafenib, for the treatment of patients with locally advanced or metastatic anaplastic thyroid cancer (ATC) with BRAF V600E mutation, as detected by an FDA-approved test, and with no satisfactory locoregional treatment options [see Dosage and Administration (2.1)] . 1.5 BRAF V600E Mutation-Positive Unresectable or Metastatic Solid Tumors MEKINIST is indicated, in combination with dabrafenib, for the treatment of adult and pediatric patients 1 year of age and older with unresectable or metastatic solid tumors with BRAF V600E mutation who have progressed following prior treatment and have no satisfactory alternative treatment options [see Dosage and Administration (2.1)] . This indication is approved under accelerated approval based on overall response rate and duration of response [see Clinical Studies (14.6)] . Continued approval for this indication may be contingent upon verification and description of clinical benefit in a confirmatory trial(s). 1.6 BRAF V600E Mutation-Positive Low-Grade Glioma MEKINIST is indicated, in combination with dabrafenib, for the treatment of pediatric patients 1 year of age and older with low-grade glioma (LGG) with a BRAF V600E mutation who require systemic therapy [see Dosage and Administration (2.1)] . 1.7 Limitations of Use MEKINIST is not indicated for treatment of patients with colorectal cancer because of known intrinsic resistance to BRAF inhibition [see Indications and Usage (1.5), Clinical Pharmacology (12.1)] ."
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "feeling today",
+            "canonical_name": "feeling today",
+            "category": "medication",
+            "confidence": 0.6,
+            "translation": "feeling today",
+            "context_clues": [
+              "Use reduces withdrawal symptoms, including nicotine craving, associated with quitting smoking"
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          }
+        ],
+        "medical_notes": [],
+        "follow_up_questions": [],
+        "confidence": 0.95,
+        "medical_accuracy": 1
+      }
+    },
+    {
+      "timestamp": "2025-08-28T20:26:38.034Z",
+      "speaker": "patient",
+      "type": "transcription",
+      "content": {
+        "text": " Buenos días, doctora. Estoy un poco preocupada. He tenido algunos dolores en la parte baja del abdomen."
+      }
+    },
+    {
+      "timestamp": "2025-08-28T20:26:58.897Z",
+      "speaker": "doctor",
+      "type": "translation",
+      "content": {
+        "original_text": " Buenos días, doctora. Estoy un poco preocupada. He tenido algunos dolores en la parte baja del abdomen.",
+        "translated_text": "Good morning, doctor. I am a little worried. I have had some pains in the lower abdomen.",
+        "medical_terms": [
+          {
+            "original_text": "buenos",
+            "canonical_name": "buenos",
+            "category": "medication",
+            "confidence": 0.5,
+            "translation": "buenos",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "días",
+            "canonical_name": "días",
+            "category": "medication",
+            "confidence": 0.5,
+            "translation": "días",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "doctora",
+            "canonical_name": "doctora",
+            "category": "medication",
+            "confidence": 0.5,
+            "translation": "doctora",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "estoy",
+            "canonical_name": "estoy",
+            "category": "medication",
+            "confidence": 0.5,
+            "translation": "estoy",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "poco",
+            "canonical_name": "poco",
+            "category": "medication",
+            "confidence": 0.55,
+            "translation": "poco",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "preocupada",
+            "canonical_name": "preocupada",
+            "category": "medication",
+            "confidence": 0.5,
+            "translation": "preocupada",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "tenido",
+            "canonical_name": "tenido",
+            "category": "medication",
+            "confidence": 0.5,
+            "translation": "tenido",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "algunos",
+            "canonical_name": "algunos",
+            "category": "medication",
+            "confidence": 0.5,
+            "translation": "algunos",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "dolores",
+            "canonical_name": "dolores",
+            "category": "medication",
+            "confidence": 0.5,
+            "translation": "dolores",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "parte",
+            "canonical_name": "parte",
+            "category": "medication",
+            "confidence": 0.5,
+            "translation": "parte",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "baja",
+            "canonical_name": "baja",
+            "category": "medication",
+            "confidence": 0.6,
+            "translation": "baja",
+            "context_clues": [
+              "Use(s) ■ aids in the prevention of cavities. ■ helps prevent and reduce plaque (antiplague). ■ helps to remove bad breath."
+            ],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "abdomen",
+            "canonical_name": "abdomen",
+            "category": "medication",
+            "confidence": 0.5,
+            "translation": "abdomen",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "buenos días",
+            "canonical_name": "buenos días",
+            "category": "medication",
+            "confidence": 0.5,
+            "translation": "buenos días",
+            "context_clues": [],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "días doctora",
+            "canonical_name": "días doctora",
+            "category": "medication",
+            "confidence": 0.5,
+            "translation": "días doctora",
+            "context_clues": [],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "doctora estoy",
+            "canonical_name": "doctora estoy",
+            "category": "medication",
+            "confidence": 0.5,
+            "translation": "doctora estoy",
+            "context_clues": [],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "estoy poco",
+            "canonical_name": "estoy poco",
+            "category": "medication",
+            "confidence": 0.6000000000000001,
+            "translation": "estoy poco",
+            "context_clues": [
+              "Uses treats head, pubic (crab), and body lice"
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "poco preocupada",
+            "canonical_name": "poco preocupada",
+            "category": "medication",
+            "confidence": 0.5,
+            "translation": "poco preocupada",
+            "context_clues": [],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "preocupada tenido",
+            "canonical_name": "preocupada tenido",
+            "category": "medication",
+            "confidence": 0.55,
+            "translation": "preocupada tenido",
+            "context_clues": [
+              "Uses Prompt temporary relief of: pain during urination burning sensation of urgency increased frequency associated with urinary tract infections."
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "tenido algunos",
+            "canonical_name": "tenido algunos",
+            "category": "medication",
+            "confidence": 0.6,
+            "translation": "tenido algunos",
+            "context_clues": [
+              "Uses treats head, pubic (crab), and body lice"
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "algunos dolores",
+            "canonical_name": "algunos dolores",
+            "category": "medication",
+            "confidence": 0.6,
+            "translation": "algunos dolores",
+            "context_clues": [
+              "Uses temporarily relieves minor aches and pain due to: headache muscular aches"
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "dolores parte",
+            "canonical_name": "dolores parte",
+            "category": "medication",
+            "confidence": 0.6,
+            "translation": "dolores parte",
+            "context_clues": [
+              "Uses treats head, pubic (crab), and body lice"
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "parte baja",
+            "canonical_name": "parte baja",
+            "category": "medication",
+            "confidence": 0.7,
+            "translation": "parte baja",
+            "context_clues": [
+              "INDICATIONS AND USAGE LYRICA is indicated for: - Neuropathic pain associated with diabetic peripheral neuropathy (DPN) ( 1.1 ) - Post herpetic neuralgia (PHN) ( 1.2 ) - Adjunctive therapy for adult patients with partial onset seizures ( 1.3 ) - Fibromyalgia ( 1.4 )",
+              "1.1 Management of neuropathic pain associated with diabetic peripheral neuropathy 1.2 Management of postherpetic neuralgia 1.3 Adjunctive therapy for adult patients with partial onset seizures 1.4 Management of fibromyalgia 1 INDICATIONS AND USAGE LYRICA is indicated for: 1.1 Management of neuropathic pain associated with diabetic peripheral neuropathy 1.2 Management of postherpetic neuralgia 1.3 Adjunctive therapy for adult patients with partial onset seizures 1.4 Management of fibromyalgia"
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "C",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "baja del",
+            "canonical_name": "baja del",
+            "category": "medication",
+            "confidence": 0.7,
+            "translation": "baja del",
+            "context_clues": [
+              "INDICATIONS & USAGE Metronidazole vaginal gel USP, 0.75% is indicated in the treatment of bacterial vaginosis (formerly referred to as Haemophilus vaginitis, Gardnerella vaginitis, nonspecific vaginitis, Corynebacterium vaginitis, or anaerobic vaginosis). NOTE: For purposes of this indication, a clinical diagnosis of bacterial vaginosis is usually defined by the presence of a homogeneous vaginal discharge that (a) has a pH of greater than 4.5, (b) emits a “fishy” amine odor when mixed with a 10% KOH solution, and (c) contains clue cells on microscopic examination. Gram’s stain results consistent with a diagnosis of bacterial vaginosis include (a) markedly reduced or absent Lactobacillus morphology, (b) predominance of Gardnerella morphotype, and (c) absent or few white blood cells. Other pathogens commonly associated with vulvovaginitis, e.g., Trichomonas vaginalis , Chlamydia trachomatis , N . gonorrhoeae , Candida albicans , and Herpes simplex virus should be ruled out."
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "B",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "del abdomen",
+            "canonical_name": "del abdomen",
+            "category": "medication",
+            "confidence": 0.6,
+            "translation": "del abdomen",
+            "context_clues": [
+              "Use for the preparation of the patient's skin prior to surgery. Helps to reduce bacteria that potentially can cause skin infection."
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          }
+        ],
+        "medical_notes": [],
+        "follow_up_questions": [],
+        "confidence": 0.95,
+        "medical_accuracy": 1
+      }
+    },
+    {
+      "timestamp": "2025-08-28T20:27:15.808Z",
+      "speaker": "doctor",
+      "type": "transcription",
+      "content": {
+        "text": " Thank you for letting me know. Before we go into the symptoms, let's confirm some background. You're currently 26 weeks pregnant, correct?"
+      }
+    },
+    {
+      "timestamp": "2025-08-28T20:27:16.421Z",
+      "speaker": "patient",
+      "type": "translation",
+      "content": {
+        "original_text": " Thank you for letting me know. Before we go into the symptoms, let's confirm some background. You're currently 26 weeks pregnant, correct?",
+        "translated_text": "Gracias por avisarme. Antes de entrar en los síntomas, confirmemos algunos antecedentes. Actualmente tienes 26 semanas de embarazo, ¿correcto?",
+        "medical_terms": [],
+        "medical_notes": [
+          {
+            "type": "pregnancy_context",
+            "message": "Patient pregnancy stage: first_trimester",
+            "importance": "high"
+          }
+        ],
+        "follow_up_questions": [
+          "Are you taking prenatal vitamins?",
+          "When is your next prenatal appointment?",
+          "Are you experiencing any concerning symptoms?"
+        ],
+        "confidence": 0.95,
+        "medical_accuracy": 0
+      }
+    },
+    {
+      "timestamp": "2025-08-28T20:27:41.900Z",
+      "speaker": "patient",
+      "type": "transcription",
+      "content": {
+        "text": " Sí, tengo 26 semanas, es mi segundo embarazo. El primero término en un parto prematuro a las 30 y 4 semanas."
+      }
+    },
+    {
+      "timestamp": "2025-08-28T20:27:42.568Z",
+      "speaker": "doctor",
+      "type": "translation",
+      "content": {
+        "original_text": " Sí, tengo 26 semanas, es mi segundo embarazo. El primero término en un parto prematuro a las 30 y 4 semanas.",
+        "translated_text": "Yes, I'm 26 weeks, it's my second pregnancy. The first term in premature delivery at 30 and 4 weeks.",
+        "medical_terms": [],
+        "medical_notes": [
+          {
+            "type": "pregnancy_context",
+            "message": "Patient pregnancy stage: unknown",
+            "importance": "high"
+          }
+        ],
+        "follow_up_questions": [
+          "Are you taking prenatal vitamins?",
+          "When is your next prenatal appointment?",
+          "Are you experiencing any concerning symptoms?"
+        ],
+        "confidence": 0.95,
+        "medical_accuracy": 0
+      }
+    },
+    {
+      "timestamp": "2025-08-28T20:28:08.737Z",
+      "speaker": "doctor",
+      "type": "transcription",
+      "content": {
+        "text": " Understood, because of your history of preterm labor, we are monitoring you more closely. Can you describe the abdominal pain? Is it cramping, sharp, or constant pressure?"
+      }
+    },
+    {
+      "timestamp": "2025-08-28T20:28:10.002Z",
+      "speaker": "patient",
+      "type": "translation",
+      "content": {
+        "original_text": " Understood, because of your history of preterm labor, we are monitoring you more closely. Can you describe the abdominal pain? Is it cramping, sharp, or constant pressure?",
+        "translated_text": "Entendido, debido a su historial de trabajo prematuro, lo estamos monitoreando más de cerca. ¿Puedes describir el dolor abdominal? ¿Es una presión calambres, aguda o constante?",
+        "medical_terms": [],
+        "medical_notes": [
+          {
+            "type": "pregnancy_context",
+            "message": "Patient pregnancy stage: third_trimester",
+            "importance": "high"
+          }
+        ],
+        "follow_up_questions": [
+          "Are you taking prenatal vitamins?",
+          "When is your next prenatal appointment?",
+          "Are you experiencing any concerning symptoms?"
+        ],
+        "confidence": 0.95,
+        "medical_accuracy": 0
+      }
+    },
+    {
+      "timestamp": "2025-08-28T20:28:31.229Z",
+      "speaker": "patient",
+      "type": "transcription",
+      "content": {
+        "text": " Es como un colico. Va y viene. Dura unos 30 segundos y luego se quita. Me pasa varias veces al día."
+      }
+    },
+    {
+      "timestamp": "2025-08-28T20:28:53.403Z",
+      "speaker": "doctor",
+      "type": "translation",
+      "content": {
+        "original_text": " Es como un colico. Va y viene. Dura unos 30 segundos y luego se quita. Me pasa varias veces al día.",
+        "translated_text": "It is like a colic. Go and go. It lasts about 30 seconds and then takes off. It happens to me several times a day.",
+        "medical_terms": [
+          {
+            "original_text": "como",
+            "canonical_name": "como",
+            "category": "medication",
+            "confidence": 0.45,
+            "translation": "como",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "colico",
+            "canonical_name": "colico",
+            "category": "medication",
+            "confidence": 0.45,
+            "translation": "colico",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "viene",
+            "canonical_name": "viene",
+            "category": "medication",
+            "confidence": 0.45,
+            "translation": "viene",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "dura",
+            "canonical_name": "dura",
+            "category": "medication",
+            "confidence": 0.45,
+            "translation": "dura",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "unos",
+            "canonical_name": "unos",
+            "category": "medication",
+            "confidence": 0.45,
+            "translation": "unos",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "segundos",
+            "canonical_name": "segundos",
+            "category": "medication",
+            "confidence": 0.5,
+            "translation": "segundos",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "luego",
+            "canonical_name": "luego",
+            "category": "medication",
+            "confidence": 0.5,
+            "translation": "luego",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "quita",
+            "canonical_name": "quita",
+            "category": "medication",
+            "confidence": 0.6,
+            "translation": "quita",
+            "context_clues": [
+              "Uses treats head, pubic (crab), and body lice"
+            ],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "pasa",
+            "canonical_name": "pasa",
+            "category": "medication",
+            "confidence": 0.5,
+            "translation": "pasa",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "varias",
+            "canonical_name": "varias",
+            "category": "medication",
+            "confidence": 0.5,
+            "translation": "varias",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "veces",
+            "canonical_name": "veces",
+            "category": "medication",
+            "confidence": 0.5,
+            "translation": "veces",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "como colico",
+            "canonical_name": "como colico",
+            "category": "medication",
+            "confidence": 0.45,
+            "translation": "como colico",
+            "context_clues": [],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "colico viene",
+            "canonical_name": "colico viene",
+            "category": "medication",
+            "confidence": 0.65,
+            "translation": "colico viene",
+            "context_clues": [
+              "1 INDICATIONS AND USAGE Risperidone is an atypical antipsychotic indicated for: Treatment of schizophrenia ( 1.1 ) As monotherapy or adjunctive therapy with lithium or valproate, for the treatment of acute manic or mixed episodes associated with Bipolar I Disorder ( 1.2 ) Treatment of irritability associated with autistic disorder ( 1.3 ) 1.1 Schizophrenia Risperidone is indicated for the treatment of schizophrenia. Efficacy was established in 4 short-term trials in adults, 2 short-term trials in adolescents (ages 13 to 17 years), and one long-term maintenance trial in adults [see Clinical Studies (14.1) ] . 1.2 Bipolar Mania Monotherapy Risperidone is indicated for the treatment of acute manic or mixed episodes associated with Bipolar I Disorder. Efficacy was established in 2 short-term trials in adults and one short-term trial in children and adolescents (ages 10 to 17 years) [see Clinical Studies (14.2) ] . Adjunctive Therapy Risperidone adjunctive therapy with lithium or valproate is indicated for the treatment of acute manic or mixed episodes associated with Bipolar I Disorder. Efficacy was established in one short-term trial in adults [see Clinical Studies (14.3) ] . 1.3 Irritability Associated with Autistic Disorder Risperidone is indicated for the treatment of irritability associated with autistic disorder, including symptoms of aggression towards others, deliberate self-injuriousness, temper tantrums, and quickly changing moods. Efficacy was established in 3 short-term trials in children and adolescents (ages 5 to 17 years) [see Clinical Studies (14.4) ] ."
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "viene dura",
+            "canonical_name": "viene dura",
+            "category": "medication",
+            "confidence": 0.65,
+            "translation": "viene dura",
+            "context_clues": [
+              "1.3 INDICATIONS AND USAGE 4% Lidocaine Hydrochloride Injection, USP is indicated for the production of topical anesthesia of the mucous membranes of the respiratory tract or the genito-urinary tract. It may be injected trans-tracheally to anesthetize the larynx and trachea, and it may be administered by retrobulbar injection to provide anesthesia for ophthalmic surgery.",
+              "INDICATIONS AND USAGE MARCAINE is indicated for the production of local or regional anesthesia or analgesia for surgery, dental and oral surgery procedures, diagnostic and therapeutic procedures, and for obstetrical procedures. Only the 0.25% and 0.5% concentrations are indicated for obstetrical anesthesia. (See WARNINGS .) Experience with nonobstetrical surgical procedures in pregnant patients is not sufficient to recommend use of 0.75% concentration of MARCAINE in these patients. MARCAINE is not recommended for intravenous regional anesthesia (Bier Block). See WARNINGS . The routes of administration and indicated MARCAINE concentrations are: • local infiltration 0.25% • peripheral nerve block 0.25% and 0.5% • retrobulbar block 0.75% • sympathetic block 0.25% • lumbar epidural 0.25%, 0.5%, and 0.75% (0.75% not for obstetrical anesthesia) • caudal 0.25% and 0.5% • epidural test dose 0.5% with epinephrine 1:200,000 • dental blocks 0.5% with epinephrine 1:200,000 (See DOSAGE AND ADMINISTRATION for additional information). Standard textbooks should be consulted to determine the accepted procedures and techniques for the administration of MARCAINE."
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "dura unos",
+            "canonical_name": "dura unos",
+            "category": "medication",
+            "confidence": 0.65,
+            "translation": "dura unos",
+            "context_clues": [
+              "INDICATIONS AND USAGE Misoprostol tablets are indicated for reducing the risk of NSAID (nonsteroidal anti-inflammatory drugs, including aspirin)–induced gastric ulcers in patients at high risk of complications from gastric ulcer, e.g., the elderly and patients with concomitant debilitating disease, as well as patients at high risk of developing gastric ulceration, such as patients with a history of ulcer. Misoprostol has not been shown to reduce the risk of duodenal ulcers in patients taking NSAIDs. Misoprostol should be taken for the duration of NSAID therapy. Misoprostol has been shown to reduce the risk of gastric ulcers in controlled studies of 3 months’ duration. It had no effect, compared to placebo, on gastrointestinal pain or discomfort associated with NSAID use."
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "X",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "unos segundos",
+            "canonical_name": "unos segundos",
+            "category": "medication",
+            "confidence": 0.55,
+            "translation": "unos segundos",
+            "context_clues": [
+              "Uses treats head, pubic (crab), and body lice"
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "segundos luego",
+            "canonical_name": "segundos luego",
+            "category": "medication",
+            "confidence": 0.7,
+            "translation": "segundos luego",
+            "context_clues": [
+              "INDICATIONS & USAGE Metronidazole vaginal gel USP, 0.75% is indicated in the treatment of bacterial vaginosis (formerly referred to as Haemophilus vaginitis, Gardnerella vaginitis, nonspecific vaginitis, Corynebacterium vaginitis, or anaerobic vaginosis). NOTE: For purposes of this indication, a clinical diagnosis of bacterial vaginosis is usually defined by the presence of a homogeneous vaginal discharge that (a) has a pH of greater than 4.5, (b) emits a “fishy” amine odor when mixed with a 10% KOH solution, and (c) contains clue cells on microscopic examination. Gram’s stain results consistent with a diagnosis of bacterial vaginosis include (a) markedly reduced or absent Lactobacillus morphology, (b) predominance of Gardnerella morphotype, and (c) absent or few white blood cells. Other pathogens commonly associated with vulvovaginitis, e.g., Trichomonas vaginalis , Chlamydia trachomatis , N . gonorrhoeae , Candida albicans , and Herpes simplex virus should be ruled out."
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "B",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "luego quita",
+            "canonical_name": "luego quita",
+            "category": "medication",
+            "confidence": 0.6,
+            "translation": "luego quita",
+            "context_clues": [
+              "Uses treats head, pubic (crab), and body lice"
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "quita pasa",
+            "canonical_name": "quita pasa",
+            "category": "medication",
+            "confidence": 0.6,
+            "translation": "quita pasa",
+            "context_clues": [],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "pasa varias",
+            "canonical_name": "pasa varias",
+            "category": "medication",
+            "confidence": 0.6,
+            "translation": "pasa varias",
+            "context_clues": [
+              "Use reduces withdrawal symptoms, including nicotine craving, associated with quitting smoking"
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "varias veces",
+            "canonical_name": "varias veces",
+            "category": "medication",
+            "confidence": 0.7,
+            "translation": "varias veces",
+            "context_clues": [
+              "INDICATIONS & USAGE Metronidazole vaginal gel USP, 0.75% is indicated in the treatment of bacterial vaginosis (formerly referred to as Haemophilus vaginitis, Gardnerella vaginitis, nonspecific vaginitis, Corynebacterium vaginitis, or anaerobic vaginosis). NOTE: For purposes of this indication, a clinical diagnosis of bacterial vaginosis is usually defined by the presence of a homogeneous vaginal discharge that (a) has a pH of greater than 4.5, (b) emits a “fishy” amine odor when mixed with a 10% KOH solution, and (c) contains clue cells on microscopic examination. Gram’s stain results consistent with a diagnosis of bacterial vaginosis include (a) markedly reduced or absent Lactobacillus morphology, (b) predominance of Gardnerella morphotype, and (c) absent or few white blood cells. Other pathogens commonly associated with vulvovaginitis, e.g., Trichomonas vaginalis , Chlamydia trachomatis , N . gonorrhoeae , Candida albicans , and Herpes simplex virus should be ruled out."
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "B",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "veces día",
+            "canonical_name": "veces día",
+            "category": "medication",
+            "confidence": 0.5,
+            "translation": "veces día",
+            "context_clues": [],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          }
+        ],
+        "medical_notes": [],
+        "follow_up_questions": [],
+        "confidence": 0.95,
+        "medical_accuracy": 1
+      }
+    },
+    {
+      "timestamp": "2025-08-28T20:29:22.124Z",
+      "speaker": "doctor",
+      "type": "transcription",
+      "content": {
+        "text": " That sounds like Braxton Hicks contractions, which are common in the second and third trimester. But given your history, I want to rule out any cervical insufficiency or early effacement. Have you had any vaginal discharge, bleeding, or pressure in the pelvis?"
+      }
+    },
+    {
+      "timestamp": "2025-08-28T20:29:23.720Z",
+      "speaker": "patient",
+      "type": "translation",
+      "content": {
+        "original_text": " That sounds like Braxton Hicks contractions, which are common in the second and third trimester. But given your history, I want to rule out any cervical insufficiency or early effacement. Have you had any vaginal discharge, bleeding, or pressure in the pelvis?",
+        "translated_text": "Eso suena como contracciones Braxton Hicks, que son comunes en el segundo y tercer trimestre. Pero dado su historial, quiero descartar cualquier insuficiencia cervical o borramiento temprano. ¿Ha tenido algún flujo vaginal, sangrado o presión en la pelvis?",
+        "medical_terms": [],
+        "medical_notes": [
+          {
+            "type": "pregnancy_context",
+            "message": "Patient pregnancy stage: third_trimester",
+            "importance": "high"
+          }
+        ],
+        "follow_up_questions": [
+          "Are you taking prenatal vitamins?",
+          "When is your next prenatal appointment?",
+          "Are you experiencing any concerning symptoms?"
+        ],
+        "confidence": 0.95,
+        "medical_accuracy": 0
+      }
+    },
+    {
+      "timestamp": "2025-08-28T20:29:50.516Z",
+      "speaker": "patient",
+      "type": "transcription",
+      "content": {
+        "text": " He notado un poco más de flujo, pero es transparente. No he tenido sangrado. Si siento un poco de presión, como si el bebé estuviera muy bajo."
+      }
+    },
+    {
+      "timestamp": "2025-08-28T20:30:14.919Z",
+      "speaker": "doctor",
+      "type": "translation",
+      "content": {
+        "original_text": " He notado un poco más de flujo, pero es transparente. No he tenido sangrado. Si siento un poco de presión, como si el bebé estuviera muy bajo.",
+        "translated_text": "I have noticed a little more flow, but it is transparent. I have not had bleeding. If I feel a little pressure, as if the baby was very low.",
+        "medical_terms": [
+          {
+            "original_text": "notado",
+            "canonical_name": "notado",
+            "category": "medication",
+            "confidence": 0.45,
+            "translation": "notado",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "poco",
+            "canonical_name": "poco",
+            "category": "medication",
+            "confidence": 0.45,
+            "translation": "poco",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "flujo",
+            "canonical_name": "flujo",
+            "category": "medication",
+            "confidence": 0.45,
+            "translation": "flujo",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "pero",
+            "canonical_name": "pero",
+            "category": "medication",
+            "confidence": 0.45,
+            "translation": "pero",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "transparente",
+            "canonical_name": "transparente",
+            "category": "medication",
+            "confidence": 0.45,
+            "translation": "transparente",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "tenido",
+            "canonical_name": "tenido",
+            "category": "medication",
+            "confidence": 0.5,
+            "translation": "tenido",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "sangrado",
+            "canonical_name": "sangrado",
+            "category": "medication",
+            "confidence": 0.5,
+            "translation": "sangrado",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "siento",
+            "canonical_name": "siento",
+            "category": "medication",
+            "confidence": 0.5,
+            "translation": "siento",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "presión",
+            "canonical_name": "presión",
+            "category": "medication",
+            "confidence": 0.5,
+            "translation": "presión",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "como",
+            "canonical_name": "como",
+            "category": "medication",
+            "confidence": 0.5,
+            "translation": "como",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "bebé",
+            "canonical_name": "bebé",
+            "category": "medication",
+            "confidence": 0.5,
+            "translation": "bebé",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "estuviera",
+            "canonical_name": "estuviera",
+            "category": "medication",
+            "confidence": 0.5,
+            "translation": "estuviera",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "bajo",
+            "canonical_name": "bajo",
+            "category": "medication",
+            "confidence": 0.5,
+            "translation": "bajo",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "notado poco",
+            "canonical_name": "notado poco",
+            "category": "medication",
+            "confidence": 0.55,
+            "translation": "notado poco",
+            "context_clues": [
+              "Uses treats head, pubic (crab), and body lice"
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "poco más",
+            "canonical_name": "poco más",
+            "category": "medication",
+            "confidence": 0.45,
+            "translation": "poco más",
+            "context_clues": [],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "más flujo",
+            "canonical_name": "más flujo",
+            "category": "medication",
+            "confidence": 0.45,
+            "translation": "más flujo",
+            "context_clues": [],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "flujo pero",
+            "canonical_name": "flujo pero",
+            "category": "medication",
+            "confidence": 0.55,
+            "translation": "flujo pero",
+            "context_clues": [
+              "Uses treats head, pubic (crab), and body lice"
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "pero transparente",
+            "canonical_name": "pero transparente",
+            "category": "medication",
+            "confidence": 0.5,
+            "translation": "pero transparente",
+            "context_clues": [
+              "Uses For the temporary relief of minor aches and pains associated with backache muscular aches headache"
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "transparente tenido",
+            "canonical_name": "transparente tenido",
+            "category": "medication",
+            "confidence": 0.5,
+            "translation": "transparente tenido",
+            "context_clues": [
+              "Uses Prompt temporary relief of: pain during urination burning sensation of urgency increased frequency associated with urinary tract infections."
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "tenido sangrado",
+            "canonical_name": "tenido sangrado",
+            "category": "medication",
+            "confidence": 0.6,
+            "translation": "tenido sangrado",
+            "context_clues": [
+              "Uses/Usos temporarily relieves Minor aches and pains due to: headache muscle pain toothache menstrual pain colds minor pain of arthritis temporarily reduces fever alivio temporal de dolores menores a causa de lo siguiente: dolor de cabeza dolor muscular dolor de muelas dolores menstruales resfrios dolores menores a causa de la artritis reduce temporalmente la fiebre"
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "sangrado siento",
+            "canonical_name": "sangrado siento",
+            "category": "medication",
+            "confidence": 0.5,
+            "translation": "sangrado siento",
+            "context_clues": [],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "siento poco",
+            "canonical_name": "siento poco",
+            "category": "medication",
+            "confidence": 0.6,
+            "translation": "siento poco",
+            "context_clues": [
+              "Uses treats head, pubic (crab), and body lice"
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "poco presión",
+            "canonical_name": "poco presión",
+            "category": "medication",
+            "confidence": 0.5,
+            "translation": "poco presión",
+            "context_clues": [],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "presión como",
+            "canonical_name": "presión como",
+            "category": "medication",
+            "confidence": 0.5,
+            "translation": "presión como",
+            "context_clues": [],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "como bebé",
+            "canonical_name": "como bebé",
+            "category": "medication",
+            "confidence": 0.5,
+            "translation": "como bebé",
+            "context_clues": [],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "bebé estuviera",
+            "canonical_name": "bebé estuviera",
+            "category": "medication",
+            "confidence": 0.5,
+            "translation": "bebé estuviera",
+            "context_clues": [],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "estuviera muy",
+            "canonical_name": "estuviera muy",
+            "category": "medication",
+            "confidence": 0.6,
+            "translation": "estuviera muy",
+            "context_clues": [
+              "Uses treats head, pubic (crab), and body lice"
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "muy bajo",
+            "canonical_name": "muy bajo",
+            "category": "medication",
+            "confidence": 0.7,
+            "translation": "muy bajo",
+            "context_clues": [
+              "INDICATIONS & USAGE Metronidazole vaginal gel USP, 0.75% is indicated in the treatment of bacterial vaginosis (formerly referred to as Haemophilus vaginitis, Gardnerella vaginitis, nonspecific vaginitis, Corynebacterium vaginitis, or anaerobic vaginosis). NOTE: For purposes of this indication, a clinical diagnosis of bacterial vaginosis is usually defined by the presence of a homogeneous vaginal discharge that (a) has a pH of greater than 4.5, (b) emits a “fishy” amine odor when mixed with a 10% KOH solution, and (c) contains clue cells on microscopic examination. Gram’s stain results consistent with a diagnosis of bacterial vaginosis include (a) markedly reduced or absent Lactobacillus morphology, (b) predominance of Gardnerella morphotype, and (c) absent or few white blood cells. Other pathogens commonly associated with vulvovaginitis, e.g., Trichomonas vaginalis , Chlamydia trachomatis , N . gonorrhoeae , Candida albicans , and Herpes simplex virus should be ruled out."
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "B",
+              "brand_names": []
+            }
+          }
+        ],
+        "medical_notes": [],
+        "follow_up_questions": [],
+        "confidence": 0.95,
+        "medical_accuracy": 1
+      }
+    },
+    {
+      "timestamp": "2025-08-28T20:30:59.586Z",
+      "speaker": "doctor",
+      "type": "transcription",
+      "content": {
+        "text": " Thank you. I'd like to perform a transvaginal untold sound today to check your cervical length. Shortening of the cervix can be an early sign of pre-term labor. We'll also monitor fetal movement and uterine activity."
+      }
+    },
+    {
+      "timestamp": "2025-08-28T20:31:01.156Z",
+      "speaker": "patient",
+      "type": "translation",
+      "content": {
+        "original_text": " Thank you. I'd like to perform a transvaginal untold sound today to check your cervical length. Shortening of the cervix can be an early sign of pre-term labor. We'll also monitor fetal movement and uterine activity.",
+        "translated_text": "Gracias. Me gustaría realizar un sonido transvaginal no contado hoy para verificar su longitud cervical. El acortamiento del cuello uterino puede ser un signo temprano de trabajo prematuro. También monitorearemos el movimiento fetal y la actividad uterina.",
+        "medical_terms": [],
+        "medical_notes": [
+          {
+            "type": "pregnancy_context",
+            "message": "Patient pregnancy stage: third_trimester",
+            "importance": "high"
+          }
+        ],
+        "follow_up_questions": [
+          "Are you taking prenatal vitamins?",
+          "When is your next prenatal appointment?",
+          "Are you experiencing any concerning symptoms?"
+        ],
+        "confidence": 0.95,
+        "medical_accuracy": 0
+      }
+    },
+    {
+      "timestamp": "2025-08-28T20:31:21.350Z",
+      "speaker": "patient",
+      "type": "transcription",
+      "content": {
+        "text": " Es peligroso para el bebé. ¿Qué pasa si el cuello del uroro está corto?"
+      }
+    },
+    {
+      "timestamp": "2025-08-28T20:31:35.770Z",
+      "speaker": "doctor",
+      "type": "translation",
+      "content": {
+        "original_text": " Es peligroso para el bebé. ¿Qué pasa si el cuello del uroro está corto?",
+        "translated_text": "It is dangerous for the baby. What happens if the Cuello del Uroro is short?",
+        "medical_terms": [
+          {
+            "original_text": "peligroso",
+            "canonical_name": "peligroso",
+            "category": "medication",
+            "confidence": 0.45,
+            "translation": "peligroso",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "para",
+            "canonical_name": "para",
+            "category": "medication",
+            "confidence": 0.55,
+            "translation": "para",
+            "context_clues": [
+              "INDICATIONS: This remedy is indicated for symptoms associated with yeast infections and intestinal dysbacteria according to traditional homeopathic practice.*"
+            ],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "bebé",
+            "canonical_name": "bebé",
+            "category": "medication",
+            "confidence": 0.45,
+            "translation": "bebé",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "pasa",
+            "canonical_name": "pasa",
+            "category": "medication",
+            "confidence": 0.5,
+            "translation": "pasa",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "cuello",
+            "canonical_name": "cuello",
+            "category": "medication",
+            "confidence": 0.5,
+            "translation": "cuello",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "uroro",
+            "canonical_name": "uroro",
+            "category": "medication",
+            "confidence": 0.5,
+            "translation": "uroro",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "está",
+            "canonical_name": "está",
+            "category": "medication",
+            "confidence": 0.5,
+            "translation": "está",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "corto",
+            "canonical_name": "corto",
+            "category": "medication",
+            "confidence": 0.5,
+            "translation": "corto",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "peligroso para",
+            "canonical_name": "peligroso para",
+            "category": "medication",
+            "confidence": 0.65,
+            "translation": "peligroso para",
+            "context_clues": [
+              "INDICATIONS AND USAGE CERISA™ WASH is indicated in the topical control of acne vulgaris, acne rosacea and seborrheic dermatitis."
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "C",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "para bebé",
+            "canonical_name": "para bebé",
+            "category": "medication",
+            "confidence": 0.45,
+            "translation": "para bebé",
+            "context_clues": [],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "bebé qué",
+            "canonical_name": "bebé qué",
+            "category": "medication",
+            "confidence": 0.45,
+            "translation": "bebé qué",
+            "context_clues": [],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "qué pasa",
+            "canonical_name": "qué pasa",
+            "category": "medication",
+            "confidence": 0.5,
+            "translation": "qué pasa",
+            "context_clues": [],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "pasa cuello",
+            "canonical_name": "pasa cuello",
+            "category": "medication",
+            "confidence": 0.6,
+            "translation": "pasa cuello",
+            "context_clues": [
+              "Uses treats head, pubic (crab), and body lice"
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "cuello del",
+            "canonical_name": "cuello del",
+            "category": "medication",
+            "confidence": 0.7,
+            "translation": "cuello del",
+            "context_clues": [
+              "INDICATIONS & USAGE Metronidazole vaginal gel USP, 0.75% is indicated in the treatment of bacterial vaginosis (formerly referred to as Haemophilus vaginitis, Gardnerella vaginitis, nonspecific vaginitis, Corynebacterium vaginitis, or anaerobic vaginosis). NOTE: For purposes of this indication, a clinical diagnosis of bacterial vaginosis is usually defined by the presence of a homogeneous vaginal discharge that (a) has a pH of greater than 4.5, (b) emits a “fishy” amine odor when mixed with a 10% KOH solution, and (c) contains clue cells on microscopic examination. Gram’s stain results consistent with a diagnosis of bacterial vaginosis include (a) markedly reduced or absent Lactobacillus morphology, (b) predominance of Gardnerella morphotype, and (c) absent or few white blood cells. Other pathogens commonly associated with vulvovaginitis, e.g., Trichomonas vaginalis , Chlamydia trachomatis , N . gonorrhoeae , Candida albicans , and Herpes simplex virus should be ruled out."
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "B",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "del uroro",
+            "canonical_name": "del uroro",
+            "category": "medication",
+            "confidence": 0.6,
+            "translation": "del uroro",
+            "context_clues": [
+              "When using this product do not • heat, microwave, add to hot water or any container where heating water may cause splattering and result in burns • use on eyes or directly on mucous membranes • take by mouth or place in nostrils • apply to wounds or damaged skin • use on bandage skin • use, store, pour or spill near heat or open flame."
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "uroro está",
+            "canonical_name": "uroro está",
+            "category": "medication",
+            "confidence": 0.5,
+            "translation": "uroro está",
+            "context_clues": [],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "está corto",
+            "canonical_name": "está corto",
+            "category": "medication",
+            "confidence": 0.5,
+            "translation": "está corto",
+            "context_clues": [],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          }
+        ],
+        "medical_notes": [],
+        "follow_up_questions": [],
+        "confidence": 0.95,
+        "medical_accuracy": 1
+      }
+    },
+    {
+      "timestamp": "2025-08-28T20:32:00.609Z",
+      "speaker": "doctor",
+      "type": "transcription",
+      "content": {
+        "text": " If your cervix is under 25 millimeters at this stage, we may consider placing you on progesterone therapy or even a circlage depending on the severity. These interventions help reduce the risk of preterm birth."
+      }
+    },
+    {
+      "timestamp": "2025-08-28T20:32:44.721Z",
+      "speaker": "patient",
+      "type": "translation",
+      "content": {
+        "original_text": " If your cervix is under 25 millimeters at this stage, we may consider placing you on progesterone therapy or even a circlage depending on the severity. These interventions help reduce the risk of preterm birth.",
+        "translated_text": "Si su cuello uterino tiene menos de 25 milímetros en esta etapa, podemos considerar colocarlo en la terapia de progesterona o incluso un círclago dependiendo de la gravedad. Estas intervenciones ayudan a reducir el riesgo de parto prematuro.",
+        "medical_terms": [
+          {
+            "original_text": "your",
+            "canonical_name": "your",
+            "category": "medication",
+            "confidence": 0.55,
+            "translation": "your",
+            "context_clues": [
+              "USES Helps prevent sunburn."
+            ],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "cervix",
+            "canonical_name": "cervix",
+            "category": "medication",
+            "confidence": 0.45,
+            "translation": "cervix",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "under",
+            "canonical_name": "under",
+            "category": "medication",
+            "confidence": 0.55,
+            "translation": "under",
+            "context_clues": [
+              "USE HELPS PREVENT SUNBURN"
+            ],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "millimeters",
+            "canonical_name": "millimeters",
+            "category": "medication",
+            "confidence": 0.6,
+            "translation": "millimeters",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "this",
+            "canonical_name": "this",
+            "category": "medication",
+            "confidence": 0.55,
+            "translation": "this",
+            "context_clues": [
+              "USE HELPS PREVENT SUNBURN"
+            ],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "stage",
+            "canonical_name": "stage",
+            "category": "medication",
+            "confidence": 0.55,
+            "translation": "stage",
+            "context_clues": [
+              "Uses For the treatment of acne"
+            ],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "consider",
+            "canonical_name": "consider",
+            "category": "medication",
+            "confidence": 0.45,
+            "translation": "consider",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "placing",
+            "canonical_name": "placing",
+            "category": "medication",
+            "confidence": 0.5,
+            "translation": "placing",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "progesterone",
+            "canonical_name": "progesterone",
+            "category": "medication",
+            "confidence": 0.85,
+            "translation": "progesterone",
+            "context_clues": [
+              "1 INDICATIONS AND USAGE Estradiol and progesterone capsules are a combination of an estrogen and progesterone indicated in a woman with a uterus for the treatment of moderate to severe vasomotor symptoms due to menopause. (1.1) 1.1 Treatment of Moderate to Severe Vasomotor Symptoms Due to Menopause"
+            ],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "therapy",
+            "canonical_name": "therapy",
+            "category": "medication",
+            "confidence": 0.6,
+            "translation": "therapy",
+            "context_clues": [
+              "Use Helps prevent and control the symptoms of dandruff and Seborrheic Dermatitis Relieves scalp itching, irritation, redness, and flaking caused by dandruff and Seborrheic Dermatitis"
+            ],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "even",
+            "canonical_name": "even",
+            "category": "medication",
+            "confidence": 0.6,
+            "translation": "even",
+            "context_clues": [
+              "USE for the management of acne treats acne clears acne blemishes helps prevent development of new acne blemishes"
+            ],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "circlage",
+            "canonical_name": "circlage",
+            "category": "medication",
+            "confidence": 0.5,
+            "translation": "circlage",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "depending",
+            "canonical_name": "depending",
+            "category": "medication",
+            "confidence": 0.5,
+            "translation": "depending",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "severity",
+            "canonical_name": "severity",
+            "category": "medication",
+            "confidence": 0.5,
+            "translation": "severity",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "these",
+            "canonical_name": "these",
+            "category": "medication",
+            "confidence": 0.5,
+            "translation": "these",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "interventions",
+            "canonical_name": "interventions",
+            "category": "medication",
+            "confidence": 0.65,
+            "translation": "interventions",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "help",
+            "canonical_name": "help",
+            "category": "medication",
+            "confidence": 0.6,
+            "translation": "help",
+            "context_clues": [
+              "Uses To help prevent infection in minor cuts, scrapes, and burns"
+            ],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "reduce",
+            "canonical_name": "reduce",
+            "category": "medication",
+            "confidence": 0.6,
+            "translation": "reduce",
+            "context_clues": [
+              "Uses For temporary relief of minor aches and pains of muscles and joints."
+            ],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "risk",
+            "canonical_name": "risk",
+            "category": "medication",
+            "confidence": 0.5,
+            "translation": "risk",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "preterm",
+            "canonical_name": "preterm",
+            "category": "medication",
+            "confidence": 0.65,
+            "translation": "preterm",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "birth",
+            "canonical_name": "birth",
+            "category": "medication",
+            "confidence": 0.5,
+            "translation": "birth",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "your cervix",
+            "canonical_name": "your cervix",
+            "category": "medication",
+            "confidence": 0.65,
+            "translation": "your cervix",
+            "context_clues": [
+              "1 INDICATIONS AND USAGE Azithromycin is a macrolide antibacterial drug indicated for the treatment of patients with mild to moderate infections caused by susceptible strains of the designated microorganisms in the specific conditions listed below. Recommended dosages and durations of therapy in adult and pediatric patient populations vary in these indications. [see Dosage and Administration (2) ] Azithromycin is a macrolide antibacterial drug indicated for mild to moderate infections caused by designated, susceptible bacteria: • Acute bacterial exacerbations of chronic bronchitis in adults ( 1.1 ) • Acute bacterial sinusitis in adults ( 1.1 ) • Uncomplicated skin and skin structure infections in adults ( 1.1 ) • Urethritis and cervicitis in adults ( 1.1 ) • Genital ulcer disease in men ( 1.1 ) • Acute otitis media in pediatric patients (6 months of age and older) ( 1.2 ) • Community-acquired pneumonia in adults and pediatric patients (6 months of age and older) ( 1.1 , 1.2 ) • Pharyngitis/tonsillitis in adults and pediatric patients (2 years of age and older) ( 1.1 , 1.2 ) Limitation of Use: Azithromycin should not be used in patients with pneumonia who are judged to be inappropriate for oral therapy because of moderate to severe illness or risk factors. ( 1.3 ) To reduce the development of drug-resistant bacteria and maintain the effectiveness of azithromycin tablets and other antibacterial drugs, azithromycin tablets should be used only to treat infections that are proven or strongly suspected to be caused by susceptible bacteria. ( 1.4 ) 1.1 Adult Patients • Acute bacterial exacerbations of chronic bronchitis due to Haemophilus influenzae , Moraxella catarrhalis, or Streptococcus pneumoniae . • Acute bacterial sinusitis due to Haemophilus influenzae , Moraxella catarrhalis. or Streptococcus pneumoniae . • Community-acquired pneumonia due to Chlamydophila pneumoniae , Haemophilus influenzae , Mycoplasma pneumoniae, or Streptococcus pneumoniae in patients appropriate for oral therapy. • Pharyngitis/tonsillitis caused by Streptococcus pyogenes as an alternative to first-line therapy in individuals who cannot use first-line therapy. • Uncomplicated skin and skin structure infections due to Staphylococcus aureus , Streptococcus pyogenes , or Streptococcus agalactiae . • Urethritis and cervicitis due to Chlamydia trachomatis or Neisseria gonorrhoeae . • Genital ulcer disease in men due to Haemophilus ducreyi (chancroid). Due to the small number of women included in clinical trials, the efficacy of azithromycin in the treatment of chancroid in women has not been established. 1.2 Pediatric Patients [see Use in Specific Populations (8.4) and Clinical Studies (14.2) ] • Acute otitis media (>6 months of age) caused by Haemophilus influenzae, Moraxella catarrhalis , or Streptococcus pneumoniae. • Community-acquired pneumonia (>6 months of age) due to Chlamydophila pneumoniae, Haemophilus influenzae, Mycoplasma pneumoniae , or Streptococcus pneumoniae in patients appropriate for oral therapy. • Pharyngitis/tonsillitis (>2 years of age) caused by Streptococcus pyogenes as an alternative to first-line therapy in individuals who cannot use first-line therapy. 1.3 Limitations of Use Azithromycin should not be used in patients with pneumonia who are judged to be inappropriate for oral therapy because of moderate to severe illness or risk factors such as any of the following: • patients with cystic fibrosis, • patients with nosocomial infections, • patients with known or suspected bacteremia, • patients requiring hospitalization, • elderly or debilitated patients, or • patients with significant underlying health problems that may compromise their ability to respond to their illness (including immunodeficiency or functional asplenia). 1.4 Usage To reduce the development of drug-resistant bacteria and maintain the effectiveness of azithromycin tablets and other antibacterial drugs, azithromycin tablets should be used only to treat infections that are proven or strongly suspected to be caused by susceptible bacteria. When culture and susceptibility information are available, they should be considered in selecting or modifying antibacterial therapy. In the absence of such data, local epidemiology and susceptibility patterns may contribute to the empiric selection of therapy."
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "cervix under",
+            "canonical_name": "cervix under",
+            "category": "medication",
+            "confidence": 0.55,
+            "translation": "cervix under",
+            "context_clues": [
+              "INDICATIONS Indications: MEZEREUM Itching"
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "under millimeters",
+            "canonical_name": "under millimeters",
+            "category": "medication",
+            "confidence": 0.75,
+            "translation": "under millimeters",
+            "context_clues": [
+              "INDICATIONS AND USAGE Isoniazid is recommended for all forms of tuberculos in which organisms are susceptible. However, active tuberculosis must be treated with multiple concomitant antituberculosis medications to prevent the emergence of drug resistance. Single-drug treatment of active tuberculos with isoniazid, or any other medication, is inadequate therapy. Isoniazid is recommended as preventive therapy for the following groups, regardless of age. (Note: the criterion for a positive reaction to a skin test (in millimeters of induration) for each group is given in parenthesis): 1. Persons with human immunodeficiency virus (HIV) infection (≥ 5 mm) and persons with risk factors for HIV infection whose HIV infection status is unknown but who are suspected of having HIV infection. Preventive therapy may be considered for HIV infected persons who are tuberculin- negative but belong to groups in which the prevalence of tuberculosis infection is high. Candidates for preventive therapy who have HIV infection should have a minimum of 12 months of therapy. 2. Close contacts of persons with newly diagnosed infectious tuberculosis (≥ 5 mm). In addition, tuberculin-negative (< 5mm) children and adolescents who have been close contacts of in- fectious persons within the past 3 months are candidates for preventive therapy until a repeat tuberculin skin test is done 12 weeks after contact with the infectious source. If the repeat skin test is positive (> 5 mm), therapy should be continued. 3. Recent converters, as indicated by a tuberculin skin test (≥ 10 mm increase within a 2-year period for those < 35 years old; ≥ 15 mm increase for those ≥ 35 years of age). All infants and children younger than 4 years of age with a > 10 mm skin test are included in this category. 4. Persons with abnormal chest radiographs that show fibrotic lesions likely to represent old healed tuberculosis (≥ 5 mm). Candidates for preventive therapy who have fibrotic pulmonary lesions consistent with healed tuberculosis or who have pulmonary silicosis should have 12 months of isoniazid or 4 months of isoniazid and rifampin, concomitantly. 5. Intravenous drug users known to be HIV-seronegative (> 10 mm). 6. Persons with the following medical conditions that have been reported to increase the risk of tuberculosis (≥ 10 mm): silicosis; diabetes mellitus; prolonged therapy with adrenocorti- costeroids; immunosuppressive therapy; some hematologic and reticuloendothelial diseases, such as leukemia or Hodgkin’s disease; end-stage renal disease; clinical situations associated with substantial rapid weight loss or chronic under nutrition (including: intestinal bypass surgery for obesity, the postgastrectomy state (with or without weight loss), chronic peptic ulcer disease, chronic malabsorption syndromes, and carcinomas of the oropharynx and upper gastrointestinal tract that prevent adequate nutritional intake). Candidates for preventive therapy who have fibrotic pulmonary lesions consistent with healed tuberculosis or who have pulmonary silicosis should have 12 months of isoniazid or 4 months of isoniazid and rifampin, concomitantly. Additionally, in the absence of any of the above risk factors, persons under the age of 35 with a tuberculin skin test reaction of 10 mm or more are also appropriate candidates for preventive therapy if they are a member of any of the following high-incidence groups: Foreign-born persons from high-prevalence countries who never received BCG vaccine. Medically under served low-income populations, including high-risk racial or ethnic minority populations, especially blacks, Hispanics, and Native Americans. Residents of facilities for long-term care (e.g., correctional institutions, nursing homes, and mental institutions). Children who are less than 4 years old are candidates for isoniazid preventive therapy if they have > 10 mm induration from a PPD Mantoux tuberculin skin test. Finally, persons under the age of 35 who a) have none of the above risk factors (1-6); b) belong to none of the high-incidence groups; and c) have a tuberculin skin test reaction of 15 mm or more, are appropriate candidates for preventive therapy. The risk of hepatitis must be weighed against the risk of tuberculosis in positive tuberculin reactors over the age of 35. However, the use of isoniazid is recommended for those with the additional risk factors listed above (1-6) and on an individual basis insituations where there is likelihood of serious consequences to contacts who may become infected."
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "C",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "millimeters this",
+            "canonical_name": "millimeters this",
+            "category": "medication",
+            "confidence": 0.65,
+            "translation": "millimeters this",
+            "context_clues": [
+              "INDICATIONS Condition listed above or as directed by the physician"
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "this stage",
+            "canonical_name": "this stage",
+            "category": "medication",
+            "confidence": 0.65,
+            "translation": "this stage",
+            "context_clues": [
+              "1 INDICATIONS AND USAGE MEKINIST is a kinase inhibitor indicated as a single agent for the treatment of BRAF-inhibitor treatment-naïve patients with unresectable or metastatic melanoma with BRAF V600E or V600K mutations as detected by an FDA-approved test. ( 1.1 , 2.1 ) MEKINIST is indicated, in combination with dabrafenib, for: the treatment of patients with unresectable or metastatic melanoma with BRAF V600E or V600K mutations as detected by an FDA-approved test. ( 1.1 , 2.1 ) the adjuvant treatment of patients with melanoma with BRAF V600E or V600K mutations, as detected by an FDA-approved test, and involvement of lymph node(s), following complete resection. ( 1.2 , 2.1 ) the treatment of patients with metastatic non-small cell lung cancer (NSCLC) with BRAF V600E mutation as detected by an FDA-approved test. ( 1.3 , 2.1 ) the treatment of patients with locally advanced or metastatic anaplastic thyroid cancer (ATC) with BRAF V600E mutation, as detected by an FDA-approved test, and with no satisfactory locoregional treatment options. ( 1.4 , 2.1 ) the treatment of adult and pediatric patients 1 year of age and older with unresectable or metastatic solid tumors with BRAF V600E mutation who have progressed following prior treatment and have no satisfactory alternative treatment options. This indication is approved under accelerated approval based on overall response rate and duration of response. Continued approval for this indication may be contingent upon verification and description of clinical benefit in a confirmatory trial(s). ( 1.5 , 2.1 ) the treatment of pediatric patients 1 year of age and older with low-grade glioma (LGG) with a BRAF V600E mutation who require systemic therapy. ( 1.6 , 2.1 ) Limitations of Use : MEKINIST is not indicated for treatment of patients with colorectal cancer because of known intrinsic resistance to BRAF inhibition. ( 1.7 , 12.1 ) 1.1 BRAF V600E or V600K Mutation-Positive Unresectable or Metastatic Melanoma MEKINIST ® is indicated, as a single agent in BRAF-inhibitor treatment-naïve patients or in combination with dabrafenib, for the treatment of patients with unresectable or metastatic melanoma with BRAF V600E or V600K mutations, as detected by an FDA-approved test [see Dosage and Administration (2.1)] . 1.2 Adjuvant Treatment of BRAF V600E or V600K Mutation-Positive Melanoma MEKINIST is indicated, in combination with dabrafenib, for the adjuvant treatment of patients with melanoma with BRAF V600E or V600K mutations as detected by an FDA-approved test, and involvement of lymph node(s), following complete resection [see Dosage and Administration (2.1)]. 1.3 BRAF V600E Mutation-Positive Metastatic NSCLC MEKINIST is indicated, in combination with dabrafenib, for the treatment of patients with metastatic non-small cell lung cancer (NSCLC) with BRAF V600E mutation as detected by an FDA-approved test [see Dosage and Administration (2.1)] . 1.4 BRAF V600E Mutation-Positive Locally Advanced or Metastatic Anaplastic Thyroid Cancer MEKINIST is indicated, in combination with dabrafenib, for the treatment of patients with locally advanced or metastatic anaplastic thyroid cancer (ATC) with BRAF V600E mutation, as detected by an FDA-approved test, and with no satisfactory locoregional treatment options [see Dosage and Administration (2.1)] . 1.5 BRAF V600E Mutation-Positive Unresectable or Metastatic Solid Tumors MEKINIST is indicated, in combination with dabrafenib, for the treatment of adult and pediatric patients 1 year of age and older with unresectable or metastatic solid tumors with BRAF V600E mutation who have progressed following prior treatment and have no satisfactory alternative treatment options [see Dosage and Administration (2.1)] . This indication is approved under accelerated approval based on overall response rate and duration of response [see Clinical Studies (14.6)] . Continued approval for this indication may be contingent upon verification and description of clinical benefit in a confirmatory trial(s). 1.6 BRAF V600E Mutation-Positive Low-Grade Glioma MEKINIST is indicated, in combination with dabrafenib, for the treatment of pediatric patients 1 year of age and older with low-grade glioma (LGG) with a BRAF V600E mutation who require systemic therapy [see Dosage and Administration (2.1)] . 1.7 Limitations of Use MEKINIST is not indicated for treatment of patients with colorectal cancer because of known intrinsic resistance to BRAF inhibition [see Indications and Usage (1.5), Clinical Pharmacology (12.1)] ."
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "stage may",
+            "canonical_name": "stage may",
+            "category": "medication",
+            "confidence": 0.55,
+            "translation": "stage may",
+            "context_clues": [
+              "Uses First aid to help prevent infection in minor cuts scrapes burns"
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "may consider",
+            "canonical_name": "may consider",
+            "category": "medication",
+            "confidence": 0.65,
+            "translation": "may consider",
+            "context_clues": [
+              "1 INDICATIONS AND USAGE Naproxen tablets and naproxen sodium tablets are indicated for: the relief of the signs and symptoms of: • rheumatoid arthritis • osteoarthritis • ankylosing spondylitis • Polyarticular Juvenile Idiopathic Arthritis Naproxen tablets and naproxen sodium tablets are also indicated for: the relief of signs and symptoms of: • tendonitis • bursitis • acute gout the management of: • pain • primary dysmenorrhea Naproxen tablets and naproxen sodium tablets are non-steroidal anti-inflammatory drugs indicated for: the relief of the signs and symptoms of: • rheumatoid arthritis • osteoarthritis • ankylosing spondylitis • polyarticular juvenile idiopathic arthritis Naproxen tablets and naproxen sodium tablets are also indicated for: the relief of signs and symptoms of: • tendonitis • bursitis • acute gout the management of: • pain • primary dysmenorrhea"
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "consider placing",
+            "canonical_name": "consider placing",
+            "category": "medication",
+            "confidence": 0.6,
+            "translation": "consider placing",
+            "context_clues": [
+              "INDICATIONS & USAGE Ipratropium bromide nasal solution 0.06% (Nasal Spray) is indicated for the symptomatic relief of rhinorrhea associated with the common cold or seasonal allergic rhinitis for adults and children age 5 years and older. Ipratropium bromide nasal solution 0.06% (Nasal Spray) does not relieve nasal congestion or sneezing associated with the common cold or seasonal allergic rhinitis. The safety and effectiveness of the use of ipratropium bromide nasal solution 0.06% (Nasal Spray) beyond four days in patients with the common cold or beyond three weeks in patients with seasonal allergic rhinitis has not been established."
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "placing you",
+            "canonical_name": "placing you",
+            "category": "medication",
+            "confidence": 0.6,
+            "translation": "placing you",
+            "context_clues": [
+              "INDICATIONS Condition listed above or as directed by the physician"
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "you progesterone",
+            "canonical_name": "you progesterone",
+            "category": "medication",
+            "confidence": 0.8,
+            "translation": "you progesterone",
+            "context_clues": [
+              "INDICATIONS AND USAGE Severe Recalcitrant Nodular Acne Amnesteem is indicated for the treatment of severe recalcitrant nodular acne. Nodules are inflammatory lesions with a diameter of 5 mm or greater. The nodules may become suppurative or hemorrhagic. “Severe,” by definition, 2 means “many” as opposed to “few or several” nodules. Because of significant adverse effects associated with its use, Amnesteem should be reserved for patients with severe nodular acne who are unresponsive to conventional therapy, including systemic antibiotics . In addition, Amnesteem is indicated only for those female patients who are not pregnant, because Amnesteem can cause severe birth defects (see Boxed CONTRAINDICATIONS AND WARNINGS ). A single course of therapy for 15 to 20 weeks has been shown to result in complete and prolonged remission of disease in many patients. 1,3,4 If a second course of therapy is needed, it should not be initiated until at least 8 weeks after completion of the first course, because experience has shown that patients may continue to improve while off Amnesteem. The optimal interval before retreatment has not been defined for patients who have not completed skeletal growth (see WARNINGS: Skeletal: Bone Mineral Density , Hyperostosis , and Premature Epiphyseal Closure )."
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "X",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "progesterone therapy",
+            "canonical_name": "progesterone therapy",
+            "category": "medication",
+            "confidence": 0.8,
+            "translation": "progesterone therapy",
+            "context_clues": [
+              "INDICATIONS AND USAGE Ofloxacin ophthalmic solution is indicated for the treatment of infections caused by susceptible strains of the following bacteria in the conditions listed below:"
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "therapy even",
+            "canonical_name": "therapy even",
+            "category": "medication",
+            "confidence": 0.7,
+            "translation": "therapy even",
+            "context_clues": [
+              "INDICATIONS AND USAGE Ofloxacin ophthalmic solution is indicated for the treatment of infections caused by susceptible strains of the following bacteria in the conditions listed below:"
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "even circlage",
+            "canonical_name": "even circlage",
+            "category": "medication",
+            "confidence": 0.6,
+            "translation": "even circlage",
+            "context_clues": [
+              "USE for the management of acne treats acne clears acne blemishes helps prevent development of new acne blemishes"
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "circlage depending",
+            "canonical_name": "circlage depending",
+            "category": "medication",
+            "confidence": 0.55,
+            "translation": "circlage depending",
+            "context_clues": [
+              "INDICATIONS Indications: MEZEREUM Itching"
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "depending the",
+            "canonical_name": "depending the",
+            "category": "medication",
+            "confidence": 0.6,
+            "translation": "depending the",
+            "context_clues": [
+              "INDICATIONS Condition listed above or as directed by the physician"
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "the severity",
+            "canonical_name": "the severity",
+            "category": "medication",
+            "confidence": 0.7,
+            "translation": "the severity",
+            "context_clues": [
+              "1 INDICATIONS AND USAGE Naproxen tablets and naproxen sodium tablets are indicated for: the relief of the signs and symptoms of: • rheumatoid arthritis • osteoarthritis • ankylosing spondylitis • Polyarticular Juvenile Idiopathic Arthritis Naproxen tablets and naproxen sodium tablets are also indicated for: the relief of signs and symptoms of: • tendonitis • bursitis • acute gout the management of: • pain • primary dysmenorrhea Naproxen tablets and naproxen sodium tablets are non-steroidal anti-inflammatory drugs indicated for: the relief of the signs and symptoms of: • rheumatoid arthritis • osteoarthritis • ankylosing spondylitis • polyarticular juvenile idiopathic arthritis Naproxen tablets and naproxen sodium tablets are also indicated for: the relief of signs and symptoms of: • tendonitis • bursitis • acute gout the management of: • pain • primary dysmenorrhea"
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "severity these",
+            "canonical_name": "severity these",
+            "category": "medication",
+            "confidence": 0.7,
+            "translation": "severity these",
+            "context_clues": [
+              "INDICATIONS AND USAGE Ofloxacin ophthalmic solution is indicated for the treatment of infections caused by susceptible strains of the following bacteria in the conditions listed below:"
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "these interventions",
+            "canonical_name": "these interventions",
+            "category": "medication",
+            "confidence": 0.8,
+            "translation": "these interventions",
+            "context_clues": [
+              "1 INDICATIONS AND USAGE Plavix is a P2Y 12 platelet inhibitor indicated for: Acute coronary syndrome Recent myocardial infarction (MI), recent stroke, or established peripheral arterial disease. Plavix has been shown to reduce the combined endpoint of new ischemic stroke (fatal or not), new MI (fatal or not), and other vascular death. ( 1.2 ) 1.1 Acute Coronary Syndrome (ACS) For patients with non-ST-segment elevation ACS [unstable angina (UA)/non-ST-elevation myocardial infarction (NSTEMI)], including patients who are to be managed medically and those who are to be managed with coronary revascularization, Plavix has been shown to decrease the rate of a combined endpoint of cardiovascular death, myocardial infarction (MI), or stroke as well as the rate of a combined endpoint of cardiovascular death, MI, stroke, or refractory ischemia. For patients with ST-elevation myocardial infarction (STEMI), Plavix has been shown to reduce the rate of death from any cause and the rate of a combined endpoint of death, re-infarction, or stroke. The benefit for patients who undergo primary percutaneous coronary intervention is unknown. The optimal duration of Plavix therapy in ACS is unknown. 1.2 Recent MI, Recent Stroke, or Established Peripheral Arterial Disease For patients with a history of recent myocardial infarction (MI), recent stroke, or established peripheral arterial disease, Plavix has been shown to reduce the rate of a combined endpoint of new ischemic stroke (fatal or not), new MI (fatal or not), and other vascular death."
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "B",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "interventions help",
+            "canonical_name": "interventions help",
+            "category": "medication",
+            "confidence": 0.7000000000000001,
+            "translation": "interventions help",
+            "context_clues": [
+              "Uses Multi-purpose mineral powder provides broad-spectrum SPF 46 PA+++ protection. Leaves the skin flawless and protected."
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "help reduce",
+            "canonical_name": "help reduce",
+            "category": "medication",
+            "confidence": 0.7,
+            "translation": "help reduce",
+            "context_clues": [
+              "1 INDICATIONS AND USAGE Naproxen tablets and naproxen sodium tablets are indicated for: the relief of the signs and symptoms of: • rheumatoid arthritis • osteoarthritis • ankylosing spondylitis • Polyarticular Juvenile Idiopathic Arthritis Naproxen tablets and naproxen sodium tablets are also indicated for: the relief of signs and symptoms of: • tendonitis • bursitis • acute gout the management of: • pain • primary dysmenorrhea Naproxen tablets and naproxen sodium tablets are non-steroidal anti-inflammatory drugs indicated for: the relief of the signs and symptoms of: • rheumatoid arthritis • osteoarthritis • ankylosing spondylitis • polyarticular juvenile idiopathic arthritis Naproxen tablets and naproxen sodium tablets are also indicated for: the relief of signs and symptoms of: • tendonitis • bursitis • acute gout the management of: • pain • primary dysmenorrhea"
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "reduce the",
+            "canonical_name": "reduce the",
+            "category": "medication",
+            "confidence": 0.6,
+            "translation": "reduce the",
+            "context_clues": [
+              "INDICATIONS Condition listed above or as directed by the physician"
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "the risk",
+            "canonical_name": "the risk",
+            "category": "medication",
+            "confidence": 0.7,
+            "translation": "the risk",
+            "context_clues": [
+              "INDICATIONS AND USAGE Ofloxacin ophthalmic solution is indicated for the treatment of infections caused by susceptible strains of the following bacteria in the conditions listed below:"
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "risk preterm",
+            "canonical_name": "risk preterm",
+            "category": "medication",
+            "confidence": 0.85,
+            "translation": "risk preterm",
+            "context_clues": [
+              "1 INDICATIONS AND USAGE Naproxen tablets and naproxen sodium tablets are indicated for: the relief of the signs and symptoms of: • rheumatoid arthritis • osteoarthritis • ankylosing spondylitis • Polyarticular Juvenile Idiopathic Arthritis Naproxen tablets and naproxen sodium tablets are also indicated for: the relief of signs and symptoms of: • tendonitis • bursitis • acute gout the management of: • pain • primary dysmenorrhea Naproxen tablets and naproxen sodium tablets are non-steroidal anti-inflammatory drugs indicated for: the relief of the signs and symptoms of: • rheumatoid arthritis • osteoarthritis • ankylosing spondylitis • polyarticular juvenile idiopathic arthritis Naproxen tablets and naproxen sodium tablets are also indicated for: the relief of signs and symptoms of: • tendonitis • bursitis • acute gout the management of: • pain • primary dysmenorrhea"
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "preterm birth",
+            "canonical_name": "preterm birth",
+            "category": "medication",
+            "confidence": 0.85,
+            "translation": "preterm birth",
+            "context_clues": [
+              "1 INDICATIONS AND USAGE Naproxen tablets and naproxen sodium tablets are indicated for: the relief of the signs and symptoms of: • rheumatoid arthritis • osteoarthritis • ankylosing spondylitis • Polyarticular Juvenile Idiopathic Arthritis Naproxen tablets and naproxen sodium tablets are also indicated for: the relief of signs and symptoms of: • tendonitis • bursitis • acute gout the management of: • pain • primary dysmenorrhea Naproxen tablets and naproxen sodium tablets are non-steroidal anti-inflammatory drugs indicated for: the relief of the signs and symptoms of: • rheumatoid arthritis • osteoarthritis • ankylosing spondylitis • polyarticular juvenile idiopathic arthritis Naproxen tablets and naproxen sodium tablets are also indicated for: the relief of signs and symptoms of: • tendonitis • bursitis • acute gout the management of: • pain • primary dysmenorrhea"
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "ter",
+            "canonical_name": "ter",
+            "category": "medication",
+            "confidence": 0.85,
+            "translation": "ter",
+            "context_clues": [],
+            "extraction_strategy": "bert_entity_extraction",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          }
+        ],
+        "medical_notes": [],
+        "follow_up_questions": [],
+        "confidence": 0.95,
+        "medical_accuracy": 1
+      }
+    }
+  ]
+}

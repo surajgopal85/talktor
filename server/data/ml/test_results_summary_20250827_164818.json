@@ -1,0 +1,135 @@
+{
+  "test_summary": {
+    "conversations_tested": 6,
+    "test_date": "2025-08-27T16:48:18.911546",
+    "bert_model": "PlanTL-GOB-ES/roberta-base-biomedical-clinical-es"
+  },
+  "accuracy_metrics": {
+    "original_average_accuracy": 0.046,
+    "enhanced_average_accuracy": 0.046,
+    "average_improvement": 0.0,
+    "conversations_improved": 0,
+    "conversations_unchanged": 6,
+    "conversations_degraded": 0
+  },
+  "confidence_metrics": {
+    "medications_boosted": 0,
+    "average_confidence_boost": 0,
+    "max_confidence_boost": 0
+  },
+  "performance_metrics": {
+    "average_processing_time_ms": 823.9,
+    "bert_overhead_ms": 62.8
+  },
+  "detailed_results": [
+    {
+      "conversation": "prenatal_medication_safety",
+      "accuracy_improvement": 0.0,
+      "medications_found": 1,
+      "confidence_boosts": 0,
+      "missed_medications": [
+        "metformina",
+        "sertralina",
+        "omeprazol",
+        "vitaminas prenatales",
+        "ácido fólico",
+        "calcio",
+        "hierro",
+        "acetaminophen"
+      ]
+    },
+    {
+      "conversation": "contraception_consultation",
+      "accuracy_improvement": 0.0,
+      "medications_found": 0,
+      "confidence_boosts": 0,
+      "missed_medications": [
+        "metformina",
+        "sumatriptán",
+        "vitamina D",
+        "omega-3",
+        "píldoras anticonceptivas",
+        "parche",
+        "anillo vaginal",
+        "DIU cobre"
+      ]
+    },
+    {
+      "conversation": "gestational_diabetes_complex",
+      "accuracy_improvement": 0.0,
+      "medications_found": 1,
+      "confidence_boosts": 0,
+      "missed_medications": [
+        "vitaminas prenatales",
+        "ácido fólico",
+        "hierro",
+        "calcio",
+        "progesterona",
+        "magnesio",
+        "DHA",
+        "crema progesterona",
+        "metformina",
+        "insulina"
+      ]
+    },
+    {
+      "conversation": "postpartum_complex",
+      "accuracy_improvement": 0.0,
+      "medications_found": 0,
+      "confidence_boosts": 0,
+      "missed_medications": [
+        "ibuprofeno",
+        "amoxicilina",
+        "crema antibiótico",
+        "vitaminas prenatales",
+        "hierro",
+        "calcio",
+        "docusato sódico",
+        "domperidona",
+        "sertralina",
+        "crema hidrocortisona"
+      ]
+    },
+    {
+      "conversation": "menopause_complex",
+      "accuracy_improvement": 0.0,
+      "medications_found": 1,
+      "confidence_boosts": 0,
+      "missed_medications": [
+        "atorvastatina",
+        "metformina",
+        "calcio",
+        "vitamina D",
+        "magnesio",
+        "omega-3",
+        "melatonina",
+        "cohosh negro",
+        "soya",
+        "valeriana",
+        "estrógeno",
+        "progesterona",
+        "alendronato"
+      ]
+    },
+    {
+      "conversation": "infertility_treatment",
+      "accuracy_improvement": 0.0,
+      "medications_found": 0,
+      "confidence_boosts": 0,
+      "missed_medications": [
+        "clomifeno",
+        "letrozol",
+        "metformina",
+        "levotiroxina",
+        "ácido fólico",
+        "vitamina D",
+        "coenzima Q10",
+        "inositol",
+        "probióticos",
+        "ibuprofeno",
+        "acetaminofén",
+        "alprazolam"
+      ]
+    }
+  ]
+}
