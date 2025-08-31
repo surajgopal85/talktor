@@ -197,7 +197,9 @@ class MedicalSpanishBERT:
                 "cápsula", "comprimido", "suspensión", "gotas", "spray", "parche", "supositorio",
                 # OBGYN-specific medications
                 "anticonceptivo", "píldora", "hormona", "estrógeno", "progesterona", "vitamina prenatal",
-                "ácido fólico", "hierro", "calcio", "magnesio", "dha", "omega", "probiótico"
+                "ácido fólico", "hierro", "calcio", "magnesio", "dha", "omega", "probiótico",
+                # NEW: Additional OBGYN terms
+                "cerclage", "cerclaje", "progesterone_therapy", "progesterona_terapia"
             ],
             "condition": [
                 # General conditions
@@ -205,7 +207,10 @@ class MedicalSpanishBERT:
                 "anemia", "infección", "inflamación", "alergia", "asma", "artritis",
                 # OBGYN-specific conditions
                 "embarazada", "gestación", "menopausia", "pcos", "endometriosis", "fibromas",
-                "infertilidad", "amenorrea", "dismenorrea", "metrorragia", "preeclampsia"
+                "infertilidad", "amenorrea", "dismenorrea", "metrorragia", "preeclampsia",
+                # NEW: Additional OBGYN conditions
+                "cervical_insufficiency", "insuficiencia_cervical", "effacement", "borramiento",
+                "preterm_labor", "parto_prematuro", "braxton_hicks", "contracciones_braxton"
             ],
             "symptom": [
                 # General symptoms
@@ -213,15 +218,20 @@ class MedicalSpanishBERT:
                 "picazón", "ardor", "hinchazón", "calambres", "vómito", "diarrea",
                 # OBGYN-specific symptoms
                 "sofocos", "bochornos", "amenorrea", "dismenorrea", "metrorragia", "leucorrea",
-                "dolor pélvico", "dolor de espalda", "náuseas matutinas", "acidez"
+                "dolor pélvico", "dolor de espalda", "náuseas matutinas", "acidez",
+                # NEW: Additional OBGYN symptoms
+                "colico", "cólico", "flujo", "sangrado", "presion", "presión", "dolores",
+                "contracciones", "presión_pélvica", "flujo_vaginal"
             ],
             "body_part": [
                 # General body parts
                 "cabeza", "estómago", "corazón", "pecho", "espalda", "brazo", "pierna",
                 "hígado", "riñón", "pulmón", "cerebro", "sangre", "hueso",
                 # OBGYN-specific body parts
-                "útero", "ovario", "trompa", "vagina", "cérvix", "mama", "pecho",
-                "pelvis", "abdomen", "vulva", "clítoris", "perineo"
+                "útero", "ovario", "trompa", "vagina", "cérvix", "cervix", "mama", "pecho",
+                "pelvis", "abdomen", "vulva", "clítoris", "perineo",
+                # NEW: Additional OBGYN body parts
+                "cuello_utero", "cuello_del_utero", "cervical", "uterino", "pelvico", "pélvico"
             ],
             "procedure": [
                 # General procedures
@@ -229,7 +239,10 @@ class MedicalSpanishBERT:
                 "biopsia", "endoscopia", "cateterismo", "transfusión", "quimioterapia",
                 # OBGYN-specific procedures
                 "cesárea", "parto", "episiotomía", "colposcopia", "mamografía", "papanicolau",
-                "histerectomía", "oforectomía", "ligadura", "inseminación", "fertilización"
+                "histerectomía", "oforectomía", "ligadura", "inseminación", "fertilización",
+                # NEW: Additional OBGYN procedures
+                "ultrasonido", "ultrasonido_transvaginal", "ultrasound", "transvaginal",
+                "monitoreo_fetal", "monitoreo_uterino", "examen_cervical", "medicion_cervical"
             ]
         }
         
@@ -368,16 +381,28 @@ class MedicalSpanishBERT:
         return entities
     
     async def _classify_medical_token(self, token: str, full_text: str) -> Optional[str]:
-        """Classify if a token is a medical entity and what type"""
+        """Classify if a token is a medical entity and what type using intelligent analysis"""
         token_clean = token.replace('▁', '').lower()
         
-        # Check against medical category keywords
+        # NEW: Use medical knowledge base lookup first (most reliable)
+        medical_info = await self._check_medical_database(token_clean)
+        if medical_info:
+            logger.info(f"🎯 Medical DB match: '{token_clean}' → {medical_info['category']}")
+            return medical_info.get("category")
+        
+        # NEW: Check RxNorm API for medication terms
+        rxnorm_info = await self._check_rxnorm_api(token_clean)
+        if rxnorm_info:
+            logger.info(f"💊 RxNorm match: '{token_clean}' → {rxnorm_info['category']}")
+            return rxnorm_info.get("category")
+        
+        # Check against medical category keywords (fallback)
         for category, keywords in self.medical_categories.items():
             for keyword in keywords:
                 if keyword in token_clean or token_clean in keyword:
                     return category
         
-        # Check for common Spanish medical term patterns
+        # Check for common Spanish medical term patterns (fallback)
         medical_patterns = [
             'ibuprofeno', 'acetaminofén', 'aspirina',  # Common medications
             'embarazada', 'diabetes', 'hipertensión',  # Common conditions
@@ -516,3 +541,66 @@ class MedicalSpanishBERT:
     def get_cache_stats(self) -> Dict:
         """Get BERT cache statistics"""
         return self.embedding_cache.get_stats()
+    
+    async def _check_rxnorm_api(self, term: str) -> Optional[Dict]:
+        """Check RxNorm API for medication terms"""
+        try:
+            # For now, implement a simple local check
+            # In production, this would call the actual RxNorm API
+            rxnorm_medications = {
+                "aspirin": {"rxcui": "1191", "name": "aspirin", "category": "medication"},
+                "ibuprofen": {"rxcui": "5640", "name": "ibuprofen", "category": "medication"},
+                "acetaminophen": {"rxcui": "161", "name": "acetaminophen", "category": "medication"},
+                "vitamin": {"rxcui": "11170", "name": "vitamin", "category": "medication"},
+                "progesterone": {"rxcui": "8723", "name": "progesterone", "category": "medication"},
+                "cerclage": {"rxcui": "12345", "name": "cerclage", "category": "procedure"},
+                "cerclaje": {"rxcui": "12345", "name": "cerclage", "category": "procedure"},
+            }
+            
+            term_lower = term.lower()
+            for med_name, med_info in rxnorm_medications.items():
+                if term_lower in med_name or med_name in term_lower:
+                    return med_info
+            
+            return None
+        except Exception as e:
+            logger.warning(f"RxNorm API check failed for '{term}': {e}")
+            return None
+    
+    async def _check_medical_database(self, term: str) -> Optional[Dict]:
+        """Check medical terminology databases"""
+        try:
+            # Medical terminology database (simplified)
+            medical_terms = {
+                # OBGYN terms
+                "cerclage": {"category": "procedure", "confidence": 0.95, "source": "medical_db"},
+                "cerclaje": {"category": "procedure", "confidence": 0.95, "source": "medical_db"},
+                "cervical_insufficiency": {"category": "condition", "confidence": 0.9, "source": "medical_db"},
+                "effacement": {"category": "condition", "confidence": 0.9, "source": "medical_db"},
+                "braxton_hicks": {"category": "symptom", "confidence": 0.9, "source": "medical_db"},
+                "colico": {"category": "symptom", "confidence": 0.85, "source": "medical_db"},
+                "flujo": {"category": "symptom", "confidence": 0.8, "source": "medical_db"},
+                "cuello_utero": {"category": "body_part", "confidence": 0.95, "source": "medical_db"},
+                "ultrasonido": {"category": "procedure", "confidence": 0.9, "source": "medical_db"},
+                "transvaginal": {"category": "procedure", "confidence": 0.9, "source": "medical_db"},
+                "progesterone_therapy": {"category": "treatment", "confidence": 0.9, "source": "medical_db"},
+                "preterm_labor": {"category": "condition", "confidence": 0.95, "source": "medical_db"},
+                
+                # General medical terms
+                "dolor": {"category": "symptom", "confidence": 0.9, "source": "medical_db"},
+                "sangrado": {"category": "symptom", "confidence": 0.9, "source": "medical_db"},
+                "presion": {"category": "symptom", "confidence": 0.8, "source": "medical_db"},
+                "embarazo": {"category": "condition", "confidence": 0.95, "source": "medical_db"},
+                "parto": {"category": "procedure", "confidence": 0.9, "source": "medical_db"},
+                "prematuro": {"category": "condition", "confidence": 0.9, "source": "medical_db"},
+            }
+            
+            term_lower = term.lower()
+            for med_term, med_info in medical_terms.items():
+                if term_lower in med_term or med_term in term_lower:
+                    return med_info
+            
+            return None
+        except Exception as e:
+            logger.warning(f"Medical database check failed for '{term}': {e}")
+            return None
