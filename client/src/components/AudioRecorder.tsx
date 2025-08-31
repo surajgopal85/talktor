@@ -4,9 +4,10 @@ import { Mic, Square, Loader2 } from 'lucide-react';
 
 interface AudioRecorderProps {
   onTranscription: (text: string, sessionId: string) => void;
+  currentSpeaker?: 'doctor' | 'patient';
 }
 
-export const AudioRecorder: React.FC<AudioRecorderProps> = ({ onTranscription }) => {
+export const AudioRecorder: React.FC<AudioRecorderProps> = ({ onTranscription, currentSpeaker = 'patient' }) => {
   const [isRecording, setIsRecording] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
@@ -26,7 +27,8 @@ export const AudioRecorder: React.FC<AudioRecorderProps> = ({ onTranscription })
       };
 
       mediaRecorder.onstop = async () => {
-        const audioBlob = new Blob(chunksRef.current, { type: 'audio/wav' });
+        // MediaRecorder typically creates audio in webm or ogg format, not wav
+        const audioBlob = new Blob(chunksRef.current, { type: 'audio/webm' });
         await sendAudioToServer(audioBlob);
         
         // Stop all tracks to release microphone
@@ -52,7 +54,8 @@ export const AudioRecorder: React.FC<AudioRecorderProps> = ({ onTranscription })
   const sendAudioToServer = async (audioBlob: Blob) => {
     try {
       const formData = new FormData();
-      formData.append('file', audioBlob, 'recording.wav');
+              formData.append('file', audioBlob, 'recording.webm');
+        formData.append('expected_language', currentSpeaker === 'doctor' ? 'en' : 'es');
 
       const response = await fetch('http://127.0.0.1:8000/speech-to-text', {
         method: 'POST',

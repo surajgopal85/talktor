@@ -4,6 +4,7 @@
 
 import re
 import logging
+import time
 from typing import Dict, List, Optional
 from datetime import datetime
 import uuid
@@ -27,7 +28,7 @@ class MedicationExtractionService:
         self.api_client = ExternalMedicalAPIClient()
         self.confidence_scorer = ConfidenceScorer()
         self.learning_manager = LearningManager()
-        self.confidence_threshold = 0.3
+        self.confidence_threshold = 0.2  # Lowered for demo to show more medications
 
         # Enhanced BERT integration
         self.bert_booster = BERTConfidenceBooster()
@@ -96,11 +97,17 @@ class MedicationExtractionService:
         candidates = []
         words = re.findall(r'\b\w{3,}\b', text.lower())
         
-        # Strategy 1: BERT-enhanced single word extraction
-        candidates.extend(self._extract_single_words_with_bert(words, bert_context))
+        # NEW: Smart pre-filtering to eliminate obvious non-medical words
+        pre_filter_start = time.time()
+        filtered_words = self._smart_pre_filter_words(words, text)
+        pre_filter_time = time.time() - pre_filter_start
+        logger.info(f"🔍 Smart pre-filter: {len(words)} → {len(filtered_words)} candidates in {pre_filter_time:.3f}s")
         
-        # Strategy 2: BERT-enhanced bigram extraction
-        candidates.extend(self._extract_bigrams_with_bert(words, bert_context))
+        # Strategy 1: BERT-enhanced single word extraction (only on filtered words)
+        candidates.extend(self._extract_single_words_with_bert(filtered_words, bert_context))
+        
+        # Strategy 2: BERT-enhanced bigram extraction (only on filtered words)
+        candidates.extend(self._extract_bigrams_with_bert(filtered_words, bert_context))
         
         # Strategy 3: Enhanced pattern-based extraction
         candidates.extend(self._extract_by_patterns_enhanced(text, bert_context))
@@ -109,6 +116,91 @@ class MedicationExtractionService:
         candidates.extend(self._extract_bert_entities(bert_context))
         
         return self._deduplicate_candidates(candidates)
+    
+    def _smart_pre_filter_words(self, words: List[str], text: str) -> List[str]:
+        """Smart pre-filtering to eliminate obvious non-medical words before BERT processing"""
+        
+        # Common non-medical words that should never be processed
+        common_words = {
+            # Greetings and common words
+            "good", "morning", "afternoon", "evening", "hello", "hi", "bye", "thank", "thanks",
+            "yes", "no", "okay", "ok", "fine", "well", "how", "are", "you", "am", "is", "was",
+            "have", "had", "has", "been", "being", "will", "would", "could", "should", "may",
+            "might", "can", "do", "does", "did", "done", "go", "goes", "went", "gone",
+            
+            # Personal pronouns and names
+            "i", "me", "my", "mine", "myself", "you", "your", "yours", "yourself", "he", "him",
+            "his", "himself", "she", "her", "hers", "herself", "it", "its", "itself", "we", "us",
+            "our", "ours", "ourselves", "they", "them", "their", "theirs", "themselves",
+            "miss", "mister", "doctor", "dr", "patient", "mr", "mrs", "ms",
+            
+            # Common verbs
+            "want", "need", "like", "love", "hate", "feel", "think", "know", "see", "hear",
+            "say", "tell", "talk", "speak", "listen", "read", "write", "eat", "drink", "sleep",
+            "walk", "run", "sit", "stand", "come", "come", "get", "give", "take", "make",
+            "help", "work", "play", "study", "learn", "teach", "buy", "sell", "pay", "cost",
+            
+            # Common adjectives
+            "big", "small", "large", "little", "good", "bad", "nice", "ugly", "beautiful",
+            "pretty", "handsome", "smart", "stupid", "clever", "dumb", "happy", "sad",
+            "angry", "excited", "bored", "tired", "hungry", "thirsty", "hot", "cold",
+            "warm", "cool", "new", "old", "young", "fresh", "clean", "dirty", "easy", "hard",
+            
+            # Time and place words
+            "today", "yesterday", "tomorrow", "now", "then", "here", "there", "where",
+            "when", "why", "what", "which", "who", "whom", "whose", "this", "that",
+            "these", "those", "some", "any", "many", "much", "few", "several", "all",
+            "every", "each", "both", "either", "neither", "none", "nothing", "something",
+            
+            # Spanish common words
+            "buenos", "días", "tardes", "noches", "hola", "adiós", "gracias", "por", "favor",
+            "pero", "como", "que", "cual", "quien", "donde", "cuando", "porque", "si", "no",
+            "también", "tampoco", "siempre", "nunca", "ahora", "después", "antes", "más",
+            "menos", "muy", "poco", "mucho", "bien", "mal", "bueno", "malo", "grande", "pequeño",
+            "nuevo", "viejo", "joven", "alto", "bajo", "largo", "corto", "ancho", "estrecho",
+            "caliente", "frío", "caluroso", "fresco", "bonito", "feo", "hermoso", "horrible",
+            "fácil", "difícil", "importante", "necesario", "posible", "imposible", "verdadero", "falso"
+        }
+        
+        # Medical context words that should always be processed
+        medical_context_words = {
+            "pain", "ache", "hurt", "sore", "swelling", "bleeding", "discharge", "fever",
+            "nausea", "vomiting", "diarrhea", "constipation", "cough", "sneeze", "runny",
+            "congestion", "headache", "migraine", "dizziness", "fatigue", "tired", "weak",
+            "pregnant", "pregnancy", "baby", "fetus", "uterus", "cervix", "ovary", "ovaries",
+            "period", "menstrual", "cycle", "ovulation", "fertility", "contraception",
+            "vitamin", "supplement", "medication", "medicine", "pill", "tablet", "capsule",
+            "injection", "shot", "cream", "ointment", "drops", "syrup", "liquid", "powder",
+            "dose", "dosage", "prescription", "refill", "side", "effect", "reaction", "allergy",
+            "infection", "bacteria", "virus", "fungus", "parasite", "inflammation", "swelling",
+            "tumor", "cancer", "benign", "malignant", "metastasis", "remission", "relapse"
+        }
+        
+        filtered_words = []
+        for word in words:
+            word_lower = word.lower()
+            
+            # Always include medical context words
+            if word_lower in medical_context_words:
+                filtered_words.append(word)
+                continue
+                
+            # Skip common non-medical words
+            if word_lower in common_words:
+                continue
+                
+            # Skip very short words (likely not medical)
+            if len(word_lower) < 4:
+                continue
+                
+            # Skip words that are clearly names or places
+            if word_lower in ["gonzalez", "carter", "smith", "jones", "brown", "wilson"]:
+                continue
+                
+            # Include the word for further processing
+            filtered_words.append(word)
+        
+        return filtered_words
     
     def _extract_single_words_with_bert(self, words: List[str], bert_context: Dict) -> List[Dict]:
         """Extract single-word candidates with BERT enhancement"""
@@ -228,17 +320,28 @@ class MedicationExtractionService:
         return candidates
     
     async def _bert_pre_filter(self, candidates: List[Dict], text: str) -> List[Dict]:
-        """Pre-filter candidates using BERT confidence"""
+        """Pre-filter candidates using BERT confidence - FIXED to be less aggressive"""
         filtered_candidates = []
         
         for candidate in candidates:
             # Calculate BERT-enhanced confidence
             bert_boost = candidate.get("confidence_modifiers", {}).get("bert_confidence_boost", 0.0)
             bert_identified = candidate.get("confidence_modifiers", {}).get("bert_identified", False)
+            pattern_confidence = candidate.get("confidence_modifiers", {}).get("pattern_confidence", 0.0)
             
-            # Keep candidates with BERT identification or high pattern confidence
-            if bert_identified or candidate.get("confidence_modifiers", {}).get("pattern_confidence", 0.0) > 0.7:
+            # FIXED: More lenient filtering criteria
+            # Keep candidates if ANY of these conditions are met:
+            should_keep = (
+                bert_identified or                    # BERT identified it
+                pattern_confidence > 0.5 or          # Lowered from 0.7 to 0.5
+                candidate.get("strategy") == "bert_entity_extraction" or  # Always keep BERT entities
+                len(candidate["term"]) >= 4          # Keep longer terms (likely real medications)
+            )
+            
+            if should_keep:
                 filtered_candidates.append(candidate)
+            else:
+                logger.debug(f"Filtered out candidate '{candidate['term']}' (confidence: {pattern_confidence:.2f}, bert: {bert_identified})")
         
         logger.info(f"BERT pre-filter: {len(candidates)} → {len(filtered_candidates)} candidates")
         return filtered_candidates

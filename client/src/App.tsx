@@ -1,9 +1,9 @@
 // src/App.tsx - Simplified & Clean
 import React, { useState } from 'react';
 import { Stethoscope, Settings, Eye, EyeOff } from 'lucide-react';
-import { TalktorMedicalInterface } from './components/TalktorMedicalInterface';
+import TalktorMedicalInterface from './components/TalktorMedicalInterface';
 import { ErrorTrackingChatInterface } from './components/ErrorTrackingChatInterface';
-import { TailwindTest } from './components/TailwindTest';
+// import { TailwindTest } from './components/TailwindTest';
 
 type AppMode = 'production' | 'development';
 
@@ -13,7 +13,7 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gray-100">
-      <TailwindTest />
+      {/* <TailwindTest /> */}
       {/* Simple Header - Only show in development mode */}
       {appMode === 'development' && (
         <div className="bg-white border-b border-gray-200 px-6 py-4">

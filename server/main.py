@@ -1,5 +1,5 @@
 # Clean main.py using service architecture pattern
-from fastapi import FastAPI, File, UploadFile, HTTPException, Depends
+from fastapi import FastAPI, File, UploadFile, HTTPException, Depends, Form
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import whisper
@@ -424,6 +424,7 @@ async def health_check():
 async def speech_to_text(
     file: UploadFile = File(...),
     session_id: Optional[str] = None,
+    expected_language: Optional[str] = Form(None),  # New parameter
     session_service: SessionService = Depends(get_session_service)
 ):
     """Convert speech to text using Whisper"""
@@ -431,19 +432,37 @@ async def speech_to_text(
         if not session_id:
             session_id = str(uuid.uuid4())
         
-        # Validate file type
+        # Validate file type - accept any audio format
         if not file.content_type.startswith("audio/"):
             raise HTTPException(status_code=400, detail="File must be audio format")
         
+        # Determine file extension based on content type
+        if file.content_type == "audio/webm":
+            file_extension = ".webm"
+        elif file.content_type == "audio/ogg":
+            file_extension = ".ogg"
+        elif file.content_type == "audio/wav":
+            file_extension = ".wav"
+        else:
+            file_extension = ".webm"  # Default to webm
+        
         # Create temporary file
-        with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp:
+        with tempfile.NamedTemporaryFile(delete=False, suffix=file_extension) as tmp:
             content = await file.read()
             tmp.write(content)
             tmp_path = tmp.name
         
-        # Transcribe
+        # Transcribe with language priming
         logger.info(f"🎤 Transcribing audio for session {session_id}")
-        result = model.transcribe(tmp_path)
+        
+        # Transcribe with language priming if available
+        if expected_language:
+            logger.info(f"🎯 Priming STT for {expected_language} language")
+            result = model.transcribe(tmp_path, language=expected_language)
+        else:
+            # Fallback to auto-detection
+            logger.info("🔍 Using auto-language detection")
+            result = model.transcribe(tmp_path)
         
         # Clean up
         os.remove(tmp_path)
@@ -496,6 +515,9 @@ async def medical_translate_with_learning(
     session_service: SessionService = Depends(get_session_service)
 ):
     """Enhanced medical translation with OBGYN specialization and learning-ready extraction"""
+    import time
+    start_time = time.time()
+    
     try:
         session_id = str(uuid.uuid4())
         
@@ -527,7 +549,10 @@ async def medical_translate_with_learning(
             }
             
             logger.info(f"🏥 Using OBGYN specialization for: '{request.text}'")
+            extraction_start = time.time()
             obgyn_result = await process_obgyn_case(request.text, session_id, patient_profile)
+            extraction_time = time.time() - extraction_start
+            logger.info(f"⏱️ OBGYN extraction completed in {extraction_time:.3f}s")
             
             # Convert OBGYN result to standard extraction format
             extraction_result = {
@@ -539,21 +564,28 @@ async def medical_translate_with_learning(
         else:
             # Use general extraction (your existing code)
             logger.info(f"📋 Using general extraction for: '{request.text}'")
+            extraction_start = time.time()
             extraction_result = await extraction_service.extract_medications(
                 request.text, 
                 session_id, 
                 request.medical_context or "general"
             )
+            extraction_time = time.time() - extraction_start
+            logger.info(f"⏱️ General extraction completed in {extraction_time:.3f}s")
         
         # Step 2: Translation (same as before)
+        translation_start = time.time()
         translation_result = await translation_service.translate_with_medical_context(
             request.text,
             request.source_language,
             request.target_language,
             extraction_result["medications"]
         )
+        translation_time = time.time() - translation_start
+        logger.info(f"⏱️ Translation completed in {translation_time:.3f}s")
         
         # Step 3: Generate follow-up questions (enhanced for OBGYN)
+        follow_up_start = time.time()
         if is_obgyn_context and "recommendations" in extraction_result:
             follow_up_questions = extraction_result["recommendations"].get("follow_up_questions", [])
         else:
@@ -561,6 +593,8 @@ async def medical_translate_with_learning(
                 request.text, 
                 request.medical_context or "general"
             )
+        follow_up_time = time.time() - follow_up_start
+        logger.info(f"⏱️ Follow-up questions generated in {follow_up_time:.3f}s")
         
         # Step 4: Format medical terms for response (enhanced)
         medical_terms_list = []
@@ -656,7 +690,8 @@ async def medical_translate_with_learning(
         )
         
         specialty_used = extraction_result["metadata"].get("specialty", "general")
-        logger.info(f"✅ Medical translation completed ({specialty_used}): {len(medical_terms_list)} medications extracted")
+        total_time = time.time() - start_time
+        logger.info(f"✅ Medical translation completed ({specialty_used}): {len(medical_terms_list)} medications extracted in {total_time:.3f}s total")
         return response
         
     except Exception as e:
@@ -688,6 +723,117 @@ async def debug_obgyn_processing(text: str = "I'm pregnant taking prenatal vitam
             "error_type": type(e).__name__,
             "success": False
         }
+
+@app.get("/session/{session_id}/export")
+async def export_session(session_id: str):
+    """Export conversation session data"""
+    try:
+        from services.session.manager import SessionService
+        session_service = SessionService()
+        
+        # Get session data
+        session_data = await session_service.get_session(session_id)
+        transcriptions = await session_service.get_transcriptions(session_id)
+        translations = await session_service.get_medical_translations(session_id)
+        
+        export_data = {
+            "session_id": session_id,
+            "session_data": session_data,
+            "transcriptions": transcriptions,
+            "translations": translations,
+            "exported_at": datetime.now().isoformat()
+        }
+        
+        return export_data
+        
+    except Exception as e:
+        logger.error(f"❌ Session export failed: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Export failed: {str(e)}")
+
+@app.get("/debug/performance")
+async def debug_performance():
+    """Test performance of individual components"""
+    import time
+    
+    results = {}
+    
+    # Test extraction service with smart pre-filtering
+    try:
+        extraction_start = time.time()
+        from services.translation.translator import TranslationService
+        from services.medical_intelligence.core.extraction import MedicationExtractionService
+        
+        extraction_service = MedicationExtractionService()
+        test_text = "Good morning, Miss Gonzalez. I'm Dr. Carter, your OBGYN. How are you feeling today? I'm taking aspirin for pain."
+        session_id = f"perf_test_{uuid.uuid4()}"
+        
+        extraction_result = await extraction_service.extract_medications(
+            test_text, session_id, "general"
+        )
+        extraction_time = time.time() - extraction_start
+        results["extraction_with_smart_filter"] = f"{extraction_time:.3f}s"
+        results["medications_found"] = len(extraction_result.get("medications", []))
+        
+    except Exception as e:
+        results["extraction_with_smart_filter"] = f"Error: {str(e)}"
+    
+    # Test translation service
+    try:
+        translation_start = time.time()
+        translation_service = TranslationService()
+        translation_result = await translation_service.translate_with_medical_context(
+            test_text, "en", "es", []
+        )
+        translation_time = time.time() - translation_start
+        results["translation"] = f"{translation_time:.3f}s"
+        
+    except Exception as e:
+        results["translation"] = f"Error: {str(e)}"
+    
+    return {
+        "performance_test": results,
+        "test_text": test_text,
+        "timestamp": datetime.now().isoformat()
+    }
+    
+    results = {}
+    
+    # Test extraction service
+    try:
+        extraction_start = time.time()
+        from services.translation.translator import TranslationService
+        from services.medical_intelligence.core.extraction import MedicationExtractionService
+        
+        extraction_service = MedicationExtractionService()
+        test_text = "I'm taking aspirin for pain"
+        session_id = f"perf_test_{uuid.uuid4()}"
+        
+        extraction_result = await extraction_service.extract_medications(
+            test_text, session_id, "general"
+        )
+        extraction_time = time.time() - extraction_start
+        results["extraction"] = f"{extraction_time:.3f}s"
+        
+    except Exception as e:
+        results["extraction"] = f"Error: {str(e)}"
+    
+    # Test translation service
+    try:
+        translation_start = time.time()
+        translation_service = TranslationService()
+        translation_result = await translation_service.translate_with_medical_context(
+            test_text, "en", "es", []
+        )
+        translation_time = time.time() - translation_start
+        results["translation"] = f"{translation_time:.3f}s"
+        
+    except Exception as e:
+        results["translation"] = f"Error: {str(e)}"
+    
+    return {
+        "performance_test": results,
+        "timestamp": datetime.now().isoformat()
+    }
 
 @app.post("/debug/obgyn-routing") 
 async def debug_obgyn_routing(text: str = "I'm pregnant taking prenatal vitamins"):
