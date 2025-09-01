@@ -764,7 +764,7 @@ async def debug_performance():
         from services.medical_intelligence.core.extraction import MedicationExtractionService
         
         extraction_service = MedicationExtractionService()
-        test_text = "Good morning, Miss Gonzalez. I'm Dr. Carter, your OBGYN. How are you feeling today? I'm taking aspirin for pain. I have some concerns about my pregnancy and need to discuss medication options."
+        test_text = "Good morning, Miss Gonzalez. I'm Dr. Carter, your OBGYN. How are you feeling today? I'm taking aspirin for pain."
         session_id = f"perf_test_{uuid.uuid4()}"
         
         extraction_result = await extraction_service.extract_medications(
@@ -773,9 +773,6 @@ async def debug_performance():
         extraction_time = time.time() - extraction_start
         results["extraction_with_smart_filter"] = f"{extraction_time:.3f}s"
         results["medications_found"] = len(extraction_result.get("medications", []))
-        results["cache_efficiency"] = f"{extraction_result.get('metadata', {}).get('cache_efficiency', 0):.1%}"
-        results["cache_hits"] = extraction_result.get('metadata', {}).get('cache_hits', 0)
-        results["cache_misses"] = extraction_result.get('metadata', {}).get('cache_misses', 0)
         
     except Exception as e:
         results["extraction_with_smart_filter"] = f"Error: {str(e)}"
@@ -798,82 +795,6 @@ async def debug_performance():
         "test_text": test_text,
         "timestamp": datetime.now().isoformat()
     }
-
-@app.get("/debug/medical-terms")
-async def test_medical_term_recognition():
-    """Test medical term recognition with the improved BERT system"""
-    try:
-        from services.ml.medical_bert import MedicalSpanishBERT
-        
-        bert_model = MedicalSpanishBERT()
-        
-        # Test terms from your conversation
-        test_terms = [
-            "cerclage", "cerclaje", "cervical_insufficiency", "effacement", 
-            "braxton_hicks", "colico", "flujo", "cuello_utero", "ultrasonido",
-            "transvaginal", "progesterone_therapy", "preterm_labor", "dolores",
-            "presion", "sangrado", "embarazo", "parto", "prematuro"
-        ]
-        
-        results = {}
-        for term in test_terms:
-            try:
-                # Test classification
-                category = await bert_model._classify_medical_token(term, f"Test context with {term}")
-                results[term] = {
-                    "category": category,
-                    "recognized": category is not None
-                }
-            except Exception as e:
-                results[term] = {
-                    "category": None,
-                    "recognized": False,
-                    "error": str(e)
-                }
-        
-        return {
-            "medical_term_test": results,
-            "total_terms": len(test_terms),
-            "recognized_terms": sum(1 for r in results.values() if r.get("recognized")),
-            "recognition_rate": f"{sum(1 for r in results.values() if r.get('recognized')) / len(test_terms) * 100:.1f}%",
-            "timestamp": datetime.now().isoformat()
-        }
-        
-    except Exception as e:
-        return {
-            "error": str(e),
-            "success": False,
-            "timestamp": datetime.now().isoformat()
-        }
-
-@app.post("/debug/cache/reset")
-async def reset_extraction_cache():
-    """Reset the extraction service cache for testing"""
-    try:
-        from services.medical_intelligence.core.extraction import MedicationExtractionService
-        
-        # Create a new instance to reset cache
-        extraction_service = MedicationExtractionService()
-        
-        # Clear all caches
-        extraction_service._extraction_cache.clear()
-        extraction_service._bert_cache.clear()
-        extraction_service._term_cache.clear()
-        extraction_service._cache_hits = 0
-        extraction_service._cache_misses = 0
-        
-        return {
-            "message": "Cache reset successfully",
-            "cache_cleared": True,
-            "timestamp": datetime.now().isoformat()
-        }
-        
-    except Exception as e:
-        return {
-            "error": str(e),
-            "cache_cleared": False,
-            "timestamp": datetime.now().isoformat()
-        }
     
     results = {}
     
@@ -1173,6 +1094,46 @@ async def test_external_apis(drug_name: str = "azithromycin"):
             "error": str(e),
             "error_type": type(e).__name__
         }
+
+@app.get("/debug/extraction-test")
+async def test_extraction_service():
+    """Test the improved extraction service with direct medical database lookup"""
+    import time
+    
+    try:
+        from services.medical_intelligence.core.extraction import MedicationExtractionService
+        
+        extraction_service = MedicationExtractionService()
+        
+        # Test text with medical terms from your conversation
+        test_text = "If your cervix is under 25 millimeters, we may consider progesterone therapy or even a cerclage. This helps reduce preterm labor risk."
+        session_id = f"extraction_test_{uuid.uuid4()}"
+        
+        # Test extraction
+        extraction_start = time.time()
+        extraction_result = await extraction_service.extract_medications(test_text, session_id, "obgyn")
+        extraction_time = time.time() - extraction_start
+        
+        return {
+            "extraction_test": {
+                "text": test_text,
+                "extraction_time": f"{extraction_time:.3f}s",
+                "medications_found": len(extraction_result.get("medications", [])),
+                "extraction_strategy": extraction_result.get("metadata", {}).get("extraction_strategies_used", []),
+                "bert_context": extraction_result.get("bert_context", {}),
+                "success": True
+            },
+            "timestamp": datetime.now().isoformat()
+        }
+        
+    except Exception as e:
+        return {
+            "error": str(e),
+            "success": False,
+            "timestamp": datetime.now().isoformat()
+        }
+
+@app.post("/debug/cache/reset")
 
 # =============================================================================
 # SESSION MANAGEMENT ENDPOINTS

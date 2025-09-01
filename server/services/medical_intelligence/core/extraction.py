@@ -8,7 +8,6 @@ import time
 from typing import Dict, List, Optional
 from datetime import datetime
 import uuid
-from functools import lru_cache
 
 from .api_client import ExternalMedicalAPIClient
 from .confidence import ConfidenceScorer
@@ -34,41 +33,10 @@ class MedicationExtractionService:
         # Enhanced BERT integration
         self.bert_booster = BERTConfidenceBooster()
         
-        # NEW: Smart caching system for performance
-        self._term_cache = {}  # Cache for medical terms
-        self._extraction_cache = {}  # Cache for extraction results
-        self._bert_cache = {}  # Cache for BERT analysis
-        self._cache_hits = 0
-        self._cache_misses = 0
-        
     async def extract_medications(self, text: str, session_id: str, medical_context: str = "general") -> Dict:
         """Enhanced extraction method with early BERT integration"""
         
         logger.info(f"🧠 Enhanced Extraction: Processing '{text[:100]}...'")
-        
-        # NEW: Early exit for very short texts (likely greetings)
-        if len(text.split()) < 5:
-            logger.info(f"🚀 Early exit: Text too short ({len(text.split())} words), skipping extraction")
-            return {
-                "medications": [],
-                "bert_context": {"bert_entities": [], "bert_confidence": 0.0, "medical_terms": [], "processing_time_ms": 0},
-                "metadata": {"strategy": "early_exit_short_text", "words_processed": len(text.split())},
-                "learning_data": {"session_id": session_id, "extraction_id": None, "ready_for_feedback": False}
-            }
-        
-        # NEW: Check extraction cache for identical texts
-        cache_key = self._generate_cache_key(text, medical_context)
-        if cache_key in self._extraction_cache:
-            self._cache_hits += 1
-            cached_result = self._extraction_cache[cache_key].copy()
-            cached_result["metadata"]["cache_strategy"] = "extraction_cache_hit"
-            cached_result["metadata"]["cache_hits"] = self._cache_hits
-            cached_result["metadata"]["cache_misses"] = self._cache_misses
-            logger.info(f"🎯 Cache HIT: Using cached extraction for '{text[:50]}...'")
-            return cached_result
-        
-        self._cache_misses += 1
-        logger.info(f"🔄 Cache MISS: Processing new text '{text[:50]}...'")
         
         # Step 1: Early BERT analysis for context understanding
         bert_context = await self._get_bert_context(text)
@@ -94,8 +62,7 @@ class MedicationExtractionService:
             session_id, text, candidates, final_medications, metadata
         )
         
-        # NEW: Store result in cache for future use
-        result = {
+        return {
             "medications": final_medications,
             "bert_context": bert_context,
             "metadata": metadata,
@@ -105,51 +72,25 @@ class MedicationExtractionService:
                 "ready_for_feedback": True
             }
         }
-        
-        # Add cache performance metrics
-        result["metadata"]["cache_hits"] = self._cache_hits
-        result["metadata"]["cache_misses"] = self._cache_misses
-        result["metadata"]["cache_efficiency"] = self._cache_hits / (self._cache_hits + self._cache_misses) if (self._cache_hits + self._cache_misses) > 0 else 0
-        
-        # Store in cache
-        self._store_in_cache(cache_key, result)
-        
-        return result
     
     async def _get_bert_context(self, text: str) -> Dict:
         """Get BERT context analysis for better extraction"""
-        # NEW: Check BERT cache first
-        bert_cache_key = f"bert:{hash(text.lower().strip())}"
-        if bert_cache_key in self._bert_cache:
-            logger.info(f"🎯 BERT Cache HIT: Using cached BERT analysis")
-            return self._bert_cache[bert_cache_key]
-        
         try:
             bert_result = await self.bert_booster.bert.extract_medical_entities(text)
-            bert_context = {
+            return {
                 "bert_entities": bert_result.entities,
                 "bert_confidence": bert_result.bert_confidence,
                 "medical_terms": [e.spanish_term for e in bert_result.entities if e.entity_type == "medication"],
                 "processing_time_ms": bert_result.processing_time_ms
             }
-            
-            # NEW: Cache BERT result
-            self._bert_cache[bert_cache_key] = bert_context
-            
-            return bert_context
         except Exception as e:
             logger.warning(f"BERT context analysis failed: {e}")
-            bert_context = {
+            return {
                 "bert_entities": [],
                 "bert_confidence": 0.0,
                 "medical_terms": [],
                 "processing_time_ms": 0
             }
-            
-            # Cache even failed results to avoid retrying
-            self._bert_cache[bert_cache_key] = bert_context
-            
-            return bert_context
     
     async def _identify_candidates_with_bert(self, text: str, bert_context: Dict) -> List[Dict]:
         """Enhanced candidate identification with BERT context"""
@@ -174,32 +115,7 @@ class MedicationExtractionService:
         # Strategy 4: BERT entity-based extraction
         candidates.extend(self._extract_bert_entities(bert_context))
         
-        # NEW: Confidence threshold filtering to skip low-confidence extractions
-        confidence_filter_start = time.time()
-        high_confidence_candidates = [c for c in candidates if c.get("confidence_modifiers", {}).get("bert_confidence_boost", 0) > 0.3]
-        confidence_filter_time = time.time() - confidence_filter_start
-        logger.info(f"🎯 Confidence filter: {len(candidates)} → {len(high_confidence_candidates)} high-confidence candidates in {confidence_filter_time:.3f}s")
-        
-        # Replace candidates with high-confidence ones only
-        candidates = high_confidence_candidates
-        
         return self._deduplicate_candidates(candidates)
-    
-    def _generate_cache_key(self, text: str, medical_context: str) -> str:
-        """Generate a cache key for text and context"""
-        # Normalize text for better cache hits
-        normalized_text = re.sub(r'\s+', ' ', text.lower().strip())
-        return f"{medical_context}:{hash(normalized_text)}"
-    
-    def _store_in_cache(self, cache_key: str, result: Dict):
-        """Store extraction result in cache"""
-        # Limit cache size to prevent memory issues
-        if len(self._extraction_cache) > 100:
-            # Remove oldest entries
-            oldest_key = next(iter(self._extraction_cache))
-            del self._extraction_cache[oldest_key]
-        
-        self._extraction_cache[cache_key] = result
     
     def _smart_pre_filter_words(self, words: List[str], text: str) -> List[str]:
         """Smart pre-filtering to eliminate obvious non-medical words before BERT processing"""
@@ -245,14 +161,14 @@ class MedicationExtractionService:
             "caliente", "frío", "caluroso", "fresco", "bonito", "feo", "hermoso", "horrible",
             "fácil", "difícil", "importante", "necesario", "posible", "imposible", "verdadero", "falso",
             
-            # NEW: Aggressive medical false positive filters (from your conversation)
-            "feeling", "feeling", "obgyn", "obgyn", "dólares", "dolores", "doctora", "estoy",
-            "preocupada", "preocupado", "algunos", "parte", "baja", "abdomen", "under",
-            "millimeters", "stage", "consider", "placing", "even", "depending", "severity",
-            "interventions", "reduce", "risk", "preterm", "birth", "ter", "cervix", "therapy",
-            "circlage", "placing", "progesterone", "even", "circlage", "depending", "severity",
+            # RESTORED: Aggressive medical false positive filters (from your conversation)
+            "feeling", "obgyn", "dólares", "dolores", "doctora", "estoy", "preocupada",
+            "preocupado", "algunos", "parte", "baja", "abdomen", "under", "millimeters",
+            "stage", "consider", "placing", "even", "depending", "severity", "interventions",
+            "reduce", "risk", "preterm", "birth", "ter", "cervix", "therapy", "circlage",
+            "progesterone", "even", "circlage", "depending", "severity",
             
-            # NEW: Common medical false positives
+            # RESTORED: Common medical false positives
             "pain", "ache", "hurt", "sore", "swelling", "bleeding", "discharge", "fever",
             "nausea", "vomiting", "diarrhea", "constipation", "cough", "sneeze", "runny",
             "congestion", "headache", "migraine", "dizziness", "fatigue", "tired", "weak",
@@ -262,7 +178,12 @@ class MedicationExtractionService:
             "injection", "shot", "cream", "ointment", "drops", "syrup", "liquid", "powder",
             "dose", "dosage", "prescription", "refill", "side", "effect", "reaction", "allergy",
             "infection", "bacteria", "virus", "fungus", "parasite", "inflammation", "swelling",
-            "tumor", "cancer", "benign", "malignant", "metastasis", "remission", "relapse"
+            "tumor", "cancer", "benign", "malignant", "metastasis", "remission", "relapse",
+            
+            # NEW: Spanish false positives that were extracted
+            "viene", "dura", "pasa", "peligroso", "para", "bebé", "está", "cuello", "útero",
+            "va", "y", "unos", "30", "segundos", "luego", "se", "quita", "me", "varias",
+            "veces", "al", "día", "qué", "si", "está", "corto"
         }
         
         # Medical context words that should always be processed
@@ -293,7 +214,7 @@ class MedicationExtractionService:
                 continue
                 
             # Skip very short words (likely not medical)
-            if len(word_lower) < 5:  # Increased from 4 to 5 for better filtering
+            if len(word_lower) < 5:  # Restored to 5 for better filtering
                 continue
                 
             # Skip words that are clearly names or places
@@ -310,23 +231,27 @@ class MedicationExtractionService:
         candidates = []
         bert_terms = set(bert_context.get("medical_terms", []))
         
-        # NEW: Skip BERT processing for very common patterns to save time
+        # RESTORED: Skip BERT processing for very common patterns to save time
         skip_bert_patterns = {
             "feeling", "obgyn", "dólares", "dolores", "doctora", "estoy", "preocupada",
             "preocupado", "algunos", "parte", "baja", "abdomen", "under", "millimeters",
             "stage", "consider", "placing", "even", "depending", "severity", "interventions",
             "reduce", "risk", "preterm", "birth", "ter", "cervix", "therapy", "circlage",
-            "progesterone", "even", "circlage", "depending", "severity"
+            "progesterone", "even", "circlage", "depending", "severity",
+            # NEW: Spanish false positives
+            "viene", "dura", "pasa", "peligroso", "para", "bebé", "está", "cuello", "útero",
+            "va", "y", "unos", "30", "segundos", "luego", "se", "quita", "me", "varias",
+            "veces", "al", "día", "qué", "si", "está", "corto"
         }
         
         for i, word in enumerate(words):
             word_lower = word.lower()
             
-            # NEW: Skip very common false positives entirely
+            # RESTORED: Skip very common false positives entirely
             if word_lower in skip_bert_patterns:
                 continue
                 
-            if len(word) >= 5:  # Increased from 4 to 5 for better filtering
+            if len(word) >= 5:  # Restored to 5 for better filtering
                 # Check if BERT identified this as medical
                 bert_boost = 0.2 if word in bert_terms else 0.0
                 
@@ -543,3 +468,78 @@ class MedicationExtractionService:
             "text_word_count": len(text.split()),
             "awaiting_feedback": True
         }
+    
+    async def _check_medical_database(self, term: str) -> Optional[Dict]:
+        """Check medical terminology databases"""
+        try:
+            # Medical terminology database (simplified)
+            medical_terms = {
+                # OBGYN terms
+                "cerclage": {"category": "procedure", "confidence": 0.95, "source": "medical_db"},
+                "cerclaje": {"category": "procedure", "confidence": 0.95, "source": "medical_db"},
+                "cervical_insufficiency": {"category": "condition", "confidence": 0.9, "source": "medical_db"},
+                "effacement": {"category": "condition", "confidence": 0.9, "source": "medical_db"},
+                "braxton_hicks": {"category": "symptom", "confidence": 0.9, "source": "medical_db"},
+                "colico": {"category": "symptom", "confidence": 0.85, "source": "medical_db"},
+                "cólico": {"category": "symptom", "confidence": 0.85, "source": "medical_db"},
+                "flujo": {"category": "symptom", "confidence": 0.8, "source": "medical_db"},
+                "cuello_utero": {"category": "body_part", "confidence": 0.95, "source": "medical_db"},
+                "ultrasonido": {"category": "procedure", "confidence": 0.9, "source": "medical_db"},
+                "transvaginal": {"category": "procedure", "confidence": 0.9, "source": "medical_db"},
+                "progesterone_therapy": {"category": "treatment", "confidence": 0.9, "source": "medical_db"},
+                "preterm_labor": {"category": "condition", "confidence": 0.95, "source": "medical_db"},
+                
+                # General medical terms
+                "dolor": {"category": "symptom", "confidence": 0.9, "source": "medical_db"},
+                "dolores": {"category": "symptom", "confidence": 0.9, "source": "medical_db"},
+                "sangrado": {"category": "symptom", "confidence": 0.9, "source": "medical_db"},
+                "presion": {"category": "symptom", "confidence": 0.8, "source": "medical_db"},
+                "presión": {"category": "symptom", "confidence": 0.8, "source": "medical_db"},
+                "embarazo": {"category": "condition", "confidence": 0.95, "source": "medical_db"},
+                "parto": {"category": "procedure", "confidence": 0.9, "source": "medical_db"},
+                "prematuro": {"category": "condition", "confidence": 0.9, "source": "medical_db"},
+                
+                # Common medications
+                "aspirin": {"category": "medication", "confidence": 0.95, "source": "medical_db"},
+                "aspirina": {"category": "medication", "confidence": 0.95, "source": "medical_db"},
+                "progesterone": {"category": "medication", "confidence": 0.9, "source": "medical_db"},
+                "progesterona": {"category": "medication", "confidence": 0.9, "source": "medical_db"},
+            }
+            
+            term_lower = term.lower()
+            for med_term, med_info in medical_terms.items():
+                if term_lower in med_term or med_term in term_lower:
+                    return med_info
+            
+            return None
+        except Exception as e:
+            logger.warning(f"Medical database check failed for '{term}': {e}")
+            return None
+    
+    async def _direct_medical_database_lookup(self, words: List[str]) -> List[Dict]:
+        """Direct medical database lookup when BERT fails"""
+        candidates = []
+        
+        for i, word in enumerate(words):
+            word_lower = word.lower()
+            
+            # Check medical database directly
+            medical_info = await self._check_medical_database(word_lower)
+            if medical_info:
+                candidates.append({
+                    "term": word,
+                    "strategy": "direct_medical_db_lookup",
+                    "context": " ".join(words[max(0,i-2):i+3]),
+                    "position": i,
+                    "confidence_modifiers": {
+                        "word_length": len(word),
+                        "position_ratio": i / len(words) if words else 0,
+                        "bert_identified": False,
+                        "bert_confidence_boost": 0.0,
+                        "medical_db_confidence": medical_info.get("confidence", 0.5),
+                        "medical_db_source": medical_info.get("source", "unknown")
+                    }
+                })
+                logger.info(f"🎯 Direct DB match: '{word}' → {medical_info['category']}")
+        
+        return candidates

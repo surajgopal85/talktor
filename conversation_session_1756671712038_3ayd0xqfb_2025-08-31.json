@@ -1,0 +1,406 @@
+{
+  "sessionId": "session_1756671712038_3ayd0xqfb",
+  "timestamp": "2025-08-31T20:27:02.166Z",
+  "messages": [
+    {
+      "id": "audio_1756671775740",
+      "speaker": "doctor",
+      "message_type": "transcription",
+      "content": {
+        "text": " Good morning, Ms. Gonzalez. I'm Dr. Carter, your OBGYN. How are you feeling today?"
+      },
+      "timestamp": "2025-08-31T20:22:55.740Z",
+      "language": "en"
+    },
+    {
+      "id": "translation_1756671776987",
+      "speaker": "patient",
+      "message_type": "translation",
+      "content": {
+        "original_text": " Good morning, Ms. Gonzalez. I'm Dr. Carter, your OBGYN. How are you feeling today?",
+        "translated_text": "Buenos días, Sra. González. Soy el Dr. Carter, tu obgyn. ¿Cómo te sientes hoy?",
+        "medical_terms": [],
+        "medical_notes": [],
+        "follow_up_questions": [],
+        "confidence": 0.95,
+        "medical_accuracy": 0
+      },
+      "timestamp": "2025-08-31T20:22:57.087Z",
+      "language": "es"
+    },
+    {
+      "id": "audio_1756671789669",
+      "speaker": "patient",
+      "message_type": "transcription",
+      "content": {
+        "text": " Buenos días, doctora. Estoy un poco preocupada. He tenido algunos dólares en la parte baja del abdomen."
+      },
+      "timestamp": "2025-08-31T20:23:09.669Z",
+      "language": "es"
+    },
+    {
+      "id": "translation_1756671790042",
+      "speaker": "doctor",
+      "message_type": "translation",
+      "content": {
+        "original_text": " Buenos días, doctora. Estoy un poco preocupada. He tenido algunos dólares en la parte baja del abdomen.",
+        "translated_text": "Good morning, doctor. I am a little worried. I have had some dollars in the lower abdomen.",
+        "medical_terms": [],
+        "medical_notes": [],
+        "follow_up_questions": [],
+        "confidence": 0.95,
+        "medical_accuracy": 0
+      },
+      "timestamp": "2025-08-31T20:23:10.142Z",
+      "language": "en"
+    },
+    {
+      "id": "audio_1756671804376",
+      "speaker": "doctor",
+      "message_type": "transcription",
+      "content": {
+        "text": " Thank you for letting me know. Before we go into the symptoms, let's confirm some background. You're currently 26 weeks pregnant, correct?"
+      },
+      "timestamp": "2025-08-31T20:23:24.376Z",
+      "language": "en"
+    },
+    {
+      "id": "translation_1756671804756",
+      "speaker": "patient",
+      "message_type": "translation",
+      "content": {
+        "original_text": " Thank you for letting me know. Before we go into the symptoms, let's confirm some background. You're currently 26 weeks pregnant, correct?",
+        "translated_text": "Gracias por avisarme. Antes de entrar en los síntomas, confirmemos algunos antecedentes. Actualmente tienes 26 semanas de embarazo, ¿correcto?",
+        "medical_terms": [],
+        "medical_notes": [
+          {
+            "type": "pregnancy_context",
+            "message": "Patient pregnancy stage: first_trimester",
+            "importance": "high"
+          }
+        ],
+        "follow_up_questions": [
+          "Are you taking prenatal vitamins?",
+          "When is your next prenatal appointment?",
+          "Are you experiencing any concerning symptoms?"
+        ],
+        "confidence": 0.95,
+        "medical_accuracy": 0
+      },
+      "timestamp": "2025-08-31T20:23:24.856Z",
+      "language": "es"
+    },
+    {
+      "id": "audio_1756671821141",
+      "speaker": "patient",
+      "message_type": "transcription",
+      "content": {
+        "text": " Sí, tengo 26 semanas. Es mi segundo embarazo. El primero terminó en un parto premoturo a las 34 semanas."
+      },
+      "timestamp": "2025-08-31T20:23:41.141Z",
+      "language": "es"
+    },
+    {
+      "id": "translation_1756671822546",
+      "speaker": "doctor",
+      "message_type": "translation",
+      "content": {
+        "original_text": " Sí, tengo 26 semanas. Es mi segundo embarazo. El primero terminó en un parto premoturo a las 34 semanas.",
+        "translated_text": "Yes, I have 26 weeks. It is my second pregnancy. The first ended in a premoturo delivery at 34 weeks.",
+        "medical_terms": [],
+        "medical_notes": [
+          {
+            "type": "pregnancy_context",
+            "message": "Patient pregnancy stage: unknown",
+            "importance": "high"
+          }
+        ],
+        "follow_up_questions": [
+          "Are you taking prenatal vitamins?",
+          "When is your next prenatal appointment?",
+          "Are you experiencing any concerning symptoms?"
+        ],
+        "confidence": 0.95,
+        "medical_accuracy": 0
+      },
+      "timestamp": "2025-08-31T20:23:42.646Z",
+      "language": "en"
+    },
+    {
+      "id": "audio_1756671839003",
+      "speaker": "doctor",
+      "message_type": "transcription",
+      "content": {
+        "text": " Understood, because of your history of preterm labor, we are monitoring you closely. Can you describe the abdominal pain? Is it cramping, sharp, or constant pressure?"
+      },
+      "timestamp": "2025-08-31T20:23:59.003Z",
+      "language": "en"
+    },
+    {
+      "id": "translation_1756671840045",
+      "speaker": "patient",
+      "message_type": "translation",
+      "content": {
+        "original_text": " Understood, because of your history of preterm labor, we are monitoring you closely. Can you describe the abdominal pain? Is it cramping, sharp, or constant pressure?",
+        "translated_text": "Entendido, debido a su historial de trabajo prematuro, lo estamos monitoreando de cerca. ¿Puedes describir el dolor abdominal? ¿Es una presión calambres, aguda o constante?",
+        "medical_terms": [],
+        "medical_notes": [
+          {
+            "type": "pregnancy_context",
+            "message": "Patient pregnancy stage: third_trimester",
+            "importance": "high"
+          }
+        ],
+        "follow_up_questions": [
+          "Are you taking prenatal vitamins?",
+          "When is your next prenatal appointment?",
+          "Are you experiencing any concerning symptoms?"
+        ],
+        "confidence": 0.95,
+        "medical_accuracy": 0
+      },
+      "timestamp": "2025-08-31T20:24:00.145Z",
+      "language": "es"
+    },
+    {
+      "id": "audio_1756671856275",
+      "speaker": "patient",
+      "message_type": "transcription",
+      "content": {
+        "text": " Es como un colico, ba y viene. Dura unos 30 segundos y luego se quita. Me pasa varias veces a dia."
+      },
+      "timestamp": "2025-08-31T20:24:16.275Z",
+      "language": "es"
+    },
+    {
+      "id": "translation_1756671856867",
+      "speaker": "doctor",
+      "message_type": "translation",
+      "content": {
+        "original_text": " Es como un colico, ba y viene. Dura unos 30 segundos y luego se quita. Me pasa varias veces a dia.",
+        "translated_text": "It's like a colic, ba and comes. It lasts about 30 seconds and then takes off. It happens to me several times.",
+        "medical_terms": [],
+        "medical_notes": [],
+        "follow_up_questions": [],
+        "confidence": 0.95,
+        "medical_accuracy": 0
+      },
+      "timestamp": "2025-08-31T20:24:16.967Z",
+      "language": "en"
+    },
+    {
+      "id": "audio_1756671881128",
+      "speaker": "doctor",
+      "message_type": "transcription",
+      "content": {
+        "text": " That sounds like Braxton Hicks contractions, which are common in the second and third trimester. But given your history, I want to rule out any cervical insufficiency or early affacement. Have you had any vaginal discharge, bleeding, or pressure in the pelvis?"
+      },
+      "timestamp": "2025-08-31T20:24:41.128Z",
+      "language": "en"
+    },
+    {
+      "id": "translation_1756671882010",
+      "speaker": "patient",
+      "message_type": "translation",
+      "content": {
+        "original_text": " That sounds like Braxton Hicks contractions, which are common in the second and third trimester. But given your history, I want to rule out any cervical insufficiency or early affacement. Have you had any vaginal discharge, bleeding, or pressure in the pelvis?",
+        "translated_text": "Eso suena como contracciones Braxton Hicks, que son comunes en el segundo y tercer trimestre. Pero dada su historial, quiero descartar cualquier insuficiencia cervical o afecto temprano. ¿Ha tenido algún flujo vaginal, sangrado o presión en la pelvis?",
+        "medical_terms": [],
+        "medical_notes": [
+          {
+            "type": "pregnancy_context",
+            "message": "Patient pregnancy stage: third_trimester",
+            "importance": "high"
+          }
+        ],
+        "follow_up_questions": [
+          "Are you taking prenatal vitamins?",
+          "When is your next prenatal appointment?",
+          "Are you experiencing any concerning symptoms?"
+        ],
+        "confidence": 0.95,
+        "medical_accuracy": 0
+      },
+      "timestamp": "2025-08-31T20:24:42.110Z",
+      "language": "es"
+    },
+    {
+      "id": "audio_1756671899954",
+      "speaker": "patient",
+      "message_type": "transcription",
+      "content": {
+        "text": " He notado un poco más de flujo, pero es transparente. No he tenido sangrado. Si siento un poco de presión, como si el bebé estuviera muy bajo."
+      },
+      "timestamp": "2025-08-31T20:24:59.954Z",
+      "language": "es"
+    },
+    {
+      "id": "translation_1756671901577",
+      "speaker": "doctor",
+      "message_type": "translation",
+      "content": {
+        "original_text": " He notado un poco más de flujo, pero es transparente. No he tenido sangrado. Si siento un poco de presión, como si el bebé estuviera muy bajo.",
+        "translated_text": "I have noticed a little more flow, but it is transparent. I have not had bleeding. If I feel a little pressure, as if the baby was very low.",
+        "medical_terms": [],
+        "medical_notes": [],
+        "follow_up_questions": [],
+        "confidence": 0.95,
+        "medical_accuracy": 0
+      },
+      "timestamp": "2025-08-31T20:25:01.677Z",
+      "language": "en"
+    },
+    {
+      "id": "audio_1756671920836",
+      "speaker": "doctor",
+      "message_type": "transcription",
+      "content": {
+        "text": " Thank you. I'd like to perform a trans-vaginal ultrasound today to check your cervical length. Shortening of the cervix can be an early sign of preterm labor. We'll also monitor fetal movement and uterine activity."
+      },
+      "timestamp": "2025-08-31T20:25:20.836Z",
+      "language": "en"
+    },
+    {
+      "id": "translation_1756671921190",
+      "speaker": "patient",
+      "message_type": "translation",
+      "content": {
+        "original_text": " Thank you. I'd like to perform a trans-vaginal ultrasound today to check your cervical length. Shortening of the cervix can be an early sign of preterm labor. We'll also monitor fetal movement and uterine activity.",
+        "translated_text": "Gracias. Me gustaría realizar un ultrasonido transvaginal hoy para verificar su longitud cervical. El acortamiento del cuello uterino puede ser un signo temprano de trabajo prematuro. También monitorearemos el movimiento fetal y la actividad uterina.",
+        "medical_terms": [],
+        "medical_notes": [
+          {
+            "type": "pregnancy_context",
+            "message": "Patient pregnancy stage: third_trimester",
+            "importance": "high"
+          }
+        ],
+        "follow_up_questions": [
+          "Are you taking prenatal vitamins?",
+          "When is your next prenatal appointment?",
+          "Are you experiencing any concerning symptoms?"
+        ],
+        "confidence": 0.95,
+        "medical_accuracy": 0
+      },
+      "timestamp": "2025-08-31T20:25:21.290Z",
+      "language": "es"
+    },
+    {
+      "id": "audio_1756671933817",
+      "speaker": "patient",
+      "message_type": "transcription",
+      "content": {
+        "text": " Es peligroso para el bebé, ¿qué pasa si el cuello del uroro está corto?"
+      },
+      "timestamp": "2025-08-31T20:25:33.817Z",
+      "language": "es"
+    },
+    {
+      "id": "translation_1756671935250",
+      "speaker": "doctor",
+      "message_type": "translation",
+      "content": {
+        "original_text": " Es peligroso para el bebé, ¿qué pasa si el cuello del uroro está corto?",
+        "translated_text": "It is dangerous for the baby, what happens if the URORO neck is short?",
+        "medical_terms": [],
+        "medical_notes": [],
+        "follow_up_questions": [],
+        "confidence": 0.95,
+        "medical_accuracy": 0
+      },
+      "timestamp": "2025-08-31T20:25:35.350Z",
+      "language": "en"
+    },
+    {
+      "id": "audio_1756671957567",
+      "speaker": "doctor",
+      "message_type": "transcription",
+      "content": {
+        "text": " If your cervix is under 25 millimeters at this stage, we may consider placing you on progesterone therapy or even a surkladge, depending on the severity. These interventions help reduce the risk of preterm birth."
+      },
+      "timestamp": "2025-08-31T20:25:57.567Z",
+      "language": "en"
+    },
+    {
+      "id": "translation_1756671959162",
+      "speaker": "patient",
+      "message_type": "translation",
+      "content": {
+        "original_text": " If your cervix is under 25 millimeters at this stage, we may consider placing you on progesterone therapy or even a surkladge, depending on the severity. These interventions help reduce the risk of preterm birth.",
+        "translated_text": "Si su cuello uterino tiene menos de 25 milímetros en esta etapa, podemos considerar colocarlo en la terapia de progesterona o incluso una surkladge, dependiendo de la gravedad. Estas intervenciones ayudan a reducir el riesgo de parto prematuro.",
+        "medical_terms": [],
+        "medical_notes": [],
+        "follow_up_questions": [],
+        "confidence": 0.95,
+        "medical_accuracy": 0
+      },
+      "timestamp": "2025-08-31T20:25:59.262Z",
+      "language": "es"
+    },
+    {
+      "id": "audio_1756671974596",
+      "speaker": "patient",
+      "message_type": "transcription",
+      "content": {
+        "text": " El ser claje duele tendría que hacer reposo después."
+      },
+      "timestamp": "2025-08-31T20:26:14.596Z",
+      "language": "es"
+    },
+    {
+      "id": "translation_1756671974997",
+      "speaker": "doctor",
+      "message_type": "translation",
+      "content": {
+        "original_text": " El ser claje duele tendría que hacer reposo después.",
+        "translated_text": "Being click hurts would have to rest later.",
+        "medical_terms": [],
+        "medical_notes": [],
+        "follow_up_questions": [],
+        "confidence": 0.95,
+        "medical_accuracy": 0
+      },
+      "timestamp": "2025-08-31T20:26:15.097Z",
+      "language": "en"
+    }
+  ],
+  "medicalContext": null,
+  "medicalAlerts": [
+    {
+      "id": "alert_1756671804756_0.43034872726045503",
+      "type": "pregnancy_context",
+      "message": "Patient pregnancy stage: first_trimester",
+      "severity": "high",
+      "timestamp": "2025-08-31T20:23:24.756Z"
+    },
+    {
+      "id": "alert_1756671822546_0.8116008024443772",
+      "type": "pregnancy_context",
+      "message": "Patient pregnancy stage: unknown",
+      "severity": "high",
+      "timestamp": "2025-08-31T20:23:42.546Z"
+    },
+    {
+      "id": "alert_1756671840045_0.3885307884493432",
+      "type": "pregnancy_context",
+      "message": "Patient pregnancy stage: third_trimester",
+      "severity": "high",
+      "timestamp": "2025-08-31T20:24:00.045Z"
+    },
+    {
+      "id": "alert_1756671882010_0.8971046983854941",
+      "type": "pregnancy_context",
+      "message": "Patient pregnancy stage: third_trimester",
+      "severity": "high",
+      "timestamp": "2025-08-31T20:24:42.010Z"
+    },
+    {
+      "id": "alert_1756671921190_0.3376360992422168",
+      "type": "pregnancy_context",
+      "message": "Patient pregnancy stage: third_trimester",
+      "severity": "high",
+      "timestamp": "2025-08-31T20:25:21.190Z"
+    }
+  ]
+}

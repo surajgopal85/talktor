@@ -1,0 +1,640 @@
+{
+  "sessionId": "session_1756691281115_44swko12j",
+  "timestamp": "2025-09-01T01:52:11.200Z",
+  "stats": {
+    "totalMessages": 22,
+    "doctorMessages": 11,
+    "patientMessages": 11,
+    "systemMessages": 0,
+    "translations": 11,
+    "duration": "3m 7s",
+    "medications": 2,
+    "alerts": 5
+  },
+  "medicalAlerts": [
+    {
+      "id": "alert_1756691360879_0.8838388725589219",
+      "type": "pregnancy_context",
+      "message": "Patient pregnancy stage: first_trimester",
+      "severity": "high",
+      "timestamp": "2025-09-01T01:49:20.879Z"
+    },
+    {
+      "id": "alert_1756691377540_0.7697090505747333",
+      "type": "pregnancy_context",
+      "message": "Patient pregnancy stage: unknown",
+      "severity": "high",
+      "timestamp": "2025-09-01T01:49:37.540Z"
+    },
+    {
+      "id": "alert_1756691395272_0.8296238056205516",
+      "type": "pregnancy_context",
+      "message": "Patient pregnancy stage: third_trimester",
+      "severity": "high",
+      "timestamp": "2025-09-01T01:49:55.272Z"
+    },
+    {
+      "id": "alert_1756691437241_0.6833492039832022",
+      "type": "pregnancy_context",
+      "message": "Patient pregnancy stage: third_trimester",
+      "severity": "high",
+      "timestamp": "2025-09-01T01:50:37.241Z"
+    },
+    {
+      "id": "alert_1756691484768_0.17661664449713044",
+      "type": "pregnancy_context",
+      "message": "Patient pregnancy stage: third_trimester",
+      "severity": "high",
+      "timestamp": "2025-09-01T01:51:24.768Z"
+    }
+  ],
+  "medications": [
+    "surkladge",
+    "cervix surkladge"
+  ],
+  "messages": [
+    {
+      "timestamp": "2025-09-01T01:48:52.261Z",
+      "speaker": "doctor",
+      "type": "transcription",
+      "content": {
+        "text": " Good morning, Ms. Gonzalez. I'm Dr. Carter, your OB-GYN. How are you feeling today?"
+      }
+    },
+    {
+      "timestamp": "2025-09-01T01:48:53.707Z",
+      "speaker": "patient",
+      "type": "translation",
+      "content": {
+        "original_text": " Good morning, Ms. Gonzalez. I'm Dr. Carter, your OB-GYN. How are you feeling today?",
+        "translated_text": "Buenos días, Sra. González. Soy el Dr. Carter, tu ob con Gyn. ¿Cómo te sientes hoy?",
+        "medical_terms": [],
+        "medical_notes": [],
+        "follow_up_questions": [],
+        "confidence": 0.95,
+        "medical_accuracy": 0
+      }
+    },
+    {
+      "timestamp": "2025-09-01T01:49:06.074Z",
+      "speaker": "patient",
+      "type": "transcription",
+      "content": {
+        "text": " Buenos días, doctora. Estoy un poco preocupada. He tenido algunos dólares en la parte Paje del abdomen."
+      }
+    },
+    {
+      "timestamp": "2025-09-01T01:49:08.081Z",
+      "speaker": "doctor",
+      "type": "translation",
+      "content": {
+        "original_text": " Buenos días, doctora. Estoy un poco preocupada. He tenido algunos dólares en la parte Paje del abdomen.",
+        "translated_text": "Good morning, doctor. I am a little worried. I have had some dollars in the page of the abdomen.",
+        "medical_terms": [
+          {
+            "original_text": "tenido",
+            "canonical_name": "tenido",
+            "category": "medication",
+            "confidence": 0.45,
+            "translation": "tenido",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          }
+        ],
+        "medical_notes": [],
+        "follow_up_questions": [],
+        "confidence": 0.95,
+        "medical_accuracy": 1
+      }
+    },
+    {
+      "timestamp": "2025-09-01T01:49:20.038Z",
+      "speaker": "doctor",
+      "type": "transcription",
+      "content": {
+        "text": " Thank you for letting me know. Before we go into the symptoms, let's confirm some background. You're currently 26 weeks pregnant, correct?"
+      }
+    },
+    {
+      "timestamp": "2025-09-01T01:49:20.979Z",
+      "speaker": "patient",
+      "type": "translation",
+      "content": {
+        "original_text": " Thank you for letting me know. Before we go into the symptoms, let's confirm some background. You're currently 26 weeks pregnant, correct?",
+        "translated_text": "Gracias por avisarme. Antes de entrar en los síntomas, confirmemos algunos antecedentes. Actualmente tienes 26 semanas de embarazo, ¿correcto?",
+        "medical_terms": [],
+        "medical_notes": [
+          {
+            "type": "pregnancy_context",
+            "message": "Patient pregnancy stage: first_trimester",
+            "importance": "high"
+          }
+        ],
+        "follow_up_questions": [
+          "Are you taking prenatal vitamins?",
+          "When is your next prenatal appointment?",
+          "Are you experiencing any concerning symptoms?"
+        ],
+        "confidence": 0.95,
+        "medical_accuracy": 0
+      }
+    },
+    {
+      "timestamp": "2025-09-01T01:49:37.180Z",
+      "speaker": "patient",
+      "type": "transcription",
+      "content": {
+        "text": " Sí, tengo 26 semanas, es mi segundo embarazo. El primero terminó en un parto prematuro a las 34 semanas."
+      }
+    },
+    {
+      "timestamp": "2025-09-01T01:49:37.640Z",
+      "speaker": "doctor",
+      "type": "translation",
+      "content": {
+        "original_text": " Sí, tengo 26 semanas, es mi segundo embarazo. El primero terminó en un parto prematuro a las 34 semanas.",
+        "translated_text": "Yes, I'm 26 weeks, it's my second pregnancy. The first ended in premature delivery at 34 weeks.",
+        "medical_terms": [],
+        "medical_notes": [
+          {
+            "type": "pregnancy_context",
+            "message": "Patient pregnancy stage: unknown",
+            "importance": "high"
+          }
+        ],
+        "follow_up_questions": [
+          "Are you taking prenatal vitamins?",
+          "When is your next prenatal appointment?",
+          "Are you experiencing any concerning symptoms?"
+        ],
+        "confidence": 0.95,
+        "medical_accuracy": 0
+      }
+    },
+    {
+      "timestamp": "2025-09-01T01:49:54.700Z",
+      "speaker": "doctor",
+      "type": "transcription",
+      "content": {
+        "text": " Understood, because of your history of free term labor, we're monitoring you more closely. Can you describe the abdominal pain? Is it cramping, sharp or constant pressure?"
+      }
+    },
+    {
+      "timestamp": "2025-09-01T01:49:55.372Z",
+      "speaker": "patient",
+      "type": "translation",
+      "content": {
+        "original_text": " Understood, because of your history of free term labor, we're monitoring you more closely. Can you describe the abdominal pain? Is it cramping, sharp or constant pressure?",
+        "translated_text": "Entendido, debido a su historial de trabajo a plazo, lo estamos monitoreando más de cerca. ¿Puedes describir el dolor abdominal? ¿Es una presión calambres, aguda o constante?",
+        "medical_terms": [],
+        "medical_notes": [
+          {
+            "type": "pregnancy_context",
+            "message": "Patient pregnancy stage: third_trimester",
+            "importance": "high"
+          }
+        ],
+        "follow_up_questions": [
+          "Are you taking prenatal vitamins?",
+          "When is your next prenatal appointment?",
+          "Are you experiencing any concerning symptoms?"
+        ],
+        "confidence": 0.95,
+        "medical_accuracy": 0
+      }
+    },
+    {
+      "timestamp": "2025-09-01T01:50:12.565Z",
+      "speaker": "patient",
+      "type": "transcription",
+      "content": {
+        "text": " Es como un colico, ba y viene. Duró unos 30 segundos y luego se quita. Me pasa varias veces a día."
+      }
+    },
+    {
+      "timestamp": "2025-09-01T01:50:15.346Z",
+      "speaker": "doctor",
+      "type": "translation",
+      "content": {
+        "original_text": " Es como un colico, ba y viene. Duró unos 30 segundos y luego se quita. Me pasa varias veces a día.",
+        "translated_text": "It's like a colic, ba and comes. It lasted about 30 seconds and then removes. It happens to me several times by day.",
+        "medical_terms": [
+          {
+            "original_text": "colico",
+            "canonical_name": "colico",
+            "category": "medication",
+            "confidence": 0.45,
+            "translation": "colico",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          }
+        ],
+        "medical_notes": [],
+        "follow_up_questions": [],
+        "confidence": 0.95,
+        "medical_accuracy": 1
+      }
+    },
+    {
+      "timestamp": "2025-09-01T01:50:36.579Z",
+      "speaker": "doctor",
+      "type": "transcription",
+      "content": {
+        "text": " That sounds like Braxton Hicks contractions, which are common in the second and third trimester, but given your history, I want to rule out any cervical insufficiency or early effacement. Have you had an imaginal discharge bleeding or pressure in the pelvis?"
+      }
+    },
+    {
+      "timestamp": "2025-09-01T01:50:37.341Z",
+      "speaker": "patient",
+      "type": "translation",
+      "content": {
+        "original_text": " That sounds like Braxton Hicks contractions, which are common in the second and third trimester, but given your history, I want to rule out any cervical insufficiency or early effacement. Have you had an imaginal discharge bleeding or pressure in the pelvis?",
+        "translated_text": "Eso suena como contracciones Braxton Hicks, que son comunes en el segundo y tercer trimestre, pero dado su historial, quiero descartar cualquier insuficiencia cervical o borramiento temprano. ¿Ha tenido un sangrado o presión de descarga imaginal en la pelvis?",
+        "medical_terms": [],
+        "medical_notes": [
+          {
+            "type": "pregnancy_context",
+            "message": "Patient pregnancy stage: third_trimester",
+            "importance": "high"
+          }
+        ],
+        "follow_up_questions": [
+          "Are you taking prenatal vitamins?",
+          "When is your next prenatal appointment?",
+          "Are you experiencing any concerning symptoms?"
+        ],
+        "confidence": 0.95,
+        "medical_accuracy": 0
+      }
+    },
+    {
+      "timestamp": "2025-09-01T01:50:56.611Z",
+      "speaker": "patient",
+      "type": "transcription",
+      "content": {
+        "text": " He notado un poco más de flujo, pero es transparente, no he tenido sangrado, si siento un poco de presión, como si el bebé estuviera muy bajo."
+      }
+    },
+    {
+      "timestamp": "2025-09-01T01:51:09.851Z",
+      "speaker": "doctor",
+      "type": "translation",
+      "content": {
+        "original_text": " He notado un poco más de flujo, pero es transparente, no he tenido sangrado, si siento un poco de presión, como si el bebé estuviera muy bajo.",
+        "translated_text": "I have noticed a little more flow, but it is transparent, I have not had bleeding, if I feel some pressure, as if the baby was very low.",
+        "medical_terms": [
+          {
+            "original_text": "notado",
+            "canonical_name": "notado",
+            "category": "medication",
+            "confidence": 0.45,
+            "translation": "notado",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "flujo",
+            "canonical_name": "flujo",
+            "category": "medication",
+            "confidence": 0.45,
+            "translation": "flujo",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "transparente",
+            "canonical_name": "transparente",
+            "category": "medication",
+            "confidence": 0.45,
+            "translation": "transparente",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "tenido",
+            "canonical_name": "tenido",
+            "category": "medication",
+            "confidence": 0.45,
+            "translation": "tenido",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "sangrado",
+            "canonical_name": "sangrado",
+            "category": "medication",
+            "confidence": 0.45,
+            "translation": "sangrado",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "siento",
+            "canonical_name": "siento",
+            "category": "medication",
+            "confidence": 0.45,
+            "translation": "siento",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "presión",
+            "canonical_name": "presión",
+            "category": "medication",
+            "confidence": 0.5,
+            "translation": "presión",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "estuviera",
+            "canonical_name": "estuviera",
+            "category": "medication",
+            "confidence": 0.5,
+            "translation": "estuviera",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "notado flujo",
+            "canonical_name": "notado flujo",
+            "category": "medication",
+            "confidence": 0.45,
+            "translation": "notado flujo",
+            "context_clues": [],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "flujo transparente",
+            "canonical_name": "flujo transparente",
+            "category": "medication",
+            "confidence": 0.5,
+            "translation": "flujo transparente",
+            "context_clues": [
+              "Uses For the temporary relief of minor aches and pains associated with backache muscular aches headache"
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "transparente tenido",
+            "canonical_name": "transparente tenido",
+            "category": "medication",
+            "confidence": 0.5,
+            "translation": "transparente tenido",
+            "context_clues": [
+              "Uses Prompt temporary relief of: pain during urination burning sensation of urgency increased frequency associated with urinary tract infections."
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "tenido sangrado",
+            "canonical_name": "tenido sangrado",
+            "category": "medication",
+            "confidence": 0.55,
+            "translation": "tenido sangrado",
+            "context_clues": [
+              "Uses/Usos temporarily relieves Minor aches and pains due to: headache muscle pain toothache menstrual pain colds minor pain of arthritis temporarily reduces fever alivio temporal de dolores menores a causa de lo siguiente: dolor de cabeza dolor muscular dolor de muelas dolores menstruales resfrios dolores menores a causa de la artritis reduce temporalmente la fiebre"
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "sangrado siento",
+            "canonical_name": "sangrado siento",
+            "category": "medication",
+            "confidence": 0.45,
+            "translation": "sangrado siento",
+            "context_clues": [],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "siento presión",
+            "canonical_name": "siento presión",
+            "category": "medication",
+            "confidence": 0.45,
+            "translation": "siento presión",
+            "context_clues": [],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "presión estuviera",
+            "canonical_name": "presión estuviera",
+            "category": "medication",
+            "confidence": 0.45,
+            "translation": "presión estuviera",
+            "context_clues": [],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          }
+        ],
+        "medical_notes": [],
+        "follow_up_questions": [],
+        "confidence": 0.95,
+        "medical_accuracy": 1
+      }
+    },
+    {
+      "timestamp": "2025-09-01T01:51:24.043Z",
+      "speaker": "doctor",
+      "type": "transcription",
+      "content": {
+        "text": " Thank you. I'd like to perform a trans-vaginal ultrasound today to check your cervical length. Shortening of the cervix can be an early sign of preterm labor. We'll also monitor fetal involvement in uterine activity."
+      }
+    },
+    {
+      "timestamp": "2025-09-01T01:51:24.868Z",
+      "speaker": "patient",
+      "type": "translation",
+      "content": {
+        "original_text": " Thank you. I'd like to perform a trans-vaginal ultrasound today to check your cervical length. Shortening of the cervix can be an early sign of preterm labor. We'll also monitor fetal involvement in uterine activity.",
+        "translated_text": "Gracias. Me gustaría realizar un ultrasonido transvaginal hoy para verificar su longitud cervical. El acortamiento del cuello uterino puede ser un signo temprano de trabajo prematuro. También monitorearemos la participación fetal en la actividad uterina.",
+        "medical_terms": [],
+        "medical_notes": [
+          {
+            "type": "pregnancy_context",
+            "message": "Patient pregnancy stage: third_trimester",
+            "importance": "high"
+          }
+        ],
+        "follow_up_questions": [
+          "Are you taking prenatal vitamins?",
+          "When is your next prenatal appointment?",
+          "Are you experiencing any concerning symptoms?"
+        ],
+        "confidence": 0.95,
+        "medical_accuracy": 0
+      }
+    },
+    {
+      "timestamp": "2025-09-01T01:51:35.571Z",
+      "speaker": "patient",
+      "type": "transcription",
+      "content": {
+        "text": " Es peligrosa para el bebé, que pasa si el cuello del útero está corto."
+      }
+    },
+    {
+      "timestamp": "2025-09-01T01:51:37.099Z",
+      "speaker": "doctor",
+      "type": "translation",
+      "content": {
+        "original_text": " Es peligrosa para el bebé, que pasa si el cuello del útero está corto.",
+        "translated_text": "It is dangerous for the baby, what happens if the cervix is ​​short.",
+        "medical_terms": [
+          {
+            "original_text": "peligrosa",
+            "canonical_name": "peligrosa",
+            "category": "medication",
+            "confidence": 0.45,
+            "translation": "peligrosa",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          }
+        ],
+        "medical_notes": [],
+        "follow_up_questions": [],
+        "confidence": 0.95,
+        "medical_accuracy": 1
+      }
+    },
+    {
+      "timestamp": "2025-09-01T01:51:57.888Z",
+      "speaker": "doctor",
+      "type": "transcription",
+      "content": {
+        "text": " If your cervix is under 25 millimeters at this stage, we may consider placing you on progesterone therapy or even a surkladge, depending on the severity. These interventions help reduce the risk of preterm birth."
+      }
+    },
+    {
+      "timestamp": "2025-09-01T01:51:59.955Z",
+      "speaker": "patient",
+      "type": "translation",
+      "content": {
+        "original_text": " If your cervix is under 25 millimeters at this stage, we may consider placing you on progesterone therapy or even a surkladge, depending on the severity. These interventions help reduce the risk of preterm birth.",
+        "translated_text": "Si su cuello uterino tiene menos de 25 milímetros en esta etapa, podemos considerar colocarlo en la terapia de progesterona o incluso una surkladge, dependiendo de la gravedad. Estas intervenciones ayudan a reducir el riesgo de parto prematuro.",
+        "medical_terms": [
+          {
+            "original_text": "surkladge",
+            "canonical_name": "surkladge",
+            "category": "medication",
+            "confidence": 0.45,
+            "translation": "surkladge",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "cervix surkladge",
+            "canonical_name": "cervix surkladge",
+            "category": "medication",
+            "confidence": 0.4,
+            "translation": "cervix surkladge",
+            "context_clues": [],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          }
+        ],
+        "medical_notes": [],
+        "follow_up_questions": [],
+        "confidence": 0.95,
+        "medical_accuracy": 1
+      }
+    }
+  ]
+}

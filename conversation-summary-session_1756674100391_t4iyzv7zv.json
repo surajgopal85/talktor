@@ -1,0 +1,905 @@
+{
+  "sessionId": "session_1756674100391_t4iyzv7zv",
+  "timestamp": "2025-08-31T21:04:31.793Z",
+  "stats": {
+    "totalMessages": 11,
+    "doctorMessages": 6,
+    "patientMessages": 5,
+    "systemMessages": 0,
+    "translations": 5,
+    "duration": "1m 54s",
+    "medications": 13,
+    "alerts": 2
+  },
+  "medicalAlerts": [
+    {
+      "id": "alert_1756674162586_0.4176151325779486",
+      "type": "pregnancy_context",
+      "message": "Patient pregnancy stage: third_trimester",
+      "severity": "high",
+      "timestamp": "2025-08-31T21:02:42.586Z"
+    },
+    {
+      "id": "alert_1756674208997_0.5750071073309916",
+      "type": "pregnancy_context",
+      "message": "Patient pregnancy stage: third_trimester",
+      "severity": "high",
+      "timestamp": "2025-08-31T21:03:28.997Z"
+    }
+  ],
+  "medications": [
+    "peligroso",
+    "para",
+    "bebé",
+    "pasa",
+    "cuello",
+    "útero",
+    "está",
+    "peligroso para",
+    "para bebé",
+    "bebé pasa",
+    "pasa cuello",
+    "cuello útero",
+    "útero está"
+  ],
+  "messages": [
+    {
+      "timestamp": "2025-08-31T21:02:11.533Z",
+      "speaker": "patient",
+      "type": "transcription",
+      "content": {
+        "text": " Es como un colico va y viene. Dura unos 30 segundos, y luego se quita. Me pasa varias veces al día."
+      }
+    },
+    {
+      "timestamp": "2025-08-31T21:02:29.107Z",
+      "speaker": "doctor",
+      "type": "translation",
+      "content": {
+        "original_text": " Es como un colico va y viene. Dura unos 30 segundos, y luego se quita. Me pasa varias veces al día.",
+        "translated_text": "It's like a colic goes and goes. It lasts about 30 seconds, and then takes off. It happens to me several times a day.",
+        "medical_terms": [
+          {
+            "original_text": "colico",
+            "canonical_name": "colico",
+            "category": "medication",
+            "confidence": 0.45,
+            "translation": "colico",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "viene",
+            "canonical_name": "viene",
+            "category": "medication",
+            "confidence": 0.45,
+            "translation": "viene",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "dura",
+            "canonical_name": "dura",
+            "category": "medication",
+            "confidence": 0.45,
+            "translation": "dura",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "unos",
+            "canonical_name": "unos",
+            "category": "medication",
+            "confidence": 0.45,
+            "translation": "unos",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "segundos",
+            "canonical_name": "segundos",
+            "category": "medication",
+            "confidence": 0.45,
+            "translation": "segundos",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "luego",
+            "canonical_name": "luego",
+            "category": "medication",
+            "confidence": 0.5,
+            "translation": "luego",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "quita",
+            "canonical_name": "quita",
+            "category": "medication",
+            "confidence": 0.6,
+            "translation": "quita",
+            "context_clues": [
+              "Uses treats head, pubic (crab), and body lice"
+            ],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "pasa",
+            "canonical_name": "pasa",
+            "category": "medication",
+            "confidence": 0.5,
+            "translation": "pasa",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "varias",
+            "canonical_name": "varias",
+            "category": "medication",
+            "confidence": 0.5,
+            "translation": "varias",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "veces",
+            "canonical_name": "veces",
+            "category": "medication",
+            "confidence": 0.5,
+            "translation": "veces",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "colico viene",
+            "canonical_name": "colico viene",
+            "category": "medication",
+            "confidence": 0.65,
+            "translation": "colico viene",
+            "context_clues": [
+              "1 INDICATIONS AND USAGE Risperidone is an atypical antipsychotic indicated for: Treatment of schizophrenia ( 1.1 ) As monotherapy or adjunctive therapy with lithium or valproate, for the treatment of acute manic or mixed episodes associated with Bipolar I Disorder ( 1.2 ) Treatment of irritability associated with autistic disorder ( 1.3 ) 1.1 Schizophrenia Risperidone is indicated for the treatment of schizophrenia. Efficacy was established in 4 short-term trials in adults, 2 short-term trials in adolescents (ages 13 to 17 years), and one long-term maintenance trial in adults [see Clinical Studies (14.1) ] . 1.2 Bipolar Mania Monotherapy Risperidone is indicated for the treatment of acute manic or mixed episodes associated with Bipolar I Disorder. Efficacy was established in 2 short-term trials in adults and one short-term trial in children and adolescents (ages 10 to 17 years) [see Clinical Studies (14.2) ] . Adjunctive Therapy Risperidone adjunctive therapy with lithium or valproate is indicated for the treatment of acute manic or mixed episodes associated with Bipolar I Disorder. Efficacy was established in one short-term trial in adults [see Clinical Studies (14.3) ] . 1.3 Irritability Associated with Autistic Disorder Risperidone is indicated for the treatment of irritability associated with autistic disorder, including symptoms of aggression towards others, deliberate self-injuriousness, temper tantrums, and quickly changing moods. Efficacy was established in 3 short-term trials in children and adolescents (ages 5 to 17 years) [see Clinical Studies (14.4) ] ."
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "viene dura",
+            "canonical_name": "viene dura",
+            "category": "medication",
+            "confidence": 0.65,
+            "translation": "viene dura",
+            "context_clues": [
+              "1.3 INDICATIONS AND USAGE 4% Lidocaine Hydrochloride Injection, USP is indicated for the production of topical anesthesia of the mucous membranes of the respiratory tract or the genito-urinary tract. It may be injected trans-tracheally to anesthetize the larynx and trachea, and it may be administered by retrobulbar injection to provide anesthesia for ophthalmic surgery.",
+              "INDICATIONS AND USAGE MARCAINE is indicated for the production of local or regional anesthesia or analgesia for surgery, dental and oral surgery procedures, diagnostic and therapeutic procedures, and for obstetrical procedures. Only the 0.25% and 0.5% concentrations are indicated for obstetrical anesthesia. (See WARNINGS .) Experience with nonobstetrical surgical procedures in pregnant patients is not sufficient to recommend use of 0.75% concentration of MARCAINE in these patients. MARCAINE is not recommended for intravenous regional anesthesia (Bier Block). See WARNINGS . The routes of administration and indicated MARCAINE concentrations are: • local infiltration 0.25% • peripheral nerve block 0.25% and 0.5% • retrobulbar block 0.75% • sympathetic block 0.25% • lumbar epidural 0.25%, 0.5%, and 0.75% (0.75% not for obstetrical anesthesia) • caudal 0.25% and 0.5% • epidural test dose 0.5% with epinephrine 1:200,000 • dental blocks 0.5% with epinephrine 1:200,000 (See DOSAGE AND ADMINISTRATION for additional information). Standard textbooks should be consulted to determine the accepted procedures and techniques for the administration of MARCAINE."
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "dura unos",
+            "canonical_name": "dura unos",
+            "category": "medication",
+            "confidence": 0.65,
+            "translation": "dura unos",
+            "context_clues": [
+              "INDICATIONS AND USAGE Misoprostol tablets are indicated for reducing the risk of NSAID (nonsteroidal anti-inflammatory drugs, including aspirin)–induced gastric ulcers in patients at high risk of complications from gastric ulcer, e.g., the elderly and patients with concomitant debilitating disease, as well as patients at high risk of developing gastric ulceration, such as patients with a history of ulcer. Misoprostol has not been shown to reduce the risk of duodenal ulcers in patients taking NSAIDs. Misoprostol should be taken for the duration of NSAID therapy. Misoprostol has been shown to reduce the risk of gastric ulcers in controlled studies of 3 months’ duration. It had no effect, compared to placebo, on gastrointestinal pain or discomfort associated with NSAID use."
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "X",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "unos segundos",
+            "canonical_name": "unos segundos",
+            "category": "medication",
+            "confidence": 0.55,
+            "translation": "unos segundos",
+            "context_clues": [
+              "Uses treats head, pubic (crab), and body lice"
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "segundos luego",
+            "canonical_name": "segundos luego",
+            "category": "medication",
+            "confidence": 0.65,
+            "translation": "segundos luego",
+            "context_clues": [
+              "INDICATIONS & USAGE Metronidazole vaginal gel USP, 0.75% is indicated in the treatment of bacterial vaginosis (formerly referred to as Haemophilus vaginitis, Gardnerella vaginitis, nonspecific vaginitis, Corynebacterium vaginitis, or anaerobic vaginosis). NOTE: For purposes of this indication, a clinical diagnosis of bacterial vaginosis is usually defined by the presence of a homogeneous vaginal discharge that (a) has a pH of greater than 4.5, (b) emits a “fishy” amine odor when mixed with a 10% KOH solution, and (c) contains clue cells on microscopic examination. Gram’s stain results consistent with a diagnosis of bacterial vaginosis include (a) markedly reduced or absent Lactobacillus morphology, (b) predominance of Gardnerella morphotype, and (c) absent or few white blood cells. Other pathogens commonly associated with vulvovaginitis, e.g., Trichomonas vaginalis , Chlamydia trachomatis , N . gonorrhoeae , Candida albicans , and Herpes simplex virus should be ruled out."
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "B",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "luego quita",
+            "canonical_name": "luego quita",
+            "category": "medication",
+            "confidence": 0.6,
+            "translation": "luego quita",
+            "context_clues": [
+              "Uses treats head, pubic (crab), and body lice"
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "quita pasa",
+            "canonical_name": "quita pasa",
+            "category": "medication",
+            "confidence": 0.6,
+            "translation": "quita pasa",
+            "context_clues": [],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "pasa varias",
+            "canonical_name": "pasa varias",
+            "category": "medication",
+            "confidence": 0.6,
+            "translation": "pasa varias",
+            "context_clues": [
+              "Use reduces withdrawal symptoms, including nicotine craving, associated with quitting smoking"
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "varias veces",
+            "canonical_name": "varias veces",
+            "category": "medication",
+            "confidence": 0.7,
+            "translation": "varias veces",
+            "context_clues": [
+              "INDICATIONS & USAGE Metronidazole vaginal gel USP, 0.75% is indicated in the treatment of bacterial vaginosis (formerly referred to as Haemophilus vaginitis, Gardnerella vaginitis, nonspecific vaginitis, Corynebacterium vaginitis, or anaerobic vaginosis). NOTE: For purposes of this indication, a clinical diagnosis of bacterial vaginosis is usually defined by the presence of a homogeneous vaginal discharge that (a) has a pH of greater than 4.5, (b) emits a “fishy” amine odor when mixed with a 10% KOH solution, and (c) contains clue cells on microscopic examination. Gram’s stain results consistent with a diagnosis of bacterial vaginosis include (a) markedly reduced or absent Lactobacillus morphology, (b) predominance of Gardnerella morphotype, and (c) absent or few white blood cells. Other pathogens commonly associated with vulvovaginitis, e.g., Trichomonas vaginalis , Chlamydia trachomatis , N . gonorrhoeae , Candida albicans , and Herpes simplex virus should be ruled out."
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "B",
+              "brand_names": []
+            }
+          }
+        ],
+        "medical_notes": [],
+        "follow_up_questions": [],
+        "confidence": 0.95,
+        "medical_accuracy": 1
+      }
+    },
+    {
+      "timestamp": "2025-08-31T21:02:41.131Z",
+      "speaker": "doctor",
+      "type": "transcription",
+      "content": {
+        "text": " That sounds like Braxton Hicks contractions, which are common in the second and third trimester. But given your history I want to rule out any cervical insufficiency or early affacement, have you had an vaginal discharge bleeding or pressure in the pelvis?"
+      }
+    },
+    {
+      "timestamp": "2025-08-31T21:02:42.686Z",
+      "speaker": "patient",
+      "type": "translation",
+      "content": {
+        "original_text": " That sounds like Braxton Hicks contractions, which are common in the second and third trimester. But given your history I want to rule out any cervical insufficiency or early affacement, have you had an vaginal discharge bleeding or pressure in the pelvis?",
+        "translated_text": "Eso suena como contracciones Braxton Hicks, que son comunes en el segundo y tercer trimestre. Pero dado su historial, quiero descartar cualquier insuficiencia cervical o afecto temprano, ¿ha tenido un sangrado o presión de descarga vaginal en la pelvis?",
+        "medical_terms": [],
+        "medical_notes": [
+          {
+            "type": "pregnancy_context",
+            "message": "Patient pregnancy stage: third_trimester",
+            "importance": "high"
+          }
+        ],
+        "follow_up_questions": [
+          "Are you taking prenatal vitamins?",
+          "When is your next prenatal appointment?",
+          "Are you experiencing any concerning symptoms?"
+        ],
+        "confidence": 0.95,
+        "medical_accuracy": 0
+      }
+    },
+    {
+      "timestamp": "2025-08-31T21:03:01.660Z",
+      "speaker": "patient",
+      "type": "transcription",
+      "content": {
+        "text": " He notado un poco más de flujo, pero es transparente. No he tenido sangrado. Si siento un poco de presión, como si el bebé estuviera muy bajo."
+      }
+    },
+    {
+      "timestamp": "2025-08-31T21:03:15.131Z",
+      "speaker": "doctor",
+      "type": "translation",
+      "content": {
+        "original_text": " He notado un poco más de flujo, pero es transparente. No he tenido sangrado. Si siento un poco de presión, como si el bebé estuviera muy bajo.",
+        "translated_text": "I have noticed a little more flow, but it is transparent. I have not had bleeding. If I feel a little pressure, as if the baby was very low.",
+        "medical_terms": [
+          {
+            "original_text": "notado",
+            "canonical_name": "notado",
+            "category": "medication",
+            "confidence": 0.45,
+            "translation": "notado",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "flujo",
+            "canonical_name": "flujo",
+            "category": "medication",
+            "confidence": 0.45,
+            "translation": "flujo",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "transparente",
+            "canonical_name": "transparente",
+            "category": "medication",
+            "confidence": 0.45,
+            "translation": "transparente",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "tenido",
+            "canonical_name": "tenido",
+            "category": "medication",
+            "confidence": 0.45,
+            "translation": "tenido",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "sangrado",
+            "canonical_name": "sangrado",
+            "category": "medication",
+            "confidence": 0.45,
+            "translation": "sangrado",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "siento",
+            "canonical_name": "siento",
+            "category": "medication",
+            "confidence": 0.45,
+            "translation": "siento",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "presión",
+            "canonical_name": "presión",
+            "category": "medication",
+            "confidence": 0.5,
+            "translation": "presión",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "bebé",
+            "canonical_name": "bebé",
+            "category": "medication",
+            "confidence": 0.5,
+            "translation": "bebé",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "estuviera",
+            "canonical_name": "estuviera",
+            "category": "medication",
+            "confidence": 0.5,
+            "translation": "estuviera",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "notado flujo",
+            "canonical_name": "notado flujo",
+            "category": "medication",
+            "confidence": 0.45,
+            "translation": "notado flujo",
+            "context_clues": [],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "flujo transparente",
+            "canonical_name": "flujo transparente",
+            "category": "medication",
+            "confidence": 0.5,
+            "translation": "flujo transparente",
+            "context_clues": [
+              "Uses For the temporary relief of minor aches and pains associated with backache muscular aches headache"
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "transparente tenido",
+            "canonical_name": "transparente tenido",
+            "category": "medication",
+            "confidence": 0.5,
+            "translation": "transparente tenido",
+            "context_clues": [
+              "Uses Prompt temporary relief of: pain during urination burning sensation of urgency increased frequency associated with urinary tract infections."
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "tenido sangrado",
+            "canonical_name": "tenido sangrado",
+            "category": "medication",
+            "confidence": 0.55,
+            "translation": "tenido sangrado",
+            "context_clues": [
+              "Uses/Usos temporarily relieves Minor aches and pains due to: headache muscle pain toothache menstrual pain colds minor pain of arthritis temporarily reduces fever alivio temporal de dolores menores a causa de lo siguiente: dolor de cabeza dolor muscular dolor de muelas dolores menstruales resfrios dolores menores a causa de la artritis reduce temporalmente la fiebre"
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "sangrado siento",
+            "canonical_name": "sangrado siento",
+            "category": "medication",
+            "confidence": 0.45,
+            "translation": "sangrado siento",
+            "context_clues": [],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "siento presión",
+            "canonical_name": "siento presión",
+            "category": "medication",
+            "confidence": 0.45,
+            "translation": "siento presión",
+            "context_clues": [],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "presión bebé",
+            "canonical_name": "presión bebé",
+            "category": "medication",
+            "confidence": 0.5,
+            "translation": "presión bebé",
+            "context_clues": [],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "bebé estuviera",
+            "canonical_name": "bebé estuviera",
+            "category": "medication",
+            "confidence": 0.5,
+            "translation": "bebé estuviera",
+            "context_clues": [],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          }
+        ],
+        "medical_notes": [],
+        "follow_up_questions": [],
+        "confidence": 0.95,
+        "medical_accuracy": 1
+      }
+    },
+    {
+      "timestamp": "2025-08-31T21:03:28.601Z",
+      "speaker": "doctor",
+      "type": "transcription",
+      "content": {
+        "text": " Thank you. I'd like to perform a trans-vaginal ultrasound today to check your cervical length. Shortening of the cervix can be an early sign of preterm labor. We'll also monitor fetal movement and uterine activity."
+      }
+    },
+    {
+      "timestamp": "2025-08-31T21:03:29.097Z",
+      "speaker": "patient",
+      "type": "translation",
+      "content": {
+        "original_text": " Thank you. I'd like to perform a trans-vaginal ultrasound today to check your cervical length. Shortening of the cervix can be an early sign of preterm labor. We'll also monitor fetal movement and uterine activity.",
+        "translated_text": "Gracias. Me gustaría realizar un ultrasonido transvaginal hoy para verificar su longitud cervical. El acortamiento del cuello uterino puede ser un signo temprano de trabajo prematuro. También monitorearemos el movimiento fetal y la actividad uterina.",
+        "medical_terms": [],
+        "medical_notes": [
+          {
+            "type": "pregnancy_context",
+            "message": "Patient pregnancy stage: third_trimester",
+            "importance": "high"
+          }
+        ],
+        "follow_up_questions": [
+          "Are you taking prenatal vitamins?",
+          "When is your next prenatal appointment?",
+          "Are you experiencing any concerning symptoms?"
+        ],
+        "confidence": 0.95,
+        "medical_accuracy": 0
+      }
+    },
+    {
+      "timestamp": "2025-08-31T21:03:40.094Z",
+      "speaker": "patient",
+      "type": "transcription",
+      "content": {
+        "text": " Es peligroso para el bebé, ¿qué pasa así que el cuello del útero está corto?"
+      }
+    },
+    {
+      "timestamp": "2025-08-31T21:03:51.413Z",
+      "speaker": "doctor",
+      "type": "translation",
+      "content": {
+        "original_text": " Es peligroso para el bebé, ¿qué pasa así que el cuello del útero está corto?",
+        "translated_text": "It is dangerous for the baby, what happens so the cervix is ​​short?",
+        "medical_terms": [
+          {
+            "original_text": "peligroso",
+            "canonical_name": "peligroso",
+            "category": "medication",
+            "confidence": 0.45,
+            "translation": "peligroso",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "para",
+            "canonical_name": "para",
+            "category": "medication",
+            "confidence": 0.55,
+            "translation": "para",
+            "context_clues": [
+              "INDICATIONS: This remedy is indicated for symptoms associated with yeast infections and intestinal dysbacteria according to traditional homeopathic practice.*"
+            ],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "bebé",
+            "canonical_name": "bebé",
+            "category": "medication",
+            "confidence": 0.45,
+            "translation": "bebé",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "pasa",
+            "canonical_name": "pasa",
+            "category": "medication",
+            "confidence": 0.45,
+            "translation": "pasa",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "cuello",
+            "canonical_name": "cuello",
+            "category": "medication",
+            "confidence": 0.5,
+            "translation": "cuello",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "útero",
+            "canonical_name": "útero",
+            "category": "medication",
+            "confidence": 0.5,
+            "translation": "útero",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "está",
+            "canonical_name": "está",
+            "category": "medication",
+            "confidence": 0.5,
+            "translation": "está",
+            "context_clues": [],
+            "extraction_strategy": "single_word_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "peligroso para",
+            "canonical_name": "peligroso para",
+            "category": "medication",
+            "confidence": 0.65,
+            "translation": "peligroso para",
+            "context_clues": [
+              "INDICATIONS AND USAGE CERISA™ WASH is indicated in the topical control of acne vulgaris, acne rosacea and seborrheic dermatitis."
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "C",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "para bebé",
+            "canonical_name": "para bebé",
+            "category": "medication",
+            "confidence": 0.45,
+            "translation": "para bebé",
+            "context_clues": [],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "bebé pasa",
+            "canonical_name": "bebé pasa",
+            "category": "medication",
+            "confidence": 0.45,
+            "translation": "bebé pasa",
+            "context_clues": [],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "pasa cuello",
+            "canonical_name": "pasa cuello",
+            "category": "medication",
+            "confidence": 0.55,
+            "translation": "pasa cuello",
+            "context_clues": [
+              "Uses treats head, pubic (crab), and body lice"
+            ],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "cuello útero",
+            "canonical_name": "cuello útero",
+            "category": "medication",
+            "confidence": 0.5,
+            "translation": "cuello útero",
+            "context_clues": [],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          },
+          {
+            "original_text": "útero está",
+            "canonical_name": "útero está",
+            "category": "medication",
+            "confidence": 0.5,
+            "translation": "útero está",
+            "context_clues": [],
+            "extraction_strategy": "bigram_bert_enhanced",
+            "api_data": {
+              "rxcui": null,
+              "pregnancy_category": "unknown",
+              "brand_names": []
+            }
+          }
+        ],
+        "medical_notes": [],
+        "follow_up_questions": [],
+        "confidence": 0.95,
+        "medical_accuracy": 1
+      }
+    },
+    {
+      "timestamp": "2025-08-31T21:04:05.774Z",
+      "speaker": "doctor",
+      "type": "transcription",
+      "content": {
+        "text": " If your cervix is under 25 millimeters at this stage, we may consider placing you on progesterone therapy or even a surklage, depending on the severity. These interventions help reduce the risk of preterm birth."
+      }
+    }
+  ]
+}
